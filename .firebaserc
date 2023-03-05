@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "maicomik"
+  },
+  "targets": {
+    "maicomik": {
+      "hosting": {
+        "MaicomiK": [
+          "maicomik"
+        ]
+      }
+    }
+  }
+}
