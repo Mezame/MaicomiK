@@ -1,6 +1,5 @@
 @use "@angular/material" as mat;
 @use "maicomik-palette" as maicomik;
-@use "components-override";
 
 @include mat.core();
 
@@ -46,6 +45,6 @@ $maicomik-dark-theme: mat.define-dark-theme(
 @include mat.core-theme($maicomik-theme);
 @include mat.typography-hierarchy($maicomik-theme);
 
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
   @include mat.core-theme($maicomik-dark-theme);
-}
+}*/
