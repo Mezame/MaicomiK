@@ -7,4 +7,8 @@ export interface Users {
     email: string;
     isEmailVerified?: boolean;
   };
+  metadata: {
+    id?: string;
+    createdAt: Date;
+  };
 }
