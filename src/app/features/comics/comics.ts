@@ -1,7 +1,7 @@
 export interface Comics {
   imageUrl?: string;
   title: string;
-  status: string;
+  status: ComicStatus;
   chapter: number;
   format: ComicFormat;
   readers?: string[];
@@ -13,4 +13,6 @@ export interface Comics {
   };
 }
 
-type ComicFormat = 'manga' | 'webtoon' | 'manhwa' | 'manhua'
+type ComicStatus = 'reading' | 'completed' | 'planning' | 'paused';
+
+type ComicFormat = 'manga' | 'webtoon' | 'manhwa' | 'manhua';
