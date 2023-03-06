@@ -1,27 +1,28 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
+import { connectAuthEmulator, getAuth, provideAuth } from '@angular/fire/auth';
 import {
-  provideFirestore,
-  getFirestore,
   connectFirestoreEmulator,
+  getFirestore,
+  provideFirestore,
 } from '@angular/fire/firestore';
 import {
-  provideStorage,
-  getStorage,
   connectStorageEmulator,
+  getStorage,
+  provideStorage,
 } from '@angular/fire/storage';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => {
@@ -47,7 +48,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       }
       return storage;
     }),
-    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
