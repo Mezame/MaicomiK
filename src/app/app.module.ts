@@ -16,6 +16,7 @@ import {
   getStorage,
   connectStorageEmulator,
 } from '@angular/fire/storage';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,6 +47,7 @@ import {
       }
       return storage;
     }),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
