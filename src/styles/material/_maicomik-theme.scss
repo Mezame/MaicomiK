@@ -1,0 +1,51 @@
+@use "@angular/material" as mat;
+@use "maicomik-palette" as maicomik;
+@use "components-override";
+
+@include mat.core();
+
+$maicomik-error: mat.define-palette(maicomik.$maicomik-error-palette, 400);
+$maicomik-typography: mat.define-typography-config(
+  $font-family: "Nunito Sans",
+);
+
+$maicomik-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: mat.define-palette(maicomik.$maicomik-primary-palette, 400),
+      accent:
+        mat.define-palette(
+          maicomik.$maicomik-terciary-palette,
+          A200,
+          A100,
+          A400
+        ),
+      warn: $maicomik-error,
+    ),
+    typography: $maicomik-typography,
+    density: 0,
+  )
+);
+
+$maicomik-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: mat.define-palette(maicomik.$maicomik-primary-palette, 200),
+      accent:
+        mat.define-palette(
+          maicomik.$maicomik-terciary-palette,
+          A200,
+          A100,
+          A400
+        ),
+      warn: $maicomik-error,
+    ),
+  )
+);
+
+@include mat.core-theme($maicomik-theme);
+@include mat.typography-hierarchy($maicomik-theme);
+
+@media (prefers-color-scheme: dark) {
+  @include mat.core-theme($maicomik-dark-theme);
+}
