@@ -15,4 +15,4 @@ export interface Comics {
 
 type ComicStatus = 'reading' | 'completed' | 'planning' | 'paused';
 
-type ComicFormat = 'manga' | 'webtoon' | 'manhwa' | 'manhua';
+type ComicFormat = 'manga' | 'manhwa' | 'manhua' | 'webtoon';
