@@ -1,0 +1,47 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 32px 48px;
+  width: 704px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidenav-container {
+  flex: 1 0 auto;
+}
+
+.side-nav {
+  width: 360px;
+}
+
+.divider {
+  margin: 0px 16px;
+}
+
+.active-link {
+  background: rgba(0, 0, 0, 0.08);
+
+  span {
+    color: #894c5d;
+  }
+}
+
+.mdc-list-item--with-leading-icon .mdc-list-item__start {
+  margin-right: 16px;
+  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.73));
+  font-size: 20px;
+}
