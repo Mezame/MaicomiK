@@ -1,4 +1,5 @@
 export const environment = {
+  useEmulators: false,
   firebase: {
     projectId: 'maicomik',
     appId: '1:1097288835978:web:37e302d1381e1bacf85e73',
