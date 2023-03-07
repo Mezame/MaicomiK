@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./comic-list.component.scss']
 })
 export class ComicListComponent {
-
+  
 }
