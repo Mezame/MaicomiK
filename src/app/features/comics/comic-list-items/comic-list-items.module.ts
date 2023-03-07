@@ -10,6 +10,9 @@ import { ComicListItemsComponent } from './comic-list-items.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    ComicListItemsComponent
   ]
 })
 export class ComicListItemsModule { }
