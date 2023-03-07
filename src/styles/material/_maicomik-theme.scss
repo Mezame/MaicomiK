@@ -44,7 +44,6 @@ $maicomik-dark-theme: mat.define-dark-theme(
 );
 
 @include mat.core-theme($maicomik-theme);
-@include mat.core-theme($maicomik-theme);
 @include mat.sidenav-theme($maicomik-theme);
 @include mat.list-theme($maicomik-theme);
 @include mat.divider-theme($maicomik-theme);
