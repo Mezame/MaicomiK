@@ -1,25 +1,25 @@
 <div class="container">
-  <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav class="side-nav" role="navigation" mode="side" #sidenav>
+  <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
+    <mat-sidenav class="side-nav" role="navigation" mode="push" position="end" #sidenav>
       <mat-nav-list (click)="sidenav.close()" disableRipple>
         <a
           mat-list-item
-          routerLink="/admin/panel-reportes"
+          routerLink="/home"
           routerLinkActive="active-link"
           tabindex="-1"
         >
-          <span>Panel</span>
+          <span>Home</span>
         </a>
 
         <mat-divider class="divider"></mat-divider>
 
         <a
           mat-list-item
-          routerLink="/home/mi-cuenta"
+          routerLink="#"
           routerLinkActive="active-link"
           tabindex="-1"
         >
-          <span>Mi cuenta</span>
+          <span>My Account</span>
         </a>
 
         <a mat-list-item tabindex="-1" (click)="logOut()">
@@ -31,12 +31,15 @@
 
     <mat-sidenav-content role="main">
       <mat-toolbar>
+        <div class="fake-icon-button-space"></div>
+        <span class="logo">Mai<span style="color: #75565B;">comiK</span></span>
         <button
           mat-icon-button
           aria-label="Abre menu lateral"
-          (click)="sidenav.open()"
+          (click)="sidenav.toggle()"
         >
-          <mat-icon>menu</mat-icon>
+          <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+          <mat-icon *ngIf="sidenav.opened">menu_open</mat-icon>
         </button>
       </mat-toolbar>
 
