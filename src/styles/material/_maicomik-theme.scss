@@ -5,9 +5,12 @@
 @include mat.core();
 
 $maicomik-error: mat.define-palette(maicomik.$maicomik-error-palette, 400);
-$maicomik-typography: mat.define-typography-config(
-  $font-family: "Nunito Sans",
-);
+$font-family-1: "Nunito Sans";
+$font-family-2: "Nunito";
+$font-size-base: 14px;
+$line-height-base: calc($font-size-base * 1.43);
+$letter-spacing-base: calc($line-height-base / 40);
+$font-scale-factor: 1.15;
 
 $maicomik-theme: mat.define-light-theme(
   (
@@ -22,7 +25,6 @@ $maicomik-theme: mat.define-light-theme(
         ),
       warn: $maicomik-error,
     ),
-    typography: $maicomik-typography,
     density: 0,
   )
 );
@@ -51,8 +53,90 @@ $maicomik-dark-theme: mat.define-dark-theme(
 @include mat.icon-button-theme($maicomik-theme);
 @include mat.button-theme($maicomik-theme);
 @include mat.icon-theme($maicomik-theme);
-@include mat.typography-hierarchy($maicomik-theme);
 
 /*@media (prefers-color-scheme: dark) {
   @include mat.core-theme($maicomik-dark-theme);
 }*/
+
+.label-small
+.label-medium,
+.label-large,
+.body-small,
+.body-medium,
+.body-large,
+.title-small,
+.title-medium,
+.title-large
+ {
+    font-family: $font-family-1;
+}
+
+.body-small,
+.body-medium,
+.body-large {
+    font-weight: 400;
+}
+
+.label-small
+.label-medium,
+.label-large,
+.title-small,
+.title-medium,
+.title-large
+ {
+    font-weight: 600;
+}
+
+.label-small {
+  font-size: calc($font-size-base / $font-scale-factor / $font-scale-factor);
+  line-height: calc($line-height-base / $font-scale-factor / $font-scale-factor);
+  letter-spacing: calc($letter-spacing-base / $font-scale-factor / $font-scale-factor);
+}
+
+.label-medium {
+  font-size: calc($font-size-base / $font-scale-factor);
+  line-height: calc($line-height-base / $font-scale-factor);
+  letter-spacing: calc($letter-spacing-base / $font-scale-factor);
+}
+
+.label-large {
+  font-size: calc($font-size-base);
+  line-height: calc($line-height-base);
+  letter-spacing: calc($letter-spacing-base);
+}
+
+.body-small {
+  font-size: calc($font-size-base / $font-scale-factor);
+  line-height: calc($line-height-base / $font-scale-factor);
+  letter-spacing: calc($letter-spacing-base / $font-scale-factor);
+}
+
+.body-medium {
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  letter-spacing: $letter-spacing-base;
+}
+
+.body-large {
+  font-size: calc($font-size-base * $font-scale-factor);
+  line-height: calc($line-height-base * $font-scale-factor);
+  letter-spacing: calc($letter-spacing-base * $font-scale-factor);
+}
+
+.title-small {
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  letter-spacing: $letter-spacing-base;
+}
+
+.title-medium {
+  font-size: calc($font-size-base * $font-scale-factor * $font-scale-factor);
+  line-height: calc($line-height-base * $font-scale-factor * $font-scale-factor);
+  letter-spacing: calc($letter-spacing-base * $font-scale-factor * $font-scale-factor);
+}
+
+.title-large {
+  font-size: calc($font-size-base * $font-scale-factor * $font-scale-factor);
+  line-height: calc($line-height-base * $font-scale-factor * $font-scale-factor);
+  letter-spacing: calc($letter-spacing-base * $font-scale-factor * $font-scale-factor);
+}
