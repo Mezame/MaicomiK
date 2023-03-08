@@ -1,8 +1,8 @@
-import { Comics } from '../comics/comics';
+import { Comic } from '../comics/comic';
 
-export interface Users {
+export interface User {
   username: string;
-  comics: Comics[];
+  comics: Comic[];
   account: {
     email: string;
     isEmailVerified?: boolean;
