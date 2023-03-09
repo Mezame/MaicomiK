@@ -1,6 +1,6 @@
 <div class="container">
-  <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
-    <mat-sidenav class="side-nav" role="navigation" mode="push" position="end" #sidenav>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav class="side-nav" role="navigation" mode="over" position="end" #sidenav>
       <mat-nav-list (click)="sidenav.close()" disableRipple>
         <a
           mat-list-item
@@ -24,7 +24,7 @@
 
         <a mat-list-item tabindex="-1" (click)="logOut()">
           <mat-icon matListItemIcon>logout</mat-icon>
-          <span matListItemTitle>Cerrar sesión</span>
+          <span matListItemTitle>Log Out</span>
         </a>
       </mat-nav-list>
     </mat-sidenav>
