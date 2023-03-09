@@ -1,1 +1,34 @@
-<p>comic-list-items works!</p>
+<ng-container *ngFor="let comic of comics">
+  <div class="item">
+    <div class="media">
+      <img src="{{ comic.coverUrl }}" alt="Comic cover" />
+    </div>
+    <div class="content">
+      <div class="header">
+        <span class="comic-title title-small">{{ comic.title }}</span>
+
+        <div class="tags-group">
+          <span class="tag comic-format body-small">{{ comic.format }}</span>
+          <span class="tag comic-status body-small">{{ comic.status }}</span>
+        </div>
+      </div>
+
+      <div class="body">
+        <span class="comic-chapter body-medium"
+          >Ch. <span class="body-large">{{ comic.chapter }}</span>
+        </span>
+        <span class="comic-updated body-small">{{ comic.metadata.updatedAt | date }}</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button mat-icon-button type="button" aria-label="Menu with options to view and edit comic">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <button mat-icon-button type="button" color="primary" aria-label="Add chapter count by one">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+</ng-container>

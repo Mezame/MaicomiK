@@ -1,0 +1,92 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+
+  max-height: 136px;
+
+  .media {
+    width: 89px;
+    min-width: 89px;
+    height: 136px;
+    overflow: hidden;
+    border-radius: 8px;
+
+    img {
+      width: 105px;
+      height: 148px;
+      margin: -8px 0 0 -8px;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0px;
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      padding: 16px 16px 8px;
+      gap: 4px;
+
+      max-width: 152px;
+
+      .comic-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .tags-group {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+      }
+    }
+
+    .body {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 16px 16px;
+      gap: 4px;
+
+      .comic-updated {
+        color: #847375;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 4px 0;
+  }
+}
+
+.tag {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 2px 4px;
+
+  border-radius: 4px;
+}
+
+.tag.comic-format {
+  background: #ffd9de;
+  color: #2c1519;
+}
+
+.tag.comic-status {
+  background: #ffddba;
+  color: #2b1700;
+}
