@@ -8,8 +8,8 @@
         <span class="comic-title title-small">{{ comic.title }}</span>
 
         <div class="tags-group">
-          <span class="tag comic-format body-small">{{ comic.format }}</span>
-          <span class="tag comic-status body-small">{{ comic.status }}</span>
+          <app-tag class="comic-format">{{ comic.format }}</app-tag>
+          <app-tag class="comic-status">{{ comic.status }}</app-tag>
         </div>
       </div>
 
@@ -17,16 +17,27 @@
         <span class="comic-chapter body-medium"
           >Ch. <span class="body-large">{{ comic.chapter }}</span>
         </span>
-        <span class="comic-updated body-small">{{ comic.metadata.updatedAt | date }}</span>
+        <span class="comic-updated body-small">{{
+          comic.metadata.updatedAt | date
+        }}</span>
       </div>
     </div>
 
     <div class="actions">
-      <button mat-icon-button type="button" aria-label="Open with options to view and edit comic">
+      <button
+        mat-icon-button
+        type="button"
+        aria-label="Open with options to view and edit comic"
+      >
         <mat-icon>more_vert</mat-icon>
       </button>
 
-      <button mat-icon-button type="button" color="primary" aria-label="Increase chapter count by one">
+      <button
+        mat-icon-button
+        type="button"
+        color="primary"
+        aria-label="Increase chapter count by one"
+      >
         <mat-icon>add</mat-icon>
       </button>
     </div>
