@@ -4,7 +4,7 @@ export interface Comic {
   format: ComicFormat;
   status: ComicStatus;
   chapter: number;
-  readers?: [{ name: string; url: string }];
+  readers?: [{ name: string; url?: string }];
   url: string;
   metadata: {
     id?: string;
