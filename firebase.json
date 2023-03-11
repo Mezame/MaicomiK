@@ -5,6 +5,7 @@
   },
   "hosting": [
     {
+      "target": "MaicomiK",
       "public": "dist",
       "ignore": [
         "firebase.json",
