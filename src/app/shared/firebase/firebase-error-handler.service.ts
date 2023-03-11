@@ -12,7 +12,7 @@ export type HandleError = <T>(
   providedIn: 'root',
 })
 export class FirebaseErrorHandlerService {
-  constructor(private logger: LoggerService) {}
+  constructor(private loggerService: LoggerService) {}
 
   createHandleError =
     (serviceName = '') =>
@@ -25,13 +25,13 @@ export class FirebaseErrorHandlerService {
     result = {} as T
   ) {
     return (error: Error): Observable<T> => {
-      this.logger.error(error as any);
+      this.loggerService.error(error as any);
 
       const message = !(error instanceof FirebaseError)
         ? error.message
         : `Firebase returned code '${error.code}' with error '${error.message}'`;
 
-      this.logger.log(`${serviceName}: ${operation} failed: ${message}`);
+      this.loggerService.log(`${serviceName}: ${operation} failed: ${message}`);
 
       return of(result);
     };

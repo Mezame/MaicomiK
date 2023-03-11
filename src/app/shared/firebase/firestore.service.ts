@@ -25,7 +25,7 @@ export interface FirestoreResponse {
   providedIn: 'root',
 })
 export class FirestoreService {
-  constructor(private firestore: Firestore, private logger: LoggerService) {}
+  constructor(private firestore: Firestore, private loggerService: LoggerService) {}
 
   /**
    * Get a stream of documents from Firestore.
@@ -63,7 +63,7 @@ export class FirestoreService {
 
       docRefId = docRef.id;
 
-      this.logger.log(
+      this.loggerService.log(
         `FirestoreGlobalService: addDocument: added document w/ id=${docRefId}`
       );
 
@@ -94,7 +94,7 @@ export class FirestoreService {
         throw new Error('could not add document');
       }
 
-      this.logger.log(
+      this.loggerService.log(
         `FirestoreGlobalService: setDocument: added document w/ id=${id}`
       );
 
@@ -128,7 +128,7 @@ export class FirestoreService {
         throw new Error('could not add document');
       }
 
-      this.logger.log(
+      this.loggerService.log(
         `FirestoreGlobalService: setDocumentNoId: added document w/ id=${docRefId}`
       );
 
@@ -156,7 +156,7 @@ export class FirestoreService {
         throw new Error('could not delete document');
       }
 
-      this.logger.log(
+      this.loggerService.log(
         `FirestoreGlobalService: deleteDocument: deleted document w/ id=${id}`
       );
 
@@ -185,7 +185,7 @@ export class FirestoreService {
         throw new Error('could not update document');
       }
 
-      this.logger.log(
+      this.loggerService.log(
         `FirestoreGlobalService: updateDocument: updated document w/ id=${id}`
       );
 
