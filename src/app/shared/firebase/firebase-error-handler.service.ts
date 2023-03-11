@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FirebaseError } from '@angular/fire/app';
+import { LoggerService } from '@core/logger/logger.service';
 import { Observable, of } from 'rxjs';
 
 export type HandleError = <T>(
@@ -11,7 +12,7 @@ export type HandleError = <T>(
   providedIn: 'root',
 })
 export class FirebaseErrorHandlerService {
-  constructor() {}
+  constructor(private logger: LoggerService) {}
 
   createHandleError =
     (serviceName = '') =>
@@ -24,13 +25,13 @@ export class FirebaseErrorHandlerService {
     result = {} as T
   ) {
     return (error: Error): Observable<T> => {
-      console.error(error as any);
+      this.logger.error(error as any);
 
       const message = !(error instanceof FirebaseError)
         ? error.message
         : `Firebase returned code '${error.code}' with error '${error.message}'`;
 
-      console.log(`${serviceName}: ${operation} failed: ${message}`);
+      this.logger.log(`${serviceName}: ${operation} failed: ${message}`);
 
       return of(result);
     };

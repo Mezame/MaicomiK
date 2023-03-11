@@ -12,6 +12,7 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
+import { LoggerService } from '@core/logger/logger.service';
 import { Observable } from 'rxjs';
 
 export interface FirestoreResponse {
@@ -24,7 +25,7 @@ export interface FirestoreResponse {
   providedIn: 'root',
 })
 export class FirestoreService {
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, private logger: LoggerService) {}
 
   /**
    * Get a stream of documents from Firestore.
@@ -62,7 +63,7 @@ export class FirestoreService {
 
       docRefId = docRef.id;
 
-      console.log(
+      this.logger.log(
         `FirestoreGlobalService: addDocument: added document w/ id=${docRefId}`
       );
 
@@ -93,7 +94,7 @@ export class FirestoreService {
         throw new Error('could not add document');
       }
 
-      console.log(
+      this.logger.log(
         `FirestoreGlobalService: setDocument: added document w/ id=${id}`
       );
 
@@ -127,7 +128,7 @@ export class FirestoreService {
         throw new Error('could not add document');
       }
 
-      console.log(
+      this.logger.log(
         `FirestoreGlobalService: setDocumentNoId: added document w/ id=${docRefId}`
       );
 
@@ -155,7 +156,7 @@ export class FirestoreService {
         throw new Error('could not delete document');
       }
 
-      console.log(
+      this.logger.log(
         `FirestoreGlobalService: deleteDocument: deleted document w/ id=${id}`
       );
 
@@ -184,7 +185,7 @@ export class FirestoreService {
         throw new Error('could not update document');
       }
 
-      console.log(
+      this.logger.log(
         `FirestoreGlobalService: updateDocument: updated document w/ id=${id}`
       );
 
