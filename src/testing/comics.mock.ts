@@ -16,27 +16,27 @@ export const comicsMock: Comic[] = [
     ],
     url: 'yaotome-x-2',
     metadata: {
-      createdAt: new Date('9/15/2022, 12:00:00 AM'),
-      updatedAt: new Date('9/15/2022, 12:00:00 AM'),
+      createdAt: new Date('3/8/2022, 12:00:00 AM'),
+      updatedAt: new Date('3/8/2022, 12:00:00 AM'),
     },
   },
   {
     coverUrl:
-      'https://locuramangaline.com/wp-content/uploads/2022/10/Rosen-Garten-Saga-448x557.jpg',
-    title: 'Rosengarten Saga',
+      'https://mangadex.org/covers/d2b02bb0-a8ec-405f-9c2d-d63df7cff785/496bd7d9-750d-461a-a7a4-f932848b2461.jpg',
+    title: 'Bijutsubu Girl',
     format: 'manga',
     status: 'paused',
-    chapter: 27,
+    chapter: 199,
     readers: [
       {
         name: 'mangadex',
-        url: 'https://mangadex.org/title/461f0cfa-cd72-4d70-bf26-a0279e0aa8fc/rosen-garten-saga',
+        url: 'https://mangadex.org/title/d2b02bb0-a8ec-405f-9c2d-d63df7cff785/bijutsubu-girl',
       },
     ],
-    url: 'rosengarten-saga',
+    url: 'bijutsubu-girl',
     metadata: {
-      createdAt: new Date('9/5/2022, 12:00:00 AM'),
-      updatedAt: new Date('9/5/2022, 12:00:00 AM'),
+      createdAt: new Date('3/8/2022, 12:00:00 AM'),
+      updatedAt: new Date('3/8/2022, 12:00:00 AM'),
     },
   },
   {
@@ -53,8 +53,42 @@ export const comicsMock: Comic[] = [
     ],
     url: 'fate-kaleid-liner-prisma-illya-3rei',
     metadata: {
-      createdAt: new Date('9/2/2022, 12:00:00 AM'),
-      updatedAt: new Date('9/2/2022, 12:00:00 AM'),
+      createdAt: new Date('3/8/2022, 12:00:00 AM'),
+      updatedAt: new Date('3/8/2022, 12:00:00 AM'),
     },
   },
+  {
+    coverUrl: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx114542-3fUNOX8DqS5e.jpg',
+    title: 'Haruman Nega Doego Sipeo',
+    format: 'manhwa',
+    status: 'reading',
+    chapter: 126,
+    readers: [
+      {
+        name: 'webtoons app'
+      },
+    ],
+    url: 'haruman-nega-doego-sipeo',
+    metadata: {
+      createdAt: new Date('3/10/2023, 12:00:00 AM'),
+      updatedAt: new Date('3/10/2023, 12:00:00 AM'),
+    },
+  },
+  {
+    coverUrl: 'https://static.wixstatic.com/media/6abcba_17e9ad8ea2bd4ef3a88c13f04f92b2cc~mv2.jpg/v1/fill/w_480,h_694,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/IMG_7496%202_JPG.jpg',
+    title: 'The Kiss Bet',
+    format: 'webtoon',
+    status: 'paused',
+    chapter: 137,
+    readers: [
+      {
+        name: 'webtoons app'
+      },
+    ],
+    url: 'the-kiss-bet',
+    metadata: {
+      createdAt: new Date('3/10/2023, 12:00:00 AM'),
+      updatedAt: new Date('3/10/2023, 12:00:00 AM'),
+    },
+  }
 ];
