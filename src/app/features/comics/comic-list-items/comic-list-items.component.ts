@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Comic } from '../comic';
 
 @Component({
@@ -8,5 +9,5 @@ import { Comic } from '../comic';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicListItemsComponent {
-  @Input('items') comics!: Comic[];
+  @Input('items') comics$!: Observable<readonly Comic[]>;
 }
