@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoggerService {
-
   logs: string[] = [];
   devMode: boolean = true;
-  debugMode: boolean = true;
 
   log: (message: string) => void = this.info;
 
@@ -22,8 +20,6 @@ export class LoggerService {
   error(message: string) {
     if (!this.devMode) return;
 
-    if (this.debugMode) {
-      console.error(message);
-    }
+    console.error(message);
   }
 }
