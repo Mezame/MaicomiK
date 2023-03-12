@@ -1,4 +1,5 @@
 import { Comic } from '@features/comics/comic';
+import { Timestamp } from "@angular/fire/firestore";
 
 export const comicsMock: Comic[] = [
   {
@@ -16,8 +17,8 @@ export const comicsMock: Comic[] = [
     ],
     url: 'yaotome-x-2',
     metadata: {
-      createdAt: new Date('3/8/2022, 12:00:00 AM'),
-      updatedAt: new Date('3/8/2022, 12:00:00 AM'),
+      createdAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
+      updatedAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
     },
   },
   {
@@ -35,8 +36,8 @@ export const comicsMock: Comic[] = [
     ],
     url: 'bijutsubu-girl',
     metadata: {
-      createdAt: new Date('3/8/2022, 12:00:00 AM'),
-      updatedAt: new Date('3/8/2022, 12:00:00 AM'),
+      createdAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
+      updatedAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
     },
   },
   {
@@ -53,8 +54,8 @@ export const comicsMock: Comic[] = [
     ],
     url: 'fate-kaleid-liner-prisma-illya-3rei',
     metadata: {
-      createdAt: new Date('3/8/2022, 12:00:00 AM'),
-      updatedAt: new Date('3/8/2022, 12:00:00 AM'),
+      createdAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
+      updatedAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
     },
   },
   {
@@ -70,8 +71,8 @@ export const comicsMock: Comic[] = [
     ],
     url: 'haruman-nega-doego-sipeo',
     metadata: {
-      createdAt: new Date('3/10/2023, 12:00:00 AM'),
-      updatedAt: new Date('3/10/2023, 12:00:00 AM'),
+      createdAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
+      updatedAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
     },
   },
   {
@@ -87,8 +88,8 @@ export const comicsMock: Comic[] = [
     ],
     url: 'the-kiss-bet',
     metadata: {
-      createdAt: new Date('3/10/2023, 12:00:00 AM'),
-      updatedAt: new Date('3/10/2023, 12:00:00 AM'),
+      createdAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
+      updatedAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
     },
   }
 ];
