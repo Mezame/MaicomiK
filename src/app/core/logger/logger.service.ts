@@ -7,7 +7,7 @@ export class LoggerService {
 
   logs: string[] = [];
   devMode: boolean = true;
-  debugMode: boolean = false;
+  debugMode: boolean = true;
 
   log: (message: string) => void = this.info;
 
