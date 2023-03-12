@@ -13,7 +13,7 @@ describe('FirestoreService', () => {
 
   beforeEach(() => {
     const firestoreServiceSpy = jasmine.createSpyObj('FirestoreService', [
-      'getCollection',
+      'getDocument',
       'addDocument',
       'setDocument',
       'setDocumentNoId',
@@ -36,7 +36,7 @@ describe('FirestoreService', () => {
         },
       ],
     });
-    
+
     firestoreService = TestBed.inject(
       FirestoreService
     ) as jasmine.SpyObj<FirestoreService>;
@@ -46,31 +46,34 @@ describe('FirestoreService', () => {
     expect(FirestoreService).toBeTruthy();
   });
 
-  describe('#getCollection', () => {
-    it('should return documents', () => {
-      firestoreService.getCollection.and.returnValue(of([documentMock]));
-
-      firestoreService.getCollection(collectionPathMock).subscribe({
-        next: (documents) =>
-          expect(documents.length)
-            .withContext('should return array')
-            .toBeDefined(),
-        error: () => fail,
-      });
-    });
-
-    it('should not return documents and throw error', () => {
-      firestoreService.getCollection.and.returnValue(
-        throwError(() => new Error('some error'))
+  describe('#getDocument', () => {
+    it('should get document and return a successful response', async () => {
+      firestoreService.getDocument.and.returnValue(
+        Promise.resolve({ success: true, document: documentMock })
       );
 
-      firestoreService.getCollection(collectionPathMock).subscribe({
-        next: (documents) =>
-          expect(documents.length)
-            .withContext('should not return array')
-            .toBeUndefined(),
-        error: (error) => expect(error.message).toBe('some error'),
-      });
+      const res = await firestoreService.getDocument(
+        collectionPathMock,
+        documentIdMock
+      );
+
+      expect(res.success).withContext('should return a true value').toBeTrue();
+      expect(res.document)
+        .withContext('should return a document')
+        .toEqual(documentMock);
+    });
+
+    it('should not get document and return an error response', async () => {
+      firestoreService.getDocument.and.returnValue(
+        Promise.resolve({ error: new Error('some error') })
+      );
+
+      const res = await firestoreService.getDocument(
+        collectionPathMock,
+        documentIdMock
+      );
+
+      expect(res.error).withContext('should return error').toBeDefined();
     });
   });
 
