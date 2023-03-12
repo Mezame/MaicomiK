@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { Comic } from '@features/comics/comic';
+import { ComicsService } from '@features/comics/comics.service';
+import { Observable } from 'rxjs';
 import { comicsMock } from 'src/testing/comics.mock';
 
 @Component({
@@ -9,9 +12,11 @@ import { comicsMock } from 'src/testing/comics.mock';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicListComponent {
-  comics!: Comic[];
+  comics$!: Observable<readonly Comic[]>;
 
-  constructor() {
-    this.comics = comicsMock;
+  constructor(private comicsService: ComicsService) {
+    const id = 'j1HeoLSPX6EgdhcvjoS6';
+
+    this.comics$ = this.comicsService.getComics(id);
   }
 }
