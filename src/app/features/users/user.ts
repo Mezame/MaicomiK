@@ -1,14 +1,14 @@
-import { Comic } from '../comics/comic';
+import { Timestamp } from '@angular/fire/firestore';
 
 export interface User {
-  username: string;
-  comics: Comic[];
   account: {
+    username: string;
     email: string;
     isEmailVerified?: boolean;
   };
+  comics: string[];
   metadata: {
     id?: string;
-    createdAt: Date;
+    createdAt: Timestamp;
   };
 }
