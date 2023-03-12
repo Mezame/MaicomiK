@@ -29,7 +29,7 @@
       "@shared/*": ["./src/app/shared/*"],
       "@environments/*": ["./src/environments/*"],
       "@styles/*": ["./src/styles/*"],
-      "@assets/*": ["./src/assets/*"],
+      "@testing/*": ["./src/testing/*"],
     }
   },
   "angularCompilerOptions": {
