@@ -1,3 +1,5 @@
+import { Timestamp } from "@angular/fire/firestore";
+
 export interface Comic {
   coverUrl?: string;
   title: string;
@@ -8,8 +10,8 @@ export interface Comic {
   url: string;
   metadata: {
     id?: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: Timestamp;
+    updatedAt: Timestamp;
   };
 }
 
