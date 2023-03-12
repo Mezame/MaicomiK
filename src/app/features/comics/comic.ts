@@ -9,7 +9,6 @@ export interface Comic {
   readers?: [{ name: string; url?: string }];
   url: string;
   metadata: {
-    id?: string;
     createdAt: Timestamp;
     updatedAt: Timestamp;
   };
