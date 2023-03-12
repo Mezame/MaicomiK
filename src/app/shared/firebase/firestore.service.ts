@@ -2,21 +2,22 @@ import { Injectable } from '@angular/core';
 import {
   addDoc,
   collection,
-  collectionData,
   CollectionReference,
   deleteDoc,
   doc,
   DocumentData,
   DocumentReference,
+  DocumentSnapshot,
   Firestore,
+  getDoc,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
 import { LoggerService } from '@core/logger/logger.service';
-import { Observable } from 'rxjs';
 
 export interface FirestoreResponse {
   success?: true;
+  document?: any;
   id?: string;
   error?: any;
 }
@@ -25,21 +26,36 @@ export interface FirestoreResponse {
   providedIn: 'root',
 })
 export class FirestoreService {
-  constructor(private firestore: Firestore, private loggerService: LoggerService) {}
+  constructor(
+    private firestore: Firestore,
+    private loggerService: LoggerService
+  ) {}
 
   /**
-   * Get a stream of documents from Firestore.
+   * Add a new document to Firestore with a custom id.
   @param path A slash-separated path to a Firestore collection.
-  @returns Returns a stream of documents.
+  @param id The id of the document.
+  @returns A promise with a Firestore custom response.
   **/
-  getCollection(path: string) {
-    let collRef: CollectionReference<DocumentData>;
-    let documents$: Observable<readonly DocumentData[]>;
+  async getDocument(path: string, id: string) {
+    let docRef: DocumentReference<DocumentData>;
+    let docSnap: DocumentSnapshot<DocumentData>;
+    let document: any;
 
-    collRef = collection(this.firestore, path);
-    documents$ = collectionData(collRef);
+    try {
+      docRef = doc(this.firestore, path, id);
+      docSnap = await getDoc(docRef);
 
-    return documents$;
+      if (!docSnap.exists()) {
+        throw new Error('could not get any document');
+      }
+
+      document = docSnap.data();
+
+      return { success: true, document } as FirestoreResponse;
+    } catch (error) {
+      return { error } as FirestoreResponse;
+    }
   }
 
   /**
@@ -169,7 +185,7 @@ export class FirestoreService {
   /**
    * Add a new document to Firestore with a custom id.
   @param path A slash-separated path to a Firestore collection.
-  @param id The id for the document to be deleted.
+  @param id The id for the document to be updated.
   @param document An Object containing the data for the document to be updated.
   @returns A promise with a Firestore custom response.
   **/
