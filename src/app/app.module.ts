@@ -20,6 +20,7 @@ import { environment } from '@environments/environment';
 import { comicsReducer } from '@features/comics/state/comics.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ComicEffects } from '@features/comics/state/comics.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,7 +53,7 @@ import { AppComponent } from './app.component';
       return storage;
     }),
     StoreModule.forRoot({ comics: comicsReducer }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([ComicEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],
