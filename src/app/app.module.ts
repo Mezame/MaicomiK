@@ -16,7 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { environment } from '../environments/environment';
+import { environment } from '@environments/environment';
+import { comicsReducer } from '@features/comics/state/comics.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -50,7 +51,7 @@ import { AppComponent } from './app.component';
       }
       return storage;
     }),
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ comics: comicsReducer }),
     EffectsModule.forRoot([]),
   ],
   providers: [],
