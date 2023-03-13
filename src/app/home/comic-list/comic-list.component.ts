@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Comic } from '@features/comics/comic';
+import { Store } from '@ngrx/store';
 import { ComicsService } from '@features/comics/comics.service';
-import { Observable } from 'rxjs';
+import { selectComics } from '@features/comics/state/comics.selectors';
+import { ComicsApiActions } from '@features/comics/state/comics.actions';
 
 @Component({
   selector: 'app-comic-list',
@@ -10,13 +11,17 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicListComponent implements OnInit {
-  comics$!: Observable<readonly Comic[]>;
+  comics$ = this.store.select(selectComics);
 
-  constructor(private comicsService: ComicsService) {}
+  constructor(private comicsService: ComicsService, private store: Store) {}
 
   ngOnInit(): void {
     const id = 'j1HeoLSPX6EgdhcvjoS6';
 
-    this.comics$ = this.comicsService.getComics(id);
+    this.comicsService
+      .getComics(id)
+      .subscribe((comics) =>
+        this.store.dispatch(ComicsApiActions.retrievedComicList({ comics }))
+      );
   }
 }
