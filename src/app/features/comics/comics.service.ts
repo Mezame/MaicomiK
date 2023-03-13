@@ -25,7 +25,9 @@ export class ComicsService {
       this.firebaseErrorHandlerService.createHandleError('ComicsService');
   }
 
-  getComics(id: string) {
+  getComics() {
+    const id = 'j1HeoLSPX6EgdhcvjoS6';
+
     return from(this.firestoreService.getDocument(this.path, id)).pipe(
       map((res) => {
         let comics: readonly Comic[];
