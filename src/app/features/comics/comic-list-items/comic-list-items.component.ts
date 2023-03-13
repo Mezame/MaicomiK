@@ -9,5 +9,5 @@ import { Comic } from '../comic';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicListItemsComponent {
-  @Input('items') comics$!: Observable<readonly Comic[]>;
+  @Input() comics: readonly Comic[] = [];
 }
