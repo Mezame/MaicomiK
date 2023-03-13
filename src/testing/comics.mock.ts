@@ -15,7 +15,7 @@ export const comicsMock: Comic[] = [
         url: 'https://mangadex.org/title/3c30229a-e6a3-44fa-a1ac-61a208c2ebad/yaotome-x-2',
       },
     ],
-    url: 'yaotome-x-2',
+    urlSegment: 'yaotome-x-2',
     metadata: {
       createdAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
       updatedAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
@@ -34,7 +34,7 @@ export const comicsMock: Comic[] = [
         url: 'https://mangadex.org/title/d2b02bb0-a8ec-405f-9c2d-d63df7cff785/bijutsubu-girl',
       },
     ],
-    url: 'bijutsubu-girl',
+    urlSegment: 'bijutsubu-girl',
     metadata: {
       createdAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
       updatedAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
@@ -52,7 +52,7 @@ export const comicsMock: Comic[] = [
         url: 'https://mangadex.org/title/e4631dc7-87b9-4d6a-8b3b-5594664ecc27/fate-kaleid-liner-prisma-illya-3rei',
       },
     ],
-    url: 'fate-kaleid-liner-prisma-illya-3rei',
+    urlSegment: 'fate-kaleid-liner-prisma-illya-3rei',
     metadata: {
       createdAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
       updatedAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
@@ -69,7 +69,7 @@ export const comicsMock: Comic[] = [
         name: 'webtoons app'
       },
     ],
-    url: 'haruman-nega-doego-sipeo',
+    urlSegment: 'haruman-nega-doego-sipeo',
     metadata: {
       createdAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
       updatedAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
@@ -86,7 +86,7 @@ export const comicsMock: Comic[] = [
         name: 'webtoons app'
       },
     ],
-    url: 'the-kiss-bet',
+    urlSegment: 'the-kiss-bet',
     metadata: {
       createdAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
       updatedAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
