@@ -54,7 +54,7 @@ describe('ComicsService', () => {
         })
       );
 
-      comicsService.getComics(comicIdMock).subscribe({
+      comicsService.getComics().subscribe({
         next: (comics) =>
           expect(comics)
             .withContext('should return expected comics')
@@ -70,7 +70,7 @@ describe('ComicsService', () => {
         Promise.resolve({ error: new Error('some error') })
       );
 
-      comicsService.getComics(comicIdMock).subscribe({
+      comicsService.getComics().subscribe({
         next: (comics) =>
           expect(comics.length)
             .withContext('should have empty array')
