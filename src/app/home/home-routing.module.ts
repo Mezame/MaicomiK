@@ -6,15 +6,22 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'comic-list',
+        path: 'comics',
         loadChildren: () =>
           import('./comic-list/comic-list.module').then(
             (m) => m.ComicListModule
           ),
       },
       {
+        path: 'comics/:comicUrlSegment',
+        loadChildren: () =>
+          import('./comic-detail/comic-detail.module').then(
+            (m) => m.ComicDetailModule
+          ),
+      },
+      {
         path: '',
-        redirectTo: 'comic-list',
+        redirectTo: 'comics',
         pathMatch: 'full',
       },
     ],
