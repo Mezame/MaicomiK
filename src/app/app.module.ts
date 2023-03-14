@@ -17,10 +17,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { environment } from '@environments/environment';
-import { comicsReducer } from '@features/comics/state/comics.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ComicEffects } from '@features/comics/state/comics.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,8 +50,8 @@ import { ComicEffects } from '@features/comics/state/comics.effects';
       }
       return storage;
     }),
-    StoreModule.forRoot({ comics: comicsReducer }),
-    EffectsModule.forRoot([ComicEffects]),
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],
