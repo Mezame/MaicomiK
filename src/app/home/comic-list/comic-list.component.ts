@@ -3,6 +3,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { Comic } from '@features/comics/comic';
+import { Router } from '@angular/router';
+import { selectComics } from '@features/comics/state/comics.selectors';
+import { LoadComicsAction } from '@features/comics/state/comics.actions';
 
 @Component({
   selector: 'app-comic-list',
@@ -13,11 +16,20 @@ import { Comic } from '@features/comics/comic';
 export class ComicListComponent implements OnInit {
   comics$: Observable<readonly Comic[]>;
 
-  constructor(private store: Store<{ comics: readonly Comic[] }>) {
-    this.comics$ = this.store.select((state) => state.comics);
+  constructor(
+    private store: Store,
+    private router: Router
+  ) {
+    this.comics$ = this.store.select(selectComics);
   }
 
   ngOnInit(): void {
-    this.store.dispatch({ type: '[Comic List Page] Load Comics' });
+    this.store.dispatch(LoadComicsAction());
+  }
+
+  goToComic(event: { action: string; data: unknown }) {
+    const comicUrlSegment = event.data;
+
+    this.router.navigate(['/home/comics', comicUrlSegment]);
   }
 }
