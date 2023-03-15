@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TagModule } from '@shared/common-ui/tag/tag.module';
+import { TagModule } from '@shared/ui-components/tag/tag.module';
 import { ComicListItemsComponent } from './comic-list-items.component';
 
 @NgModule({
