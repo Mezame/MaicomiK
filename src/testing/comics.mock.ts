@@ -16,6 +16,7 @@ export const comicsMock: Comic[] = [
       },
     ],
     metadata: {
+      id: 'ea82d858-3828-4b5a-a4d1-b016ed510cd4',
       urlSegment: 'yaotome-x-2',
       createdAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
       updatedAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
@@ -35,6 +36,7 @@ export const comicsMock: Comic[] = [
       },
     ],
     metadata: {
+      id: '6e61e424-cb98-46ec-b47c-6f61aebecff6',
       urlSegment: 'bijutsubu-girl',
       createdAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
       updatedAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
@@ -54,6 +56,7 @@ export const comicsMock: Comic[] = [
       },
     ],
     metadata: {
+      id: 'c14b6b34-82c4-4d15-b69c-08514b5ce656',
       urlSegment: 'fate-kaleid-liner-prisma-illya-3rei',
       createdAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
       updatedAt: Timestamp.fromDate(new Date('3/8/2022, 12:00:00 AM')),
@@ -72,6 +75,7 @@ export const comicsMock: Comic[] = [
       },
     ],
     metadata: {
+      id: '404f7aba-c5bd-4c1d-a8cc-f7a78c18979a',
       urlSegment: 'haruman-nega-doego-sipeo',
       createdAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
       updatedAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
@@ -90,6 +94,7 @@ export const comicsMock: Comic[] = [
       },
     ],
     metadata: {
+      id: 'eb2b9b1f-01fe-4770-b1c6-0e3683ca01db',
       urlSegment: 'the-kiss-bet',
       createdAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
       updatedAt: Timestamp.fromDate(new Date('3/10/2023, 12:00:00 AM')),
