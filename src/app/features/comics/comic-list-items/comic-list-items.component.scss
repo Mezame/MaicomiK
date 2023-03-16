@@ -48,6 +48,16 @@
         display: flex;
         flex-direction: row;
         gap: 8px;
+
+        .comic-format {
+          background: #ffd9de;
+          color: #2c1519;
+        }
+        
+        .comic-status {
+          background: #ffddba;
+          color: #2b1700;
+        }
       }
     }
 
@@ -70,14 +80,4 @@
 
     padding: 4px 0;
   }
-}
-
-.comic-format {
-  background: #ffd9de;
-  color: #2c1519;
-}
-
-.comic-status {
-  background: #ffddba;
-  color: #2b1700;
 }
