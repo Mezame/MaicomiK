@@ -11,4 +11,9 @@ export class ComicListBottomSheetComponent {
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<ComicListBottomSheetComponent>
   ) {}
+
+  openLink(event: MouseEvent): void {
+    this._bottomSheetRef.dismiss();
+    event.preventDefault();
+  }
 }
