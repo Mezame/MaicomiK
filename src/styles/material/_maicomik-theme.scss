@@ -131,9 +131,9 @@ $maicomik-dark-theme: mat.define-dark-theme(
 }
 
 .title-medium {
-  font-size: calc($font-size-base * $font-scale-factor * $font-scale-factor);
-  line-height: calc($line-height-base * $font-scale-factor * $font-scale-factor);
-  letter-spacing: calc($letter-spacing-base * $font-scale-factor * $font-scale-factor);
+  font-size: calc($font-size-base * $font-scale-factor);
+  line-height: calc($line-height-base * $font-scale-factor);
+  letter-spacing: calc($letter-spacing-base * $font-scale-factor);
 }
 
 .title-large {
