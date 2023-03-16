@@ -7,6 +7,7 @@ export interface Comic {
   status: ComicStatus;
   chapter: number;
   readers?: [{ name: string; url?: string }];
+  notes?: string;
   metadata: {
     id: string;
     urlSegment: string;
