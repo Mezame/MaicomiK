@@ -8,6 +8,7 @@ export interface Comic {
   chapter: number;
   readers?: [{ name: string; url?: string }];
   metadata: {
+    id: string;
     urlSegment: string;
     createdAt: Timestamp;
     updatedAt: Timestamp;
