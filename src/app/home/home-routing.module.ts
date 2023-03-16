@@ -8,15 +8,15 @@ const routes: Routes = [
       {
         path: 'comics',
         loadChildren: () =>
-          import('./comic-list/comic-list.module').then(
-            (m) => m.ComicListModule
+          import('./comic-list-page/comic-list-page.module').then(
+            (m) => m.ComicListPageModule
           ),
       },
       {
         path: 'comics/:comicUrlSegment',
         loadChildren: () =>
-          import('./comic-detail/comic-detail.module').then(
-            (m) => m.ComicDetailModule
+          import('./comic-detail-page/comic-detail-page.module').then(
+            (m) => m.ComicDetailPageModule
           ),
       },
       {
