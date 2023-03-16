@@ -1,0 +1,6 @@
+<app-primary-layout>
+  <app-comic-list-items
+    [comics]="(comics$ | async)!"
+    (actionEvent)="goToComic($event)"
+  ></app-comic-list-items>
+</app-primary-layout>

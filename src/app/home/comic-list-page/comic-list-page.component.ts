@@ -8,12 +8,12 @@ import { selectComics } from '@features/comics/state/comics.selectors';
 import { LoadComicsAction } from '@features/comics/state/comics.actions';
 
 @Component({
-  selector: 'app-comic-list',
-  templateUrl: './comic-list.component.html',
-  styleUrls: ['./comic-list.component.scss'],
+  selector: 'app-comic-list-page',
+  templateUrl: './comic-list-page.component.html',
+  styleUrls: ['./comic-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicListComponent implements OnInit {
+export class ComicListPageComponent implements OnInit {
   comics$: Observable<readonly Comic[]>;
 
   constructor(

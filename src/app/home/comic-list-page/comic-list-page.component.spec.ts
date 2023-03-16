@@ -5,11 +5,11 @@ import { ComicListItemsModule } from '@features/comics/comic-list-items/comic-li
 import { ComicsService } from '@features/comics/comics.service';
 import { PrimaryLayoutModule } from '@shared/layouts/primary-layout/primary-layout.module';
 
-import { ComicListComponent } from './comic-list.component';
+import { ComicListPageComponent } from './comic-list-page.component';
 
-describe('ComicListComponent', () => {
-  let component: ComicListComponent;
-  let fixture: ComponentFixture<ComicListComponent>;
+describe('ComicListPageComponent', () => {
+  let component: ComicListPageComponent;
+  let fixture: ComponentFixture<ComicListPageComponent>;
   let comicsService: jasmine.SpyObj<ComicsService>;
 
   beforeEach(async () => {
@@ -24,7 +24,7 @@ describe('ComicListComponent', () => {
         PrimaryLayoutModule,
         ComicListItemsModule,
       ],
-      declarations: [ComicListComponent],
+      declarations: [ComicListPageComponent],
       providers: [
         { provide: ActivatedRoute, useValue: routeSpy },
         { provide: ComicsService, useValue: comicsServiceSpy },
@@ -35,7 +35,7 @@ describe('ComicListComponent', () => {
       ComicsService
     ) as jasmine.SpyObj<ComicsService>;
 
-    fixture = TestBed.createComponent(ComicListComponent);
+    fixture = TestBed.createComponent(ComicListPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

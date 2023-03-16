@@ -4,12 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ComicListItemsModule } from '@features/comics/comic-list-items/comic-list-items.module';
 import { PrimaryLayoutModule } from '@shared/layouts/primary-layout/primary-layout.module';
-import { ComicListComponent } from './comic-list.component';
+import { ComicListPageComponent } from './comic-list-page.component';
 
-const routes: Routes = [{ path: '', component: ComicListComponent }];
+const routes: Routes = [{ path: '', component: ComicListPageComponent }];
 
 @NgModule({
-  declarations: [ComicListComponent],
+  declarations: [ComicListPageComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
