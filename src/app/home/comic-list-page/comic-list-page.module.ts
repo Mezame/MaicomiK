@@ -17,4 +17,4 @@ const routes: Routes = [{ path: '', component: ComicListPageComponent }];
     ComicListItemsModule,
   ],
 })
-export class ComicListModule {}
+export class ComicListPageModule {}
