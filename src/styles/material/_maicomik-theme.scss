@@ -50,8 +50,8 @@ $maicomik-dark-theme: mat.define-dark-theme(
 @include mat.list-theme($maicomik-theme);
 @include mat.divider-theme($maicomik-theme);
 @include mat.toolbar-theme($maicomik-theme);
-@include mat.icon-button-theme($maicomik-theme);
 @include mat.button-theme($maicomik-theme);
+@include mat.icon-button-theme($maicomik-theme);
 @include mat.icon-theme($maicomik-theme);
 @include mat.menu-theme($maicomik-theme);
 
