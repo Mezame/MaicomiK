@@ -11,7 +11,7 @@ export class ComicEffects {
   loadComics$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoadComicsAction),
-      concatLatestFrom(() => this.store.pipe(select(selectComics))),
+      concatLatestFrom(() => this.store.select(selectComics)),
       mergeMap(([_, comics]) => {
         if (comics?.length > 0) {
           return EMPTY;
