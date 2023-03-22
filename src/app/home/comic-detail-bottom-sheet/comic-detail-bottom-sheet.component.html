@@ -1,21 +1,29 @@
 <mat-nav-list>
-  <a href="https://keep.google.com/" mat-list-item (click)="openLink($event)">
+  <a
+    [routerLink]="['/home/comics', comic.metadata.urlSegment, 'edit']"
+    mat-list-item
+    (click)="openLink()"
+  >
     <span>Edit comic</span>
   </a>
 
-  <a href="https://docs.google.com/" mat-list-item (click)="openLink($event)">
+  <a *ngIf="comic.readers?.length"
+    [routerLink]="['/home/comics', comic.metadata.urlSegment, 'reader-sites']"
+    mat-list-item
+    (click)="openLink()"
+  >
     <span>Edit reader sites</span>
   </a>
 
-  <a href="https://plus.google.com/" mat-list-item (click)="openLink($event)">
+  <a *ngIf="comic.notes"
+    [routerLink]="['/home/comics', comic.metadata.urlSegment, 'notes']"
+    mat-list-item
+    (click)="openLink()"
+  >
     <span>Edit notes</span>
   </a>
 
-  <a
-    href="https://hangouts.google.com/"
-    mat-list-item
-    (click)="openLink($event)"
-  >
+  <mat-list-item (click)="deleteComic()">
     <span>Delete comic</span>
-  </a>
+  </mat-list-item>
 </mat-nav-list>

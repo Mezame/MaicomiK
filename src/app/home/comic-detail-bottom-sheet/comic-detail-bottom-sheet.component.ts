@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import {
+  MatBottomSheetRef,
+  MAT_BOTTOM_SHEET_DATA,
+} from '@angular/material/bottom-sheet';
+import { Comic } from '@features/comics/comic';
 
 @Component({
   selector: 'app-comic-detail-bottom-sheet',
@@ -8,12 +12,22 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicDetailBottomSheetComponent {
-  constructor(
-    private _bottomSheetRef: MatBottomSheetRef<ComicDetailBottomSheetComponent>
-  ) {}
+  comic: Comic;
 
-  openLink(event: MouseEvent): void {
+  constructor(
+    private _bottomSheetRef: MatBottomSheetRef<ComicDetailBottomSheetComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { comic: Comic }
+  ) {
+    this.comic = data.comic;
+  }
+
+  openLink(): void {
     this._bottomSheetRef.dismiss();
-    event.preventDefault();
+  }
+
+  deleteComic() {
+    console.log('deleted comic: ', this.comic.title);
+
+    this._bottomSheetRef.dismiss();
   }
 }
