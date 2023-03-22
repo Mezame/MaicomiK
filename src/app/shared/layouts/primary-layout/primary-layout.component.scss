@@ -12,28 +12,56 @@
   flex: 1 0 auto;
 }
 
+mat-nav-list {
+  padding-top: 16px;
+}
+
 .side-nav {
   position: fixed;
   width: 50%;
   overflow: hidden;
+
+  border-radius: 12px 0 0 12px;
 }
 
 .divider {
-  margin: 0px 16px;
+  margin: 8px 16px;
+}
+
+.mdc-list-item {
+  width: auto;
+  margin-left: 8px;
+  margin-right: 8px;
+  border-radius: 8px;
 }
 
 .active-link {
-  background: rgba(0, 0, 0, 0.08);
+  background: #ffd9de;
+  border-radius: 8px;
 
   span {
-    color: #894c5d;
+    color: black;
   }
 }
 
 .mdc-list-item--with-leading-icon .mdc-list-item__start {
-  margin-right: 16px;
-  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.73));
+  margin-right: 8px;
+  color: #524345;
   font-size: 20px;
+}
+
+/* Fix item icon alignment */
+.mdc-list-item.mdc-list-item--with-one-line .mdc-list-item__start {
+  margin-top: 4px;
+}
+
+.mdc-list-item--with-one-line.mdc-list-item--with-leading-avatar,
+.mdc-list-item--with-one-line.mdc-list-item--with-leading-icon,
+.mdc-list-item--with-one-line.mdc-list-item--with-leading-thumbnail,
+.mdc-list-item--with-one-line.mdc-list-item--with-leading-checkbox,
+.mdc-list-item--with-one-line.mdc-list-item--with-leading-radio,
+.mdc-list-item--with-one-line.mdc-list-item--with-leading-switch {
+  border-radius: 8px;
 }
 
 .mat-toolbar-row,
@@ -67,6 +95,10 @@ mat-toolbar,
 
 mat-toolbar {
   background-color: #fafafa;
+
+  .mat-mdc-icon-button {
+    color: #524345;
+  }
 }
 
 .sticky {
@@ -86,4 +118,5 @@ mat-toolbar {
   padding: 0 16px;
 
   background-color: #fff;
+  border-top: solid #eeeeee 1px;
 }
