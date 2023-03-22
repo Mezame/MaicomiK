@@ -13,6 +13,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'comics/add-comic',
+        loadChildren: () =>
+          import('./comic-add-edit-page/comic-add-edit-page.module').then(
+            (m) => m.ComicAddEditPageModule
+          ),
+      },
+      {
         path: 'comics/:comicUrlSegment',
         loadChildren: () =>
           import('./comic-detail-page/comic-detail-page.module').then(
