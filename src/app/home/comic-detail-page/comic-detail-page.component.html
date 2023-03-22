@@ -1,5 +1,6 @@
 <app-primary-layout>
   <app-comic-detail-content
     [comic]="(comic$ | async)!"
+    (actionEvent)="openBottomSheet($event)"
   ></app-comic-detail-content>
 </app-primary-layout>
