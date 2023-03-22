@@ -1,6 +1,23 @@
 <app-primary-layout>
-  <app-comic-list-items
-    [comics]="(comics$ | async)!"
-    (actionEvent)="goToComic($event)"
-  ></app-comic-list-items>
+  <div class="content">
+    <app-comic-list-items
+      [comics]="(comics$ | async)!"
+      (actionEvent)="goToComic($event)"
+    ></app-comic-list-items>
+  </div>
+  <div class="footer" footer>
+    <div class="tab">
+      <a mat-button aria-label="Go to add component">
+        <mat-icon>library_add</mat-icon>
+        <span class="label-medium">Add comic</span>
+      </a>
+    </div>
+
+    <div class="tab">
+      <a mat-button aria-label="Go to filters">
+        <mat-icon>tune</mat-icon>
+        <span class="label-medium">Filters</span>
+      </a>
+    </div>
+  </div>
 </app-primary-layout>
