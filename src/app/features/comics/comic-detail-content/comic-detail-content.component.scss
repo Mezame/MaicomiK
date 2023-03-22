@@ -1,0 +1,144 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.comic-header-section {
+  display: flex;
+  flex-direction: row;
+
+  max-height: 96px;
+
+  .media {
+    width: 64px;
+    height: 96px;
+    overflow: hidden;
+    border-radius: 8px;
+
+    img {
+      width: 72px;
+      height: 104px;
+      margin: -4px 0 0 -4px;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0;
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 16px 8px;
+      gap: 4px;
+
+      max-width: 152px;
+
+      .comic-title {
+        white-space: wrap;
+      }
+
+      .tags-group {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+
+        .comic-format {
+          background: #ffd9de;
+          color: #2c1519;
+        }
+
+        .comic-status {
+          background: #ffddba;
+          color: #2b1700;
+        }
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+
+    .mat-mdc-icon-button {
+      color: #524345;
+    }
+  }
+}
+
+.comic-chapter-section {
+  display: flex;
+  flex-direction: row;
+  padding: 0 16px;
+  gap: 4px;
+
+  box-sizing: border-box;
+  max-width: 164px;
+  min-width: 164px;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+
+    padding: 0px;
+  }
+
+  .comic-updated {
+    color: #847375;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.comic-reader-sites-section {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    padding: 0px;
+    margin: 0;
+
+    .is-link {
+      color: #ac2e50;
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.comic-notes-section {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+  gap: 16px;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+  }
+}
