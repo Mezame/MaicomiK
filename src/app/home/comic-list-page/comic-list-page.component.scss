@@ -1,7 +1,15 @@
+.content {
+  padding-bottom: 48px;
+}
+
 .footer {
   display: flex;
   box-sizing: border-box;
   width: 100%;
+
+  .mat-mdc-button:not(:disabled) {
+    color: #524345;
+  }
 
   mat-icon {
     font-size: 20px;
