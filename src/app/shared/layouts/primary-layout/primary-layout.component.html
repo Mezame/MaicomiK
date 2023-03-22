@@ -15,7 +15,17 @@
           [routerLinkActiveOptions]="{ exact: true }"
           tabindex="-1"
         >
-          <span>Home</span>
+          <span class="label-large">Home</span>
+        </a>
+
+        <a
+          mat-list-item
+          routerLink="/home/about"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          tabindex="-1"
+        >
+          <span class="label-large">About</span>
         </a>
 
         <mat-divider class="divider"></mat-divider>
@@ -26,12 +36,12 @@
           routerLinkActive="active-link"
           tabindex="-1"
         >
-          <span>My Account</span>
+          <span class="label-large">My Account</span>
         </a>
 
         <a mat-list-item tabindex="-1" (click)="logOut()">
           <mat-icon matListItemIcon>logout</mat-icon>
-          <span matListItemTitle>Log Out</span>
+          <span class="label-large">Log Out</span>
         </a>
       </mat-nav-list>
     </mat-sidenav>
