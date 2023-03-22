@@ -14,31 +14,32 @@
       </div>
 
       <div class="body">
-        <span class="comic-chapter body-medium"
-          >Ch. <span class="body-large">{{ comic.chapter }}</span>
-        </span>
-        <span class="comic-updated body-small">{{
-          comic.metadata.updatedAt.toDate() | date
-        }}</span>
+        <div class="comic-chapter">
+          <span class="body-medium"
+            >Ch. <span class="body-large">{{ comic.chapter }}</span>
+          </span>
+          <span class="comic-updated body-small">{{
+            comic.metadata.updatedAt.toDate() | date
+          }}</span>
+        </div>
+
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Increase comic counter by one"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
       </div>
     </div>
 
     <div class="actions">
       <button
         mat-icon-button
-        type="button"
-        aria-label="Open with options to view and edit comic"
+        aria-label="Navigate to comic detail"
+        (click)="emitGoToComicAction(comic.metadata.urlSegment)"
       >
-        <mat-icon>more_vert</mat-icon>
-      </button>
-
-      <button
-        mat-icon-button
-        type="button"
-        color="primary"
-        aria-label="Increase chapter count by one"
-      >
-        <mat-icon>add</mat-icon>
+        <mat-icon>read_more</mat-icon>
       </button>
     </div>
   </div>

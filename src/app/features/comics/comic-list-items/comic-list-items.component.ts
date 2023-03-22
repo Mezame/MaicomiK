@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Comic } from '../comic';
 
@@ -10,4 +10,15 @@ import { Comic } from '../comic';
 })
 export class ComicListItemsComponent {
   @Input() comics: readonly Comic[] = [];
+
+  @Output() actionEvent = new EventEmitter<{
+    action: string;
+    data: string;
+  }>();
+
+  emitGoToComicAction(data: string) {
+    const action = 'goToComic';
+
+    this.actionEvent.emit({ action, data });
+  }
 }

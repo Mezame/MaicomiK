@@ -53,7 +53,7 @@
           background: #ffd9de;
           color: #2c1519;
         }
-        
+
         .comic-status {
           background: #ffddba;
           color: #2b1700;
@@ -63,9 +63,19 @@
 
     .body {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-between;
+
+      box-sizing: border-box;
+      max-width: 164px;
+      min-width: 164px;
       padding: 8px 16px 16px;
-      gap: 4px;
+
+      .comic-chapter {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
 
       .comic-updated {
         color: #847375;
@@ -79,5 +89,9 @@
     justify-content: space-between;
 
     padding: 4px 0;
+
+    .mat-mdc-icon-button {
+      color: #524345;
+    }
   }
 }
