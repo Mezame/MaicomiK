@@ -15,4 +15,9 @@ mat-toolbar {
   mat-bottom-sheet-container {
     border-radius: 8px 8px 0 0 !important;
   }
+
+  a[mat-button], button[mat-button] {
+    font-family: "Nunito Sans" !important;
+    font-weight: 600;
+  }
 }

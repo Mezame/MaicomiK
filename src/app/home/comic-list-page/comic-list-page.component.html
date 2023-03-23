@@ -7,17 +7,22 @@
   </div>
   <div class="footer" footer>
     <div class="tab">
-      <a mat-button aria-label="Go to add component">
+      <a
+        mat-button
+        class="label-medium"
+        [routerLink]="['add-comic']"
+        aria-label="Go to add component"
+      >
         <mat-icon>library_add</mat-icon>
-        <span class="label-medium">Add comic</span>
+        <span>Add comic</span>
       </a>
     </div>
 
     <div class="tab">
-      <a mat-button aria-label="Go to filters">
+      <button mat-button class="label-medium" aria-label="Go to filters">
         <mat-icon>tune</mat-icon>
-        <span class="label-medium">Filters</span>
-      </a>
+        <span>Filters</span>
+      </button>
     </div>
   </div>
 </app-primary-layout>
