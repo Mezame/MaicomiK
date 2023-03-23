@@ -7,6 +7,13 @@ mat-toolbar {
   padding: 0 16px;
 }
 
+.mat-mdc-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
+  font-weight: 600;
+}
+
 @layer importantOverrides {
   .mat-drawer:not(.mat-drawer-side) {
     box-shadow: none !important;
@@ -16,8 +23,11 @@ mat-toolbar {
     border-radius: 8px 8px 0 0 !important;
   }
 
-  a[mat-button], button[mat-button] {
+  .mat-mdc-button,
+  .mat-mdc-unelevated-button,
+  .mat-mdc-raised-button,
+  .mat-mdc-outlined-button {
+    border-radius: 8px !important;
     font-family: "Nunito Sans" !important;
-    font-weight: 600;
   }
 }
