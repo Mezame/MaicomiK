@@ -4,7 +4,7 @@
 
 @include mat.core();
 
-$maicomik-error: mat.define-palette(maicomik.$maicomik-error-palette, 400);
+$maicomik-error: mat.define-palette(maicomik.$maicomik-error-palette, 500);
 $font-family-1: "Nunito Sans";
 $font-family-2: "Nunito";
 $font-size-base: 14px;
@@ -15,7 +15,7 @@ $font-scale-factor: 1.15;
 $maicomik-theme: mat.define-light-theme(
   (
     color: (
-      primary: mat.define-palette(maicomik.$maicomik-primary-palette, 400),
+      primary: mat.define-palette(maicomik.$maicomik-primary-palette, 500),
       accent:
         mat.define-palette(
           maicomik.$maicomik-terciary-palette,
@@ -32,7 +32,7 @@ $maicomik-theme: mat.define-light-theme(
 $maicomik-dark-theme: mat.define-dark-theme(
   (
     color: (
-      primary: mat.define-palette(maicomik.$maicomik-primary-palette, 200),
+      primary: mat.define-palette(maicomik.$maicomik-primary-palette, 300),
       accent:
         mat.define-palette(
           maicomik.$maicomik-terciary-palette,
