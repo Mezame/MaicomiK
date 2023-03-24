@@ -16,6 +16,6 @@ export interface Comic {
   };
 }
 
-type ComicStatus = 'reading' | 'completed' | 'planning' | 'paused';
+export type ComicFormat = 'manga' | 'manhwa' | 'manhua' | 'webtoon';
 
-type ComicFormat = 'manga' | 'manhwa' | 'manhua' | 'webtoon';
+export type ComicStatus = 'reading' | 'completed' | 'planning' | 'paused';
