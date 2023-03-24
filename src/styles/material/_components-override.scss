@@ -17,6 +17,12 @@ mat-toolbar {
 .cdk-overlay-pane:not(.mat-mdc-select-panel-above)
   .mdc-menu-surface.mat-mdc-select-panel {
   border-radius: 4px;
+  background: linear-gradient(
+      0deg,
+      rgba(172, 46, 80, 0.05),
+      rgba(172, 46, 80, 0.05)
+    ),
+    #ffffff;
 }
 
 @layer importantOverrides {
