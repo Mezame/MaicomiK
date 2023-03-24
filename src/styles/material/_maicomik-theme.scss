@@ -63,39 +63,43 @@ $maicomik-dark-theme: mat.define-dark-theme(
   @include mat.core-theme($maicomik-dark-theme);
 }*/
 
-.label-small
-.label-medium,
+.material-symbols-rounded {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0;
+}
+
+.label-small .label-medium,
 .label-large,
 .body-small,
 .body-medium,
 .body-large,
 .title-small,
 .title-medium,
-.title-large
- {
-    font-family: $font-family-1;
+.title-large {
+  font-family: $font-family-1;
 }
 
 .body-small,
 .body-medium,
 .body-large {
-    font-weight: 400;
+  font-weight: 400;
 }
 
-.label-small
-.label-medium,
+.label-small .label-medium,
 .label-large,
 .title-small,
 .title-medium,
-.title-large
- {
-    font-weight: 600;
+.title-large {
+  font-weight: 600;
 }
 
 .label-small {
   font-size: calc($font-size-base / $font-scale-factor / $font-scale-factor);
-  line-height: calc($line-height-base / $font-scale-factor / $font-scale-factor);
-  letter-spacing: calc($letter-spacing-base / $font-scale-factor / $font-scale-factor);
+  line-height: calc(
+    $line-height-base / $font-scale-factor / $font-scale-factor
+  );
+  letter-spacing: calc(
+    $letter-spacing-base / $font-scale-factor / $font-scale-factor
+  );
 }
 
 .label-medium {
@@ -142,6 +146,10 @@ $maicomik-dark-theme: mat.define-dark-theme(
 
 .title-large {
   font-size: calc($font-size-base * $font-scale-factor * $font-scale-factor);
-  line-height: calc($line-height-base * $font-scale-factor * $font-scale-factor);
-  letter-spacing: calc($letter-spacing-base * $font-scale-factor * $font-scale-factor);
+  line-height: calc(
+    $line-height-base * $font-scale-factor * $font-scale-factor
+  );
+  letter-spacing: calc(
+    $letter-spacing-base * $font-scale-factor * $font-scale-factor
+  );
 }
