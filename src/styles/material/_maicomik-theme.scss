@@ -55,6 +55,9 @@ $maicomik-dark-theme: mat.define-dark-theme(
 @include mat.icon-theme($maicomik-theme);
 @include mat.menu-theme($maicomik-theme);
 @include mat.bottom-sheet-theme($maicomik-theme);
+@include mat.form-field-theme($maicomik-theme);
+@include mat.input-theme($maicomik-theme);
+@include mat.select-theme($maicomik-theme);
 
 /*@media (prefers-color-scheme: dark) {
   @include mat.core-theme($maicomik-dark-theme);
