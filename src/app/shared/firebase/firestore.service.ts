@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   addDoc,
   collection,
+  collectionData,
   CollectionReference,
   deleteDoc,
   doc,
@@ -14,6 +15,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { LoggerService } from '@core/logger/logger.service';
+import { Observable } from 'rxjs';
 
 export interface FirestoreResponse {
   success?: true;
@@ -32,30 +34,18 @@ export class FirestoreService {
   ) {}
 
   /**
-   * Add a new document to Firestore with a custom id.
+   * Get a stream of documents from Firestore.
   @param path A slash-separated path to a Firestore collection.
-  @param id The id of the document.
-  @returns A promise with a Firestore custom response.
+  @returns Returns a stream of documents.
   **/
-  async getDocument(path: string, id: string) {
-    let docRef: DocumentReference<DocumentData>;
-    let docSnap: DocumentSnapshot<DocumentData>;
-    let document: any;
+  getCollection(path: string) {
+    let collRef: CollectionReference<DocumentData>;
+    let documents$: Observable<readonly DocumentData[]>;
 
-    try {
-      docRef = doc(this.firestore, path, id);
-      docSnap = await getDoc(docRef);
+    collRef = collection(this.firestore, path);
+    documents$ = collectionData(collRef);
 
-      if (!docSnap.exists()) {
-        throw new Error('could not get any document');
-      }
-
-      document = docSnap.data();
-
-      return { success: true, document } as FirestoreResponse;
-    } catch (error) {
-      return { error } as FirestoreResponse;
-    }
+    return documents$;
   }
 
   /**
