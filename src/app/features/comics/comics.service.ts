@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
+import { arrayUnion } from '@angular/fire/firestore';
 import { LoggerService } from '@core/logger/logger.service';
 import {
   FirebaseErrorHandlerService,
   HandleError,
 } from '@shared/firebase/firebase-error-handler.service';
-import { FirestoreService } from '@shared/firebase/firestore.service';
+import {
+  FirestoreResponse,
+  FirestoreService,
+} from '@shared/firebase/firestore.service';
+import { AutoId } from '@shared/utils/id-generator';
 import { catchError, from, map, tap } from 'rxjs';
 import { Comic } from './comic';
 
@@ -20,31 +25,35 @@ export class ComicsService {
     private firebaseErrorHandlerService: FirebaseErrorHandlerService,
     private loggerService: LoggerService
   ) {
-    this.path = 'comics';
+    const id = 'ynYZI4n3XarUz7tlW4zU68uHSm25';
+
+    this.path = `users/${id}/comics`;
     this.handleError =
       this.firebaseErrorHandlerService.createHandleError('ComicsService');
   }
 
   getComics() {
-    const id = 'j1HeoLSPX6EgdhcvjoS6';
+    return this.firestoreService.getCollection(this.path).pipe(
+      map((docData) => docData as readonly Comic[]),
+      tap((comics) => {
+        this.loggerService.log(
+          `ComicsServiceService: getMangas: got ${comics.length} comics`
+        );
+      }),
+      catchError(this.handleError<readonly Comic[]>('getComics', []))
+    );
+  }
 
-    return from(this.firestoreService.getDocument(this.path, id)).pipe(
-      map((res) => {
-        let comics: readonly Comic[];
-
+  addComic(comic: Comic) {
+    return from(this.firestoreService.addDocument(this.path, comic)).pipe(
+      tap((res) => {
         if (res.error) {
           throw res.error;
         }
 
-        comics = res.document!['payload'];
-
-        this.loggerService.log(
-          `ComicsService: getComics: got ${comics.length} comics`
-        );
-
-        return comics;
+        this.loggerService.log(`ComicsServiceService: addComic: added comic`);
       }),
-      catchError(this.handleError<readonly Comic[]>('getComics', []))
+      catchError(this.handleError<FirestoreResponse>('addComic'))
     );
   }
 }
