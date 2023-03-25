@@ -2,11 +2,13 @@
 
 @layer importantOverrides;
 
+/* Toolbar */
 mat-toolbar {
   gap: 16px;
   padding: 0 16px;
 }
 
+/* Buttons */
 .mat-mdc-button,
 .mat-mdc-unelevated-button,
 .mat-mdc-raised-button,
@@ -14,6 +16,7 @@ mat-toolbar {
   font-weight: 600;
 }
 
+/* Select menu */
 .cdk-overlay-pane:not(.mat-mdc-select-panel-above)
   .mdc-menu-surface.mat-mdc-select-panel {
   border-radius: 4px;
@@ -26,14 +29,17 @@ mat-toolbar {
 }
 
 @layer importantOverrides {
+  /* Sidenav elevation */
   .mat-drawer:not(.mat-drawer-side) {
     box-shadow: none !important;
   }
 
+  /* Bottom sheet */
   mat-bottom-sheet-container {
     border-radius: 8px 8px 0 0 !important;
   }
 
+  /* Buttons */
   .mat-mdc-button,
   .mat-mdc-unelevated-button,
   .mat-mdc-raised-button,
@@ -42,8 +48,31 @@ mat-toolbar {
     font-family: "Nunito Sans" !important;
   }
 
+  /* Menu container */
   .mdc-menu-surface {
     box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15),
       0px 1px 3px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* Input fields */
+  .mdc-text-field--outlined:not(
+      .mdc-text-field--disabled
+    ).mdc-text-field--focused
+    .mdc-notched-outline__leading,
+  .mdc-text-field--outlined:not(
+      .mdc-text-field--disabled
+    ).mdc-text-field--focused
+    .mdc-notched-outline__notch,
+  .mdc-text-field--outlined:not(
+      .mdc-text-field--disabled
+    ).mdc-text-field--focused
+    .mdc-notched-outline__trailing {
+    border-color: #201a1b !important;
+  }
+
+  /* Label and icon */
+  .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label,
+  .mat-mdc-form-field.mat-focused.mat-primary .mat-mdc-select-arrow {
+    color: #201a1b !important;
   }
 }
