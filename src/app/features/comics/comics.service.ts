@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { arrayUnion } from '@angular/fire/firestore';
+import { arrayUnion, Timestamp } from '@angular/fire/firestore';
 import { LoggerService } from '@core/logger/logger.service';
 import {
   FirebaseErrorHandlerService,
@@ -44,8 +44,12 @@ export class ComicsService {
     );
   }
 
-  addComic(comic: Comic) {
-    return from(this.firestoreService.addDocument(this.path, comic)).pipe(
+  addComic(comic: Readonly<Comic>) {
+    const newComic = this.addMetadataUrlSegment(comic);
+
+    return from(
+      this.firestoreService.setDocumentNoId(this.path, newComic)
+    ).pipe(
       tap((res) => {
         if (res.error) {
           throw res.error;
@@ -55,5 +59,25 @@ export class ComicsService {
       }),
       catchError(this.handleError<FirestoreResponse>('addComic'))
     );
+  }
+
+  private addMetadataUrlSegment(comic: Readonly<Comic>) {
+    let comicWithMetadataUrlSegment: Readonly<Comic>;
+    let urlSegment: string;
+    const metadata = {
+      id: '',
+      createdAt: null,
+      updatedAt: null,
+      urlSegment: '',
+    };
+
+    urlSegment = comic.title
+      .toLowerCase()
+      .replace(/[\W_]+/g, '')
+      .replace(/ /g, '-');
+    metadata.urlSegment = urlSegment;
+    comicWithMetadataUrlSegment = { ...comic, metadata };
+
+    return comicWithMetadataUrlSegment;
   }
 }
