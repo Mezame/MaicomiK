@@ -11,8 +11,8 @@ export interface Comic {
   metadata: {
     id: string;
     urlSegment: string;
-    createdAt: Timestamp;
-    updatedAt: Timestamp;
+    createdAt: Timestamp | null;
+    updatedAt: Timestamp | null;
   };
 }
 
