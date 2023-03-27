@@ -1,1 +1,44 @@
-<p>comic-add-edit-form works!</p>
+<form [formGroup]="comicForm" (change)="onValueChange()">
+  <div class="">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Title</mat-label>
+      <input matInput placeholder="This is a comic title" formControlName="title" />
+    </mat-form-field>
+  </div>
+
+  <div class="">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Format</mat-label>
+      <mat-select placeholder="Select format" formControlName="format" (selectionChange)="onValueChange()">
+        <mat-option *ngFor="let format of formatList" [value]="format">{{
+          format | titlecase
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Status</mat-label>
+      <mat-select placeholder="Select status" formControlName="status" (selectionChange)="onValueChange()">
+        <mat-option *ngFor="let status of statusList" [value]="status">{{
+          status | titlecase
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="chapter">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Chapter</mat-label>
+      <input matInput placeholder="0" formControlName="chapter" />
+    </mat-form-field>
+  </div>
+
+  <div class="">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Cover image link</mat-label>
+      <input matInput placeholder="http://image-link-example" formControlName="coverUrl" />
+    </mat-form-field>
+  </div>
+</form>
