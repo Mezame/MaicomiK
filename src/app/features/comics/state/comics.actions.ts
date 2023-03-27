@@ -3,10 +3,10 @@ import { Comic } from '../comic';
 
 export const LoadComicsAction = createAction('[Comic List Page] Load Comics');
 
-export const ComicsActions = createActionGroup({
-  source: 'Comics',
+export const ComicsAddEditActions = createActionGroup({
+  source: 'Comic Add/Edit Page',
   events: {
-    'Add Comics': props<{ comic: Comic }>(),
+    'Add Comic': props<{ comic: Readonly<Comic> }>(),
   },
 });
 
@@ -15,6 +15,6 @@ export const ComicsApiActions = createActionGroup({
   events: {
     'Retrieved Comic List': props<{ comics: readonly Comic[] }>(),
 
-    'Added Comic': props<{ comic: Comic }>(),
+    'Added Comic': props<{ comic: Readonly<Comic> }>(),
   },
 });
