@@ -83,7 +83,7 @@ export class ComicsService {
 
     urlSegment = comic.title
       .toLowerCase()
-      .replace(/[\W_]+/g, '')
+      .replace(/[^a-z0-9]+/g, ' ')
       .replace(/ /g, '-');
     metadata.urlSegment = urlSegment;
     comicWithMetadataUrlSegment = { ...comic, metadata };
