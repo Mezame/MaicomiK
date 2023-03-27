@@ -10,9 +10,22 @@ form {
   }
 
   .chapter {
-
     .mat-mdc-form-field {
-        width: 33.33%;
-      }
+      width: 33.33%;
+    }
+  }
+}
+
+.preview-image {
+  width: 89px;
+  min-width: 89px;
+  height: 136px;
+  overflow: hidden;
+  border-radius: 8px;
+
+  img {
+    width: 105px;
+    height: 148px;
+    margin: -8px 0 0 -8px;
   }
 }

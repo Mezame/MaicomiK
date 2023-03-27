@@ -24,6 +24,7 @@ import { ComicFormValue } from './comic-form-value';
 export class ComicAddEditFormComponent implements OnInit {
   formatList: ComicFormat[];
   statusList: ComicStatus[];
+  imageSrc: string | null;
 
   comicForm!: FormGroup<{
     title: FormControl<string | null>;
@@ -46,6 +47,7 @@ export class ComicAddEditFormComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.formatList = ['manga', 'manhua', 'manhwa', 'webtoon'];
     this.statusList = ['reading', 'paused', 'planning', 'completed'];
+    this.imageSrc = null;
   }
 
   ngOnInit(): void {
@@ -59,9 +61,13 @@ export class ComicAddEditFormComponent implements OnInit {
   }
 
   onValueChange() {
-    const comicFormValue = this.comicForm.value as Readonly<ComicFormValue>;
-    const isComicFormValid = this.comicForm.valid;
-    const isComicFormDirty = this.comicForm.dirty;
+    let comicFormValue: Readonly<ComicFormValue>;
+    let isComicFormValid: boolean;
+    let isComicFormDirty: boolean;
+
+    comicFormValue = { ...this.comicForm.value } as Readonly<ComicFormValue>;
+    isComicFormValid = this.comicForm.valid;
+    isComicFormDirty = this.comicForm.dirty;
 
     if (!isComicFormValid) {
       this.emitAddComic({} as any, isComicFormValid);
@@ -76,5 +82,9 @@ export class ComicAddEditFormComponent implements OnInit {
     const action = 'addComic';
 
     this.actionEvent.emit({ action, data, isFormValid });
+  }
+
+  setImageSrc() {
+    this.imageSrc = this.comicForm.value.coverUrl!;
   }
 }
