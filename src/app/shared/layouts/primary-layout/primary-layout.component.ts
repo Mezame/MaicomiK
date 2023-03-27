@@ -43,8 +43,6 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
     const footerEl = this.footer.nativeElement;
     const observer = new ResizeObserver((entries) => {
       const height = entries[0].contentRect.height;
-      console.log(height);
-      console.log(maxBodyContent);
 
       if (height > maxBodyContent) {
         this.renderer.addClass(footerEl, 'sticky-footer');
