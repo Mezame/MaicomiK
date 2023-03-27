@@ -17,7 +17,7 @@
 
     <div class="actions">
       <button mat-icon-button (click)="emitOpenBottomSheetAction(comic)" aria-label="Navigate to comic detail">
-        <mat-icon>more_vert</mat-icon>
+        <mat-icon fontSet="material-symbols-rounded">more_vert</mat-icon>
       </button>
     </div>
   </div>
@@ -29,7 +29,7 @@
       </span>
 
       <span class="comic-updated body-small">{{
-        comic.metadata.updatedAt.toDate() | date
+        comic.metadata.updatedAt!.toDate() | date
       }}</span>
     </div>
 
@@ -39,7 +39,7 @@
         color="primary"
         aria-label="Increase comic counter by one"
       >
-        <mat-icon>add</mat-icon>
+        <mat-icon fontSet="material-symbols-rounded">add</mat-icon>
       </button>
     </div>
   </div>
