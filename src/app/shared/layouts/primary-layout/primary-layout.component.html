@@ -59,11 +59,11 @@
         </button>
       </mat-toolbar>
 
-      <div class="content">
+      <div class="content" #body>
         <ng-content></ng-content>
       </div>
 
-      <div class="footer">
+      <div class="footer" #footer>
         <ng-content select="[footer]"></ng-content>
       </div>
     </mat-sidenav-content>
