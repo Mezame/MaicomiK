@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { arrayUnion, Timestamp } from '@angular/fire/firestore';
 import { LoggerService } from '@core/logger/logger.service';
 import {
   FirebaseErrorHandlerService,
@@ -9,9 +8,9 @@ import {
   FirestoreResponse,
   FirestoreService,
 } from '@shared/firebase/firestore.service';
-import { AutoId } from '@shared/utils/id-generator';
 import { catchError, from, map, tap } from 'rxjs';
 import { Comic } from './comic';
+import { ComicsStoreService } from './comics-store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +22,7 @@ export class ComicsService {
   constructor(
     private firestoreService: FirestoreService,
     private firebaseErrorHandlerService: FirebaseErrorHandlerService,
+    private comicsStoreService: ComicsStoreService,
     private loggerService: LoggerService
   ) {
     const id = 'ynYZI4n3XarUz7tlW4zU68uHSm25';
@@ -37,7 +37,7 @@ export class ComicsService {
       map((docData) => docData as readonly Comic[]),
       tap((comics) => {
         this.loggerService.log(
-          `ComicsServiceService: getMangas: got ${comics.length} comics`
+          `ComicsServiceService: getComics: got ${comics.length} comics`
         );
       }),
       catchError(this.handleError<readonly Comic[]>('getComics', []))
@@ -52,10 +52,20 @@ export class ComicsService {
     ).pipe(
       tap((res) => {
         if (res.error) {
+          this.comicsStoreService.setApiState({
+            operation: 'addComic',
+            status: 'failure',
+          });
+
           throw res.error;
         }
 
-        this.loggerService.log(`ComicsServiceService: addComic: added comic`);
+        this.comicsStoreService.setApiState({
+          operation: 'addComic',
+          status: 'success',
+        });
+
+        this.loggerService.log('ComicsServiceService: addComic: added comic');
       }),
       catchError(this.handleError<FirestoreResponse>('addComic'))
     );
