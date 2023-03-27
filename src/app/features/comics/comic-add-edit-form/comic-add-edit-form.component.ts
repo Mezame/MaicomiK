@@ -25,7 +25,7 @@ import { webUrlValidator } from './validators';
 export class ComicAddEditFormComponent implements OnInit {
   formatList: ComicFormat[];
   statusList: ComicStatus[];
-  imageSrc: string | null;
+  previewImageSrc: string | null;
 
   comicForm!: FormGroup<{
     title: FormControl<string | null>;
@@ -48,7 +48,27 @@ export class ComicAddEditFormComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.formatList = ['manga', 'manhua', 'manhwa', 'webtoon'];
     this.statusList = ['reading', 'paused', 'planning', 'completed'];
-    this.imageSrc = null;
+    this.previewImageSrc = null;
+  }
+
+  get titleCtrl() {
+    return this.comicForm.controls['title'];
+  }
+
+  get formatCtrl() {
+    return this.comicForm.controls['format'];
+  }
+
+  get statusCtrl() {
+    return this.comicForm.controls['status'];
+  }
+
+  get chapterCtrl() {
+    return this.comicForm.controls['chapter'];
+  }
+
+  get coverUrlCtrl() {
+    return this.comicForm.controls['coverUrl'];
   }
 
   ngOnInit(): void {
@@ -88,7 +108,7 @@ export class ComicAddEditFormComponent implements OnInit {
     this.actionEvent.emit({ action, data, isFormValid });
   }
 
-  setImageSrc() {
-    this.imageSrc = this.comicForm.value.coverUrl!;
+  setPreviewImageSrc() {
+    this.previewImageSrc = this.comicForm.value.coverUrl!;
   }
 }
