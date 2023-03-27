@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { Comic, ComicFormat, ComicStatus } from '../comic';
 import { ComicFormValue } from './comic-form-value';
+import { webUrlValidator } from './validators';
 
 @Component({
   selector: 'app-comic-add-edit-form',
@@ -55,8 +56,11 @@ export class ComicAddEditFormComponent implements OnInit {
       title: ['', Validators.required],
       format: ['', Validators.required],
       status: ['', Validators.required],
-      chapter: ['', Validators.required],
-      coverUrl: ['', Validators.required],
+      chapter: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]\\d*(\\.\\d+)?$')],
+      ],
+      coverUrl: ['', [Validators.required, webUrlValidator()]],
     });
   }
 
