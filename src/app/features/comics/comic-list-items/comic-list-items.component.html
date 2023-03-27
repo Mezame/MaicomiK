@@ -19,7 +19,7 @@
             >Ch. <span class="body-large">{{ comic.chapter }}</span>
           </span>
           <span class="comic-updated body-small">{{
-            comic.metadata.updatedAt.toDate() | date
+            comic.metadata.updatedAt!.toDate() | date
           }}</span>
         </div>
 
