@@ -10,8 +10,14 @@ form {
   }
 
   .chapter {
+    display: flex;
+
     .mat-mdc-form-field {
       width: 33.33%;
+    }
+
+    mat-error {
+      width: 400%;
     }
   }
 }
