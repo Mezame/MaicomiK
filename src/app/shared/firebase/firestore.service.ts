@@ -8,9 +8,7 @@ import {
   doc,
   DocumentData,
   DocumentReference,
-  DocumentSnapshot,
   Firestore,
-  getDoc,
   setDoc,
   Timestamp,
   updateDoc,
@@ -44,6 +42,7 @@ export class FirestoreService {
     let documents$: Observable<readonly DocumentData[]>;
 
     collRef = collection(this.firestore, path);
+
     documents$ = collectionData(collRef);
 
     return documents$;
