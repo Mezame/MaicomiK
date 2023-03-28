@@ -38,7 +38,7 @@ export class ComicAddPageComponent {
     let action: string;
     let comicFormValue: Readonly<ComicFormValue>;
     let isFormValid: boolean | undefined;
-    let formatedComic: Comic;
+    let formatedComic: Readonly<Comic>;
 
     action = event.action;
     comicFormValue = { ...event.data };
