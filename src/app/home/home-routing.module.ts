@@ -29,8 +29,8 @@ const routes: Routes = [
       {
         path: 'comics/:comicUrlSegment/edit',
         loadChildren: () =>
-          import('./comic-add-edit-page/comic-add-edit-page.module').then(
-            (m) => m.ComicAddEditPageModule
+          import('./comic-edit-page/comic-edit-page.module').then(
+            (m) => m.ComicEditPageModule
           ),
       },
       {
