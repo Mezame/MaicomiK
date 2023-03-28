@@ -59,7 +59,7 @@
         </button>
       </mat-toolbar>
 
-      <div class="content" #body>
+      <div class="content" (scroll)="onScroll($event)" #body>
         <ng-content></ng-content>
       </div>
 

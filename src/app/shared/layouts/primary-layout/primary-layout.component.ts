@@ -24,18 +24,6 @@ export class PrimaryLayoutComponent implements AfterViewInit, OnDestroy {
   @ViewChild('body') body!: ElementRef<HTMLDivElement>;
   @ViewChild('footer') footer!: ElementRef<HTMLDivElement>;
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: any) {
-    const scrollTop = event.target.documentElement.scrollTop;
-    const toolbarEl = this.toolbar._elementRef.nativeElement;
-
-    if (scrollTop > 22) {
-      this.renderer.addClass(toolbarEl, 'sticky-toolbar');
-    } else {
-      this.renderer.removeClass(toolbarEl, 'sticky-toolbar');
-    }
-  }
-
   constructor(private renderer: Renderer2) {}
 
   ngAfterViewInit(): void {
@@ -58,6 +46,17 @@ export class PrimaryLayoutComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.resizeObserver.unobserve(this.body.nativeElement);
+  }
+
+  onScroll(event: any) {
+    const scrollTop = event.target.scrollTop;
+    const toolbarEl = this.toolbar._elementRef.nativeElement;
+
+    if (scrollTop > 28) {
+      this.renderer.addClass(toolbarEl, 'sticky-toolbar');
+    } else {
+      this.renderer.removeClass(toolbarEl, 'sticky-toolbar');
+    }
   }
 
   logOut() {}
