@@ -15,8 +15,8 @@ const routes: Routes = [
       {
         path: 'comics/add-comic',
         loadChildren: () =>
-          import('./comic-add-edit-page/comic-add-edit-page.module').then(
-            (m) => m.ComicAddEditPageModule
+          import('./comic-add-page/comic-add-page.module').then(
+            (m) => m.ComicAddPageModule
           ),
       },
       {
@@ -24,6 +24,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./comic-detail-page/comic-detail-page.module').then(
             (m) => m.ComicDetailPageModule
+          ),
+      },
+      {
+        path: 'comics/:comicUrlSegment/edit',
+        loadChildren: () =>
+          import('./comic-add-edit-page/comic-add-edit-page.module').then(
+            (m) => m.ComicAddEditPageModule
           ),
       },
       {
