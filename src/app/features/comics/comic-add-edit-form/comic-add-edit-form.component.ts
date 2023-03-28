@@ -35,7 +35,7 @@ export class ComicAddEditFormComponent implements OnInit {
     coverUrl: FormControl<string | null>;
   }>;
 
-  @Input('data') comic!: Comic;
+  @Input('data') comic!: Readonly<Comic>;
 
   @Input() action!: string;
 
@@ -43,6 +43,7 @@ export class ComicAddEditFormComponent implements OnInit {
     action: string;
     data: Readonly<ComicFormValue>;
     isFormValid: boolean;
+    isFormDirty?: boolean;
   }>();
 
   constructor(private fb: FormBuilder) {
@@ -82,6 +83,18 @@ export class ComicAddEditFormComponent implements OnInit {
       ],
       coverUrl: ['', [Validators.required, webUrlValidator()]],
     });
+
+    if (this.action == 'editComic') {
+      this.comicForm.patchValue({
+        title: this.comic.title,
+        format: this.comic.format,
+        status: this.comic.status,
+        chapter: this.comic.chapter?.toString(),
+        coverUrl: this.comic.coverUrl,
+      });
+
+      this.setPreviewImageSrc();
+    }
   }
 
   onValueChange() {
@@ -93,19 +106,42 @@ export class ComicAddEditFormComponent implements OnInit {
     isComicFormValid = this.comicForm.valid;
     isComicFormDirty = this.comicForm.dirty;
 
-    if (!isComicFormValid) {
-      this.emitAddComic({} as any, isComicFormValid);
+    if (this.action == 'addComic') {
+      if (!isComicFormValid) {
+        this.emitAddComic({} as any, isComicFormValid);
 
-      return;
+        return;
+      }
+
+      this.emitAddComic(comicFormValue, isComicFormValid);
     }
 
-    this.emitAddComic(comicFormValue, isComicFormValid);
+    if (this.action == 'editComic') {
+      if (!isComicFormValid || !isComicFormDirty) {
+        this.emitEditComic({} as any, isComicFormValid, isComicFormDirty);
+
+        return;
+      }
+
+      /* ToDo: Check if updated value is different from the current value */
+      this.emitEditComic(comicFormValue, isComicFormValid, isComicFormDirty);
+    }
   }
 
   emitAddComic(data: Readonly<ComicFormValue>, isFormValid = false) {
     const action = 'addComic';
 
     this.actionEvent.emit({ action, data, isFormValid });
+  }
+
+  emitEditComic(
+    data: Readonly<ComicFormValue>,
+    isFormValid = false,
+    isFormDirty = false
+  ) {
+    const action = 'editComic';
+
+    this.actionEvent.emit({ action, data, isFormValid, isFormDirty });
   }
 
   setPreviewImageSrc() {
