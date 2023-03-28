@@ -29,15 +29,15 @@ export class ComicDetailPageComponent {
         if (!comic) {
           this.store.dispatch(LoadComicsAction());
 
-          return {} as Comic;
+          return {} as Readonly<Comic>;
         }
 
-        return { ...comic };
+        return { ...comic } as Readonly<Comic>;
       })
     );
   }
 
-  openBottomSheet(event: { action: string; data: Comic }): void {
+  openBottomSheet(event: { action: string; data: Readonly<Comic> }): void {
     const comic = event.data;
 
     this._bottomSheet.open(ComicDetailBottomSheetComponent, {
