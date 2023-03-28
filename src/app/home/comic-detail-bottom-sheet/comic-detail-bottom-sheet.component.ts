@@ -12,11 +12,11 @@ import { Comic } from '@features/comics/comic';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicDetailBottomSheetComponent {
-  comic: Comic;
+  comic: Readonly<Comic>;
 
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<ComicDetailBottomSheetComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { comic: Comic }
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { comic: Readonly<Comic> }
   ) {
     this.comic = data.comic;
   }
