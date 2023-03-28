@@ -32,7 +32,7 @@ export class ComicDetailPageComponent {
           return {} as Readonly<Comic>;
         }
 
-        return { ...comic } as Readonly<Comic>;
+        return comic;
       })
     );
   }

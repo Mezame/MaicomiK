@@ -4,6 +4,12 @@ import { Comic } from '../comic';
 export const selectComics = createFeatureSelector<readonly Comic[]>('comics');
 
 export const selectComic = (comicUrlSegment: string) =>
-  createSelector(selectComics, (comics) =>
-    comics.find((comic) => comic.metadata.urlSegment == comicUrlSegment)!
-  );
+  createSelector(selectComics, (comics) => {
+    let comic: Readonly<Comic>;
+
+    comic = comics.find(
+      (comic) => comic.metadata.urlSegment == comicUrlSegment
+    )!;
+
+    return comic;
+  });
