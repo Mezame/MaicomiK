@@ -5,7 +5,7 @@ import { catchError, EMPTY, map, mergeMap, of, switchMap } from 'rxjs';
 import { ComicsService } from '../comics.service';
 import {
   addComicAction,
-  ComicEditAction,
+  editComicAction,
   ComicsApiActions,
   incrementComicChapterAction,
   loadComicsAction,
@@ -52,7 +52,7 @@ export class ComicEffects {
 
   updateComic$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ComicEditAction),
+      ofType(editComicAction),
       switchMap((action) => {
         return this.comicsService.updateComic(action.comic).pipe(
           map((res) => {

@@ -6,7 +6,7 @@ import { ComicFormService } from '@features/comics/comic-add-edit-form/comic-for
 import { ComicsStoreService } from '@features/comics/comics-store.service';
 import { ComicsService } from '@features/comics/comics.service';
 import {
-  ComicEditAction,
+  editComicAction,
   loadComicsAction,
 } from '@features/comics/state/comics.actions';
 import { selectComic } from '@features/comics/state/comics.selectors';
@@ -90,7 +90,7 @@ export class ComicEditPageComponent {
   editComic() {
     this.isSubmitButtonDisabled = true;
 
-    this.store.dispatch(ComicEditAction({ comic: this.editedComic }));
+    this.store.dispatch(editComicAction({ comic: this.editedComic }));
 
     this.comicsStoreService.getApiState().subscribe((apiState) => {
       if (

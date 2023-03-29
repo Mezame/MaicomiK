@@ -8,7 +8,7 @@ export const addComicAction = createAction(
   props<{ comic: Partial<Comic> }>()
 );
 
-export const ComicEditAction = createAction(
+export const editComicAction = createAction(
   '[Comic Edit Page] Edit Comic',
   props<{ comic: Readonly<Comic> }>()
 );
