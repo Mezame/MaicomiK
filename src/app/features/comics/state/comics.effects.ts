@@ -4,7 +4,8 @@ import { select, Store } from '@ngrx/store';
 import { catchError, EMPTY, map, mergeMap, of, switchMap } from 'rxjs';
 import { ComicsService } from '../comics.service';
 import {
-  ComicsAddEditActions,
+  ComicAddAction,
+  ComicEditAction,
   ComicsApiActions,
   LoadComicsAction,
 } from './comics.actions';
@@ -32,7 +33,7 @@ export class ComicEffects {
 
   addComic$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ComicsAddEditActions.addComic),
+      ofType(ComicAddAction),
       switchMap((action) => {
         return this.comicsService.addComic(action.comic).pipe(
           map((res) => {
@@ -43,6 +44,24 @@ export class ComicEffects {
             return ComicsApiActions.addedComic({ comic: res.document });
           }),
           catchError(() => of({ type: '[Comics API] Add Comic Failure' }))
+        );
+      })
+    )
+  );
+
+  updateComic$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ComicEditAction),
+      switchMap((action) => {
+        return this.comicsService.updateComic(action.comic).pipe(
+          map((res) => {
+            if (res.error) {
+              throw new Error('comics api failure');
+            }
+
+            return ComicsApiActions.updatedComic({ comic: res.document });
+          }),
+          catchError(() => of({ type: '[Comics API] Edit Comic Failure' }))
         );
       })
     )
