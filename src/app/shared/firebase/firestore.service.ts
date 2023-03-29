@@ -201,6 +201,49 @@ export class FirestoreService {
   /**
    * Add a new document to Firestore with a custom id.
   @param path A slash-separated path to a Firestore collection.
+  @param id The id for the document to be updated.
+  @param document An Object containing the data for the original document.
+  @param fields An Object containing the data for the document to be patched.
+  @returns A promise with a Firestore custom response.
+  **/
+  async patchDocument(path: string, id: string, document: any, fields: any) {
+    let docRef: DocumentReference<DocumentData>;
+    let currentTimestamp: Timestamp;
+    let patchedDocument: any;
+    let res: any;
+
+    try {
+      docRef = doc(this.firestore, `${path}/${id}`);
+      currentTimestamp = Timestamp.fromDate(new Date());
+      patchedDocument = {
+        ...document,
+        metadata: {
+          ...document['metadata'],
+          updatedAt: currentTimestamp,
+        },
+      };
+      res = await updateDoc(docRef, {
+        ...fields,
+        'metadata.updatedAt': currentTimestamp,
+      });
+
+      if (res !== undefined) {
+        throw new Error('could not patch document');
+      }
+
+      this.loggerService.log(
+        `FirestoreGlobalService: patchDocument: patched document w/ id=${id}`
+      );
+
+      return { success: true, document: patchedDocument } as FirestoreResponse;
+    } catch (error) {
+      return { error } as FirestoreResponse;
+    }
+  }
+
+  /**
+   * Add a new document to Firestore with a custom id.
+  @param path A slash-separated path to a Firestore collection.
   @param id The id for the document to be deleted.
   @returns A promise with a Firestore custom response.
   **/
