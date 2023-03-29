@@ -100,6 +100,35 @@ export class ComicsService {
     );
   }
 
+  patchComic(comic: Readonly<Comic>, fields: Partial<Comic>) {
+    const id = comic.metadata!.id;
+
+    return from(
+      this.firestoreService.patchDocument(this.path, id, comic, fields)
+    ).pipe(
+      tap((res) => {
+        if (res.error) {
+          this.comicsStoreService.setApiState({
+            operation: 'patchComic',
+            status: 'failure',
+          });
+
+          throw res.error;
+        }
+
+        this.comicsStoreService.setApiState({
+          operation: 'patchComic',
+          status: 'success',
+        });
+
+        this.loggerService.log(
+          'ComicsServiceService: patchComic: patched comic'
+        );
+      }),
+      catchError(this.handleError<FirestoreResponse>('patchComic'))
+    );
+  }
+
   private addMetadataUrlSegment(comic: Partial<Comic>) {
     let comicWithMetadataUrlSegment: Readonly<Comic>;
     let urlSegment: string;
@@ -110,8 +139,8 @@ export class ComicsService {
       urlSegment: '',
     };
 
-    urlSegment = comic.title!
-      .toLowerCase()
+    urlSegment = comic
+      .title!.toLowerCase()
       .replace(/[^a-z0-9]+/g, ' ')
       .replace(/ /g, '-');
     metadata.urlSegment = urlSegment;
