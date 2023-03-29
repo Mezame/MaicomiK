@@ -48,4 +48,4 @@ Thumbs.db
 /firebase-mock-data
 
 # Environments
-/src/environments/*
+/src/environments/environment.development.ts
