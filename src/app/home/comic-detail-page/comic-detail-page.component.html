@@ -1,6 +1,6 @@
 <app-primary-layout>
   <app-comic-detail-content
     [comic]="(comic$ | async)!"
-    (actionEvent)="openBottomSheet($event)"
+    (actionEvent)="getContentAction($event)"
   ></app-comic-detail-content>
 </app-primary-layout>
