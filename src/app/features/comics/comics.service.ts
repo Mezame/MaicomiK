@@ -44,7 +44,7 @@ export class ComicsService {
     );
   }
 
-  addComic(comic: Readonly<Comic>) {
+  addComic(comic: Partial<Comic>) {
     const newComic = this.addMetadataUrlSegment(comic);
 
     return from(
@@ -71,7 +71,36 @@ export class ComicsService {
     );
   }
 
-  private addMetadataUrlSegment(comic: Readonly<Comic>) {
+  updateComic(comic: Partial<Comic>) {
+    const id = comic.metadata!.id;
+
+    return from(
+      this.firestoreService.updateDocument(this.path, id, comic)
+    ).pipe(
+      tap((res) => {
+        if (res.error) {
+          this.comicsStoreService.setApiState({
+            operation: 'updateComic',
+            status: 'failure',
+          });
+
+          throw res.error;
+        }
+
+        this.comicsStoreService.setApiState({
+          operation: 'updateComic',
+          status: 'success',
+        });
+
+        this.loggerService.log(
+          'ComicsServiceService: updateComic: updated comic'
+        );
+      }),
+      catchError(this.handleError<FirestoreResponse>('updateComic'))
+    );
+  }
+
+  private addMetadataUrlSegment(comic: Partial<Comic>) {
     let comicWithMetadataUrlSegment: Readonly<Comic>;
     let urlSegment: string;
     const metadata = {
@@ -81,12 +110,12 @@ export class ComicsService {
       urlSegment: '',
     };
 
-    urlSegment = comic.title
+    urlSegment = comic.title!
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, ' ')
       .replace(/ /g, '-');
     metadata.urlSegment = urlSegment;
-    comicWithMetadataUrlSegment = { ...comic, metadata };
+    comicWithMetadataUrlSegment = { ...comic, metadata } as Readonly<Comic>;
 
     return comicWithMetadataUrlSegment;
   }
