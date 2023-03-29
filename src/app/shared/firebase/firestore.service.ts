@@ -162,6 +162,45 @@ export class FirestoreService {
   /**
    * Add a new document to Firestore with a custom id.
   @param path A slash-separated path to a Firestore collection.
+  @param id The id for the document to be updated.
+  @param document An Object containing the data for the document to be updated.
+  @returns A promise with a Firestore custom response.
+  **/
+  async updateDocument(path: string, id: string, document: any) {
+    let docRef: DocumentReference<DocumentData>;
+    let currentTimestamp: Timestamp;
+    let updatedDocument: any;
+    let res: any;
+
+    try {
+      docRef = doc(this.firestore, `${path}/${id}`);
+      currentTimestamp = Timestamp.fromDate(new Date());
+      updatedDocument = {
+        ...document,
+        metadata: {
+          ...document['metadata'],
+          updatedAt: currentTimestamp,
+        },
+      };
+      res = await updateDoc(docRef, updatedDocument);
+
+      if (res !== undefined) {
+        throw new Error('could not update document');
+      }
+
+      this.loggerService.log(
+        `FirestoreGlobalService: updateDocument: updated document w/ id=${id}`
+      );
+
+      return { success: true, document: updatedDocument } as FirestoreResponse;
+    } catch (error) {
+      return { error } as FirestoreResponse;
+    }
+  }
+
+  /**
+   * Add a new document to Firestore with a custom id.
+  @param path A slash-separated path to a Firestore collection.
   @param id The id for the document to be deleted.
   @returns A promise with a Firestore custom response.
   **/
@@ -179,35 +218,6 @@ export class FirestoreService {
 
       this.loggerService.log(
         `FirestoreGlobalService: deleteDocument: deleted document w/ id=${id}`
-      );
-
-      return { success: true } as FirestoreResponse;
-    } catch (error) {
-      return { error } as FirestoreResponse;
-    }
-  }
-
-  /**
-   * Add a new document to Firestore with a custom id.
-  @param path A slash-separated path to a Firestore collection.
-  @param id The id for the document to be updated.
-  @param document An Object containing the data for the document to be updated.
-  @returns A promise with a Firestore custom response.
-  **/
-  async updateDocument(path: string, id: string, document: any) {
-    let docRef: DocumentReference<DocumentData>;
-    let res: any;
-
-    try {
-      docRef = doc(this.firestore, `${path}/${id}`);
-      res = await updateDoc(docRef, { ...document });
-
-      if (res !== undefined) {
-        throw new Error('could not update document');
-      }
-
-      this.loggerService.log(
-        `FirestoreGlobalService: updateDocument: updated document w/ id=${id}`
       );
 
       return { success: true } as FirestoreResponse;
