@@ -7,6 +7,7 @@ import {
   ComicAddAction,
   ComicEditAction,
   ComicsApiActions,
+  incrementComicChapterAction,
   LoadComicsAction,
 } from './comics.actions';
 import { selectComics } from './comics.selectors';
@@ -54,6 +55,24 @@ export class ComicEffects {
       ofType(ComicEditAction),
       switchMap((action) => {
         return this.comicsService.updateComic(action.comic).pipe(
+          map((res) => {
+            if (res.error) {
+              throw new Error('comics api failure');
+            }
+
+            return ComicsApiActions.updatedComic({ comic: res.document });
+          }),
+          catchError(() => of({ type: '[Comics API] Update Comic Failure' }))
+        );
+      })
+    )
+  );
+
+  patchComic$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(incrementComicChapterAction),
+      switchMap((action) => {
+        return this.comicsService.patchComic(action.comic, action.fields).pipe(
           map((res) => {
             if (res.error) {
               throw new Error('comics api failure');
