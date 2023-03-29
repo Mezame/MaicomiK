@@ -3,12 +3,9 @@ import { Comic } from '../comic';
 
 export const LoadComicsAction = createAction('[Comic List Page] Load Comics');
 
-export const ComicsAddEditActions = createActionGroup({
-  source: 'Comic Add/Edit Page',
-  events: {
-    'Add Comic': props<{ comic: Readonly<Comic> }>(),
-  },
-});
+export const ComicAddAction = createAction('[Comic Add Page] Add Comic', props<{ comic: Partial<Comic> }>());
+
+export const ComicEditAction = createAction('[Comic Edit Page] Edit Comic', props<{ comic: Readonly<Comic> }>());
 
 export const ComicsApiActions = createActionGroup({
   source: 'Comics API',
@@ -16,5 +13,7 @@ export const ComicsApiActions = createActionGroup({
     'Retrieved Comic List': props<{ comics: readonly Comic[] }>(),
 
     'Added Comic': props<{ comic: Readonly<Comic> }>(),
+
+    'Updated Comic': props<{ comic: Readonly<Comic> }>(),
   },
 });
