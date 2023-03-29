@@ -15,5 +15,15 @@ export const comicsReducer = createReducer(
     newState = [...state, comic];
 
     return newState;
-  })
+  }),
+
+  on(ComicsApiActions.updatedComic, (state, { comic }) => {
+    let newState: readonly Comic[];
+
+    newState = state.filter((c) => c.metadata.id != comic.metadata.id);
+
+    newState = [...state, comic];
+
+    return newState;
+  }),
 );
