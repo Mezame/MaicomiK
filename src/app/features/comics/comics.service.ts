@@ -71,7 +71,7 @@ export class ComicsService {
     );
   }
 
-  updateComic(comic: Partial<Comic>) {
+  updateComic(comic: Readonly<Comic>) {
     const id = comic.metadata!.id;
 
     return from(
