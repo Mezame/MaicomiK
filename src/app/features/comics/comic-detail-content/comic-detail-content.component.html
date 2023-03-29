@@ -16,7 +16,11 @@
     </div>
 
     <div class="actions">
-      <button mat-icon-button (click)="emitOpenBottomSheetAction(comic)" aria-label="Navigate to comic detail">
+      <button
+        mat-icon-button
+        (click)="emitOpenBottomSheetAction(comic)"
+        aria-label="Navigate to comic detail"
+      >
         <mat-icon fontSet="material-symbols-rounded">more_vert</mat-icon>
       </button>
     </div>
@@ -37,7 +41,8 @@
       <button
         mat-icon-button
         color="primary"
-        aria-label="Increase comic counter by one"
+        (click)="emitIncrementChapterAction(comic)"
+        aria-label="Increment comic chapter by one"
       >
         <mat-icon fontSet="material-symbols-rounded">add</mat-icon>
       </button>
@@ -73,7 +78,7 @@
     <span class="title-small">Notes</span>
 
     <div class="content">
-      <span class="body-medium">{{comic.notes}}</span>
+      <span class="body-medium">{{ comic.notes }}</span>
     </div>
   </div>
 </ng-container>

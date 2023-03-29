@@ -8,17 +8,23 @@ import { Comic } from '../comic';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicDetailContentComponent {
-  @Input() comic!: Comic;
+  @Input() comic!: Readonly<Comic>;
 
   @Output() actionEvent = new EventEmitter<{
     action: string;
-    data: Comic;
+    data: Readonly<Comic>;
   }>();
 
   constructor() {}
 
-  emitOpenBottomSheetAction(data: Comic) {
-    const action = 'OpenBottomSheet';
+  emitIncrementChapterAction(data: Readonly<Comic>) {
+    const action = 'incrementChapter';
+
+    this.actionEvent.emit({ action, data });
+  }
+
+  emitOpenBottomSheetAction(data: Readonly<Comic>) {
+    const action = 'openBottomSheet';
 
     this.actionEvent.emit({ action, data });
   }
