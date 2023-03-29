@@ -44,6 +44,7 @@ export class ComicAddEditFormComponent implements OnInit {
     data: Readonly<ComicFormValue>;
     isFormValid: boolean;
     isFormDirty?: boolean;
+    originalComic?: Readonly<Comic>;
   }>();
 
   constructor(private fb: FormBuilder) {
@@ -140,8 +141,9 @@ export class ComicAddEditFormComponent implements OnInit {
     isFormDirty = false
   ) {
     const action = 'editComic';
+    const originalComic = this.comic;
 
-    this.actionEvent.emit({ action, data, isFormValid, isFormDirty });
+    this.actionEvent.emit({ action, data, isFormValid, isFormDirty, originalComic });
   }
 
   setPreviewImageSrc() {
