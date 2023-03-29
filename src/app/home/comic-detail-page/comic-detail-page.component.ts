@@ -5,7 +5,7 @@ import { Comic } from '@features/comics/comic';
 import { ComicDetailBottomSheetComponent } from 'src/app/home/comic-detail-bottom-sheet/comic-detail-bottom-sheet.component';
 import {
   incrementComicChapterAction,
-  LoadComicsAction,
+  loadComicsAction,
 } from '@features/comics/state/comics.actions';
 import { selectComic } from '@features/comics/state/comics.selectors';
 import { Store } from '@ngrx/store';
@@ -32,7 +32,7 @@ export class ComicDetailPageComponent {
     this.comic$ = this.store.select(selectComic(comicUrlSegment)).pipe(
       map((comic) => {
         if (!comic) {
-          this.store.dispatch(LoadComicsAction());
+          this.store.dispatch(loadComicsAction());
 
           return {} as Readonly<Comic>;
         }

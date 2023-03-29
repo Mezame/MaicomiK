@@ -8,7 +8,7 @@ import {
   ComicEditAction,
   ComicsApiActions,
   incrementComicChapterAction,
-  LoadComicsAction,
+  loadComicsAction,
 } from './comics.actions';
 import { selectComics } from './comics.selectors';
 
@@ -16,7 +16,7 @@ import { selectComics } from './comics.selectors';
 export class ComicEffects {
   loadComics$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(LoadComicsAction),
+      ofType(loadComicsAction),
       concatLatestFrom(() => this.store.select(selectComics)),
       mergeMap(([_, comics]) => {
         if (comics?.length > 0) {

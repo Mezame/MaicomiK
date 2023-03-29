@@ -1,7 +1,7 @@
 import { createAction, createActionGroup, props } from '@ngrx/store';
 import { Comic } from '../comic';
 
-export const LoadComicsAction = createAction('[Comic List Page] Load Comics');
+export const loadComicsAction = createAction('[Comic List Page] Load Comics');
 
 export const ComicAddAction = createAction(
   '[Comic Add Page] Add Comic',

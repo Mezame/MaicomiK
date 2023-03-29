@@ -7,7 +7,7 @@ import { ComicsStoreService } from '@features/comics/comics-store.service';
 import { ComicsService } from '@features/comics/comics.service';
 import {
   ComicEditAction,
-  LoadComicsAction,
+  loadComicsAction,
 } from '@features/comics/state/comics.actions';
 import { selectComic } from '@features/comics/state/comics.selectors';
 import { Store } from '@ngrx/store';
@@ -37,7 +37,7 @@ export class ComicEditPageComponent {
     this.comic$ = this.store.select(selectComic(this.comicUrlSegment)).pipe(
       map((comic) => {
         if (!comic) {
-          this.store.dispatch(LoadComicsAction());
+          this.store.dispatch(loadComicsAction());
 
           return null as unknown as Readonly<Comic>;
         }

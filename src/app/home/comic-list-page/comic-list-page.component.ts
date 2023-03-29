@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Comic } from '@features/comics/comic';
 import { Router } from '@angular/router';
 import { selectComics } from '@features/comics/state/comics.selectors';
-import { LoadComicsAction } from '@features/comics/state/comics.actions';
+import { loadComicsAction } from '@features/comics/state/comics.actions';
 
 @Component({
   selector: 'app-comic-list-page',
@@ -24,7 +24,7 @@ export class ComicListPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(LoadComicsAction());
+    this.store.dispatch(loadComicsAction());
   }
 
   goToComic(event: { action: string; data: unknown }) {
