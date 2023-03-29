@@ -3,7 +3,7 @@ import { Comic } from '../comic';
 
 export const loadComicsAction = createAction('[Comic List Page] Load Comics');
 
-export const ComicAddAction = createAction(
+export const addComicAction = createAction(
   '[Comic Add Page] Add Comic',
   props<{ comic: Partial<Comic> }>()
 );

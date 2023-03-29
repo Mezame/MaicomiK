@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { catchError, EMPTY, map, mergeMap, of, switchMap } from 'rxjs';
 import { ComicsService } from '../comics.service';
 import {
-  ComicAddAction,
+  addComicAction,
   ComicEditAction,
   ComicsApiActions,
   incrementComicChapterAction,
@@ -34,7 +34,7 @@ export class ComicEffects {
 
   addComic$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ComicAddAction),
+      ofType(addComicAction),
       switchMap((action) => {
         return this.comicsService.addComic(action.comic).pipe(
           map((res) => {
