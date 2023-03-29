@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute } from '@angular/router';
 import { Comic } from '@features/comics/comic';
-import { ComicDetailBottomSheetComponent } from 'src/app/home/comic-detail-bottom-sheet/comic-detail-bottom-sheet.component';
 import {
   incrementComicChapterAction,
   loadComicsAction,
@@ -10,7 +9,7 @@ import {
 import { selectComic } from '@features/comics/state/comics.selectors';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
-import { ComicsService } from '@features/comics/comics.service';
+import { ComicDetailBottomSheetComponent } from 'src/app/home/comic-detail-bottom-sheet/comic-detail-bottom-sheet.component';
 
 @Component({
   selector: 'app-comic-detail-page',
@@ -24,8 +23,7 @@ export class ComicDetailPageComponent {
   constructor(
     private route: ActivatedRoute,
     private store: Store,
-    private _bottomSheet: MatBottomSheet,
-    private comicsService: ComicsService
+    private _bottomSheet: MatBottomSheet
   ) {
     const comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
 
