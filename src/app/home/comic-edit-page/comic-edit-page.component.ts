@@ -1,10 +1,118 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Comic } from '@features/comics/comic';
+import { ComicFormValue } from '@features/comics/comic-add-edit-form/comic-form-value';
+import { ComicFormService } from '@features/comics/comic-add-edit-form/comic-form.service';
+import { ComicsStoreService } from '@features/comics/comics-store.service';
+import { ComicsService } from '@features/comics/comics.service';
+import {
+  ComicEditAction,
+  LoadComicsAction,
+} from '@features/comics/state/comics.actions';
+import { selectComic } from '@features/comics/state/comics.selectors';
+import { Store } from '@ngrx/store';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-comic-edit-page',
   templateUrl: './comic-edit-page.component.html',
-  styleUrls: ['./comic-edit-page.component.scss']
+  styleUrls: ['./comic-edit-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicEditPageComponent {
+  comic$: Observable<Readonly<Comic>>;
+  comicUrlSegment: string;
+  editedComic!: Readonly<Comic>;
+  isSubmitButtonDisabled: boolean;
 
+  constructor(
+    private route: ActivatedRoute,
+    private comicFormService: ComicFormService,
+    private store: Store,
+    private comicsStoreService: ComicsStoreService,
+    private router: Router
+  ) {
+    this.comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
+
+    this.comic$ = this.store.select(selectComic(this.comicUrlSegment)).pipe(
+      map((comic) => {
+        if (!comic) {
+          this.store.dispatch(LoadComicsAction());
+
+          return null as unknown as Readonly<Comic>;
+        }
+
+        return comic;
+      })
+    );
+
+    this.isSubmitButtonDisabled = true;
+  }
+
+  ngOnDestroy(): void {
+    this.comicsStoreService.clearApiState();
+  }
+
+  getFormAction(event: {
+    action: string;
+    data: Readonly<ComicFormValue>;
+    isFormValid: boolean;
+    isFormDirty?: boolean;
+    originalComic?: Readonly<Comic>;
+  }) {
+    let action: string;
+    let comicFormValue: Readonly<ComicFormValue>;
+    let isFormValid: boolean | undefined;
+    let isFormDirty: boolean | undefined;
+    let originalComic: Readonly<Comic>;
+    let editedComicFields: Partial<Comic>;
+
+    action = event.action;
+    comicFormValue = { ...event.data };
+    isFormValid = event.isFormValid;
+    isFormDirty = event.isFormDirty;
+
+    if (action == 'editComic') {
+      if (isFormValid && isFormDirty) {
+        editedComicFields = this.comicFormService.formatChapter(comicFormValue);
+
+        originalComic = event.originalComic!;
+
+        this.editedComic = { ...originalComic, ...editedComicFields };
+
+        this.isSubmitButtonDisabled = false;
+      } else {
+        this.isSubmitButtonDisabled = true;
+      }
+    }
+  }
+
+  editComic() {
+    this.isSubmitButtonDisabled = true;
+
+    this.store.dispatch(ComicEditAction({ comic: this.editedComic }));
+
+    this.comicsStoreService.getApiState().subscribe((apiState) => {
+      if (
+        apiState?.operation == 'updateComic' &&
+        apiState.status == 'failure'
+      ) {
+        setTimeout(() => {
+          this.isSubmitButtonDisabled = false;
+        }, 3000);
+
+        return;
+      }
+
+      this.navigateToComicDetailPage();
+    });
+  }
+
+  cancel() {
+    this.navigateToComicDetailPage();
+  }
+
+  private navigateToComicDetailPage() {
+    this.router.navigate(['/home/comics', this.comicUrlSegment]);
+  }
 }
