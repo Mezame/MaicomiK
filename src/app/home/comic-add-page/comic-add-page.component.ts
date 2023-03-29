@@ -4,7 +4,7 @@ import { Comic } from '@features/comics/comic';
 import { ComicFormValue } from '@features/comics/comic-add-edit-form/comic-form-value';
 import { ComicFormService } from '@features/comics/comic-add-edit-form/comic-form.service';
 import { ComicsStoreService } from '@features/comics/comics-store.service';
-import { ComicsAddEditActions } from '@features/comics/state/comics.actions';
+import { ComicAddAction } from '@features/comics/state/comics.actions';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -14,7 +14,7 @@ import { Store } from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicAddPageComponent {
-  comic!: Readonly<Comic>;
+  comic!: Partial<Comic>;
   isSubmitButtonDisabled: boolean;
 
   constructor(
@@ -38,18 +38,21 @@ export class ComicAddPageComponent {
     let action: string;
     let comicFormValue: Readonly<ComicFormValue>;
     let isFormValid: boolean | undefined;
-    let formatedComic: Readonly<Comic>;
+    let formatedComic: Partial<Comic>;
 
     action = event.action;
     comicFormValue = { ...event.data };
     isFormValid = event.isFormValid;
-    formatedComic = this.comicFormService.formatChapter(comicFormValue);
 
     if (action == 'addComic') {
       if (isFormValid) {
+        formatedComic = this.comicFormService.formatChapter(comicFormValue);
+
         this.comic = { ...formatedComic };
 
         this.isSubmitButtonDisabled = false;
+      } else {
+        this.isSubmitButtonDisabled = true;
       }
     }
   }
@@ -57,7 +60,7 @@ export class ComicAddPageComponent {
   addComic() {
     this.isSubmitButtonDisabled = true;
 
-    this.store.dispatch(ComicsAddEditActions.addComic({ comic: this.comic }));
+    this.store.dispatch(ComicAddAction({ comic: this.comic }));
 
     this.comicsStoreService.getApiState().subscribe((apiState) => {
       if (apiState?.operation == 'addComic' && apiState.status == 'failure') {
@@ -68,11 +71,15 @@ export class ComicAddPageComponent {
         return;
       }
 
-      this.router.navigateByUrl('/home/comics');
+      this.navigateToComicListPage();
     });
   }
 
   cancel() {
+    this.navigateToComicListPage();
+  }
+
+  private navigateToComicListPage() {
     this.router.navigateByUrl('/home/comics');
   }
 }
