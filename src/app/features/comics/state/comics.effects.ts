@@ -61,7 +61,7 @@ export class ComicEffects {
 
             return ComicsApiActions.updatedComic({ comic: res.document });
           }),
-          catchError(() => of({ type: '[Comics API] Edit Comic Failure' }))
+          catchError(() => of({ type: '[Comics API] Update Comic Failure' }))
         );
       })
     )
