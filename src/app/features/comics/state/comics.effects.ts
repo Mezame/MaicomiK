@@ -9,6 +9,7 @@ import {
   ComicsApiActions,
   incrementComicChapterAction,
   loadComicsAction,
+  deleteComicAction,
 } from './comics.actions';
 import { selectComics } from './comics.selectors';
 
@@ -81,6 +82,24 @@ export class ComicEffects {
             return ComicsApiActions.updatedComic({ comic: res.document });
           }),
           catchError(() => of({ type: '[Comics API] Update Comic Failure' }))
+        );
+      })
+    )
+  );
+
+  deleteComic$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteComicAction),
+      switchMap((action) => {
+        return this.comicsService.deleteComic(action.id).pipe(
+          map((res) => {
+            if (res.error) {
+              throw new Error('comics api failure');
+            }
+
+            return ComicsApiActions.deletedComic({ id: res.id! });
+          }),
+          catchError(() => of({ type: '[Comics API] Delete Comic Failure' }))
         );
       })
     )
