@@ -263,7 +263,7 @@ export class FirestoreService {
         `FirestoreGlobalService: deleteDocument: deleted document w/ id=${id}`
       );
 
-      return { success: true } as FirestoreResponse;
+      return { success: true, id } as FirestoreResponse;
     } catch (error) {
       return { error } as FirestoreResponse;
     }
