@@ -129,6 +129,29 @@ export class ComicsService {
     );
   }
 
+  deleteComic(id: string) {
+    return from(this.firestoreService.deleteDocument(this.path, id)).pipe(
+      tap((res) => {
+        if (res.error) {
+          this.comicsStoreService.setApiState({
+            operation: 'deleteComic',
+            status: 'failure',
+          });
+
+          throw res.error;
+        }
+
+        this.comicsStoreService.setApiState({
+          operation: 'deleteComic',
+          status: 'success',
+        });
+
+        console.log('ComicsServiceService: deleteComic: deleted comic');
+      }),
+      catchError(this.handleError<FirestoreResponse>('deleteComic'))
+    );
+  }
+
   private addMetadataUrlSegment(comic: Partial<Comic>) {
     let comicWithMetadataUrlSegment: Readonly<Comic>;
     let urlSegment: string;
