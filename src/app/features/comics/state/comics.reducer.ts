@@ -26,4 +26,12 @@ export const comicsReducer = createReducer(
 
     return newState;
   }),
+
+  on(ComicsApiActions.deletedComic, (state, { id }) => {
+    let newState: readonly Comic[];
+
+    newState = state.filter((c) => c.metadata.id != id);
+
+    return newState;
+  }),
 );
