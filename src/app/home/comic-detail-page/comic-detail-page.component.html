@@ -4,3 +4,42 @@
     (actionEvent)="getContentAction($event)"
   ></app-comic-detail-content>
 </app-primary-layout>
+
+<ng-template #bottomSheet>
+  <mat-nav-list *ngIf="comic$ | async as comic; else noComic">
+    <a
+      [routerLink]="['/home/comics', comic?.metadata?.urlSegment, 'edit']"
+      mat-list-item
+      (click)="closeBottomSheet()"
+    >
+      <span>Edit comic</span>
+    </a>
+
+    <a
+      *ngIf="comic.readers?.length"
+      [routerLink]="['/home/comics', comic?.metadata?.urlSegment, 'reader-sites']"
+      mat-list-item
+      (click)="closeBottomSheet()"
+    >
+      <span>Edit reader sites</span>
+    </a>
+
+    <a
+      *ngIf="comic.notes"
+      [routerLink]="['/home/comics', comic?.metadata?.urlSegment, 'notes']"
+      mat-list-item
+      (click)="closeBottomSheet()"
+    >
+      <span>Edit notes</span>
+    </a>
+
+    <mat-list-item (click)="deleteComic(comic.metadata.id)">
+      <span>Delete comic</span>
+    </mat-list-item>
+  </mat-nav-list>
+  <ng-template #noComic>
+    <mat-list-item (click)="closeBottomSheet()">
+      <span>Close</span>
+    </mat-list-item>
+  </ng-template>
+</ng-template>
