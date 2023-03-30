@@ -10,13 +10,14 @@ import {
 } from '@shared/firebase/firestore.service';
 import { catchError, from, map, tap } from 'rxjs';
 import { Comic } from './comic';
-import { ComicsStoreService } from './comics-store.service';
+import { ApiState, ComicsStoreService } from './comics-store.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ComicsService {
   private path: string;
+  private serviceName: string;
   private handleError: HandleError;
 
   constructor(
@@ -28,128 +29,122 @@ export class ComicsService {
     const id = 'ynYZI4n3XarUz7tlW4zU68uHSm25';
 
     this.path = `users/${id}/comics`;
-    this.handleError =
-      this.firebaseErrorHandlerService.createHandleError('ComicsService');
+    this.serviceName = 'ComicsService';
+    this.handleError = this.firebaseErrorHandlerService.createHandleError(
+      this.serviceName
+    );
   }
 
   getComics() {
+    const operation = 'getComics';
+
     return this.firestoreService.getCollection(this.path).pipe(
       map((docData) => docData as readonly Comic[]),
       tap((comics) => {
         this.loggerService.log(
-          `ComicsServiceService: getComics: got ${comics.length} comics`
+          `${this.serviceName}: ${operation}: got ${comics.length} comics`
         );
       }),
-      catchError(this.handleError<readonly Comic[]>('getComics', []))
+      catchError(this.handleError<readonly Comic[]>(operation, []))
     );
   }
 
   addComic(comic: Partial<Comic>) {
     const newComic = this.addMetadataUrlSegment(comic);
+    const operation = 'addComic';
 
     return from(
       this.firestoreService.setDocumentNoId(this.path, newComic)
     ).pipe(
       tap((res) => {
         if (res.error) {
-          this.comicsStoreService.setApiState({
-            operation: 'addComic',
-            status: 'failure',
-          });
+          this.setApiState(operation, 'failure');
 
           throw res.error;
         }
 
-        this.comicsStoreService.setApiState({
-          operation: 'addComic',
-          status: 'success',
-        });
+        this.setApiState(operation, 'success');
 
-        this.loggerService.log('ComicsServiceService: addComic: added comic');
+        this.loggerService.log(
+          `${this.serviceName}: ${operation}: added comic`
+        );
       }),
-      catchError(this.handleError<FirestoreResponse>('addComic'))
+      catchError(this.handleError<FirestoreResponse>(operation))
     );
   }
 
   updateComic(comic: Readonly<Comic>) {
     const id = comic.metadata!.id;
+    const operation = 'updateComic';
 
     return from(
       this.firestoreService.updateDocument(this.path, id, comic)
     ).pipe(
       tap((res) => {
         if (res.error) {
-          this.comicsStoreService.setApiState({
-            operation: 'updateComic',
-            status: 'failure',
-          });
+          this.setApiState(operation, 'failure');
 
           throw res.error;
         }
 
-        this.comicsStoreService.setApiState({
-          operation: 'updateComic',
-          status: 'success',
-        });
+        this.setApiState(operation, 'success');
 
         this.loggerService.log(
-          'ComicsServiceService: updateComic: updated comic'
+          `${this.serviceName}: ${operation}: updated comic`
         );
       }),
-      catchError(this.handleError<FirestoreResponse>('updateComic'))
+      catchError(this.handleError<FirestoreResponse>(operation))
     );
   }
 
   patchComic(comic: Readonly<Comic>, fields: Partial<Comic>) {
     const id = comic.metadata!.id;
+    const operation = 'patchComic';
 
     return from(
       this.firestoreService.patchDocument(this.path, id, comic, fields)
     ).pipe(
       tap((res) => {
         if (res.error) {
-          this.comicsStoreService.setApiState({
-            operation: 'patchComic',
-            status: 'failure',
-          });
+          this.setApiState(operation, 'failure');
 
           throw res.error;
         }
 
-        this.comicsStoreService.setApiState({
-          operation: 'patchComic',
-          status: 'success',
-        });
+        this.setApiState(operation, 'success');
 
         this.loggerService.log(
-          'ComicsServiceService: patchComic: patched comic'
+          `${this.serviceName}: ${operation}: patched comic`
         );
       }),
-      catchError(this.handleError<FirestoreResponse>('patchComic'))
+      catchError(this.handleError<FirestoreResponse>(operation))
     );
   }
 
   deleteComic(id: string) {
+    const operation = 'patchComic';
+
     return from(this.firestoreService.deleteDocument(this.path, id)).pipe(
       tap((res) => {
         if (res.error) {
-          this.comicsStoreService.setApiState({
-            operation: 'deleteComic',
-            status: 'failure',
-          });
+          this.setApiState(operation, 'failure');
 
           throw res.error;
         }
 
-        this.comicsStoreService.setApiState({
-          operation: 'deleteComic',
-          status: 'success',
-        });
+        this.setApiState(operation, 'success');
 
-        console.log('ComicsServiceService: deleteComic: deleted comic');
+        console.log(`${this.serviceName}: ${operation}: deleted comic`);
       }),
-      catchError(this.handleError<FirestoreResponse>('deleteComic'))
+      catchError(this.handleError<FirestoreResponse>(operation))
     );
+  }
+
+  private setApiState(operation: string, status: ApiState['status']) {
+    this.comicsStoreService.setApiState({
+      operation,
+      status,
+    });
   }
 
   private addMetadataUrlSegment(comic: Partial<Comic>) {
