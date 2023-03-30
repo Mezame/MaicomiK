@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
-interface ApiState {
+export interface ApiState {
   operation: string;
   status: 'loading' | 'success' | 'failure';
 }
