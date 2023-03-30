@@ -27,7 +27,7 @@ export class ComicEffects {
         return this.comicsService
           .getComics()
           .pipe(
-            map((comics) => ComicsApiActions.retrievedComicList({ comics }))
+            map((comics) => ComicsApiActions.gotComics({ comics }))
           );
       })
     )

@@ -26,7 +26,7 @@ export const incrementComicChapterAction = createAction(
 export const ComicsApiActions = createActionGroup({
   source: 'Comics API',
   events: {
-    'Retrieved Comic List': props<{ comics: readonly Comic[] }>(),
+    'Got Comics': props<{ comics: readonly Comic[] }>(),
 
     'Added Comic': props<{ comic: Readonly<Comic> }>(),
 

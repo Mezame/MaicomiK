@@ -7,7 +7,7 @@ export const initialState: readonly Comic[] = [];
 
 export const comicsReducer = createReducer(
   initialState,
-  on(ComicsApiActions.retrievedComicList, (_state, { comics }) => comics),
+  on(ComicsApiActions.gotComics, (_state, { comics }) => comics),
 
   on(ComicsApiActions.addedComic, (state, { comic }) => {
     let newState: readonly Comic[];
