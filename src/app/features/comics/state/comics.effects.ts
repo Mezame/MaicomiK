@@ -26,9 +26,7 @@ export class ComicEffects {
 
         return this.comicsService
           .getComics()
-          .pipe(
-            map((comics) => ComicsApiActions.gotComics({ comics }))
-          );
+          .pipe(map((comics) => ComicsApiActions.gotComics({ comics })));
       })
     )
   );
@@ -37,7 +35,9 @@ export class ComicEffects {
     this.actions$.pipe(
       ofType(addComicAction),
       switchMap((action) => {
-        return this.comicsService.addComic(action.comic).pipe(
+        const comic = action.comic;
+
+        return this.comicsService.addComic(comic).pipe(
           map((res) => {
             if (res.error) {
               throw new Error('comics api failure');
@@ -55,7 +55,9 @@ export class ComicEffects {
     this.actions$.pipe(
       ofType(editComicAction),
       switchMap((action) => {
-        return this.comicsService.updateComic(action.comic).pipe(
+        const comic = action.comic;
+
+        return this.comicsService.updateComic(comic).pipe(
           map((res) => {
             if (res.error) {
               throw new Error('comics api failure');
@@ -73,7 +75,10 @@ export class ComicEffects {
     this.actions$.pipe(
       ofType(incrementComicChapterAction),
       switchMap((action) => {
-        return this.comicsService.patchComic(action.comic, action.fields).pipe(
+        const comic = action.comic;
+        const fields = action.fields;
+
+        return this.comicsService.patchComic(comic, fields).pipe(
           map((res) => {
             if (res.error) {
               throw new Error('comics api failure');
@@ -91,7 +96,9 @@ export class ComicEffects {
     this.actions$.pipe(
       ofType(deleteComicAction),
       switchMap((action) => {
-        return this.comicsService.deleteComic(action.id).pipe(
+        const id = action.id;
+
+        return this.comicsService.deleteComic(id).pipe(
           map((res) => {
             if (res.error) {
               throw new Error('comics api failure');
