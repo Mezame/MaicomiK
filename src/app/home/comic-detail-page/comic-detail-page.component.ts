@@ -1,15 +1,21 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { ActivatedRoute } from '@angular/router';
-import { Comic } from '@features/comics/comic';
 import {
+  ChangeDetectionStrategy,
+  Component,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Comic } from '@features/comics/comic';
+import { ComicsStoreService } from '@features/comics/comics-store.service';
+import {
+  deleteComicAction,
   incrementComicChapterAction,
   loadComicsAction,
 } from '@features/comics/state/comics.actions';
 import { selectComic } from '@features/comics/state/comics.selectors';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
-import { ComicDetailBottomSheetComponent } from 'src/app/home/comic-detail-bottom-sheet/comic-detail-bottom-sheet.component';
 
 @Component({
   selector: 'app-comic-detail-page',
@@ -20,10 +26,14 @@ import { ComicDetailBottomSheetComponent } from 'src/app/home/comic-detail-botto
 export class ComicDetailPageComponent {
   comic$: Observable<Readonly<Comic>>;
 
+  @ViewChild('bottomSheet') bottomSheet!: TemplateRef<any>;
+
   constructor(
     private route: ActivatedRoute,
     private store: Store,
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+    private comicsStoreService: ComicsStoreService,
+    private router: Router
   ) {
     const comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
 
@@ -52,7 +62,7 @@ export class ComicDetailPageComponent {
     }
 
     if (action == 'openBottomSheet') {
-      this.openBottomSheet(comic);
+      this.openBottomSheet();
     }
   }
 
@@ -68,9 +78,30 @@ export class ComicDetailPageComponent {
     );
   }
 
-  openBottomSheet(comic: Readonly<Comic>): void {
-    this._bottomSheet.open(ComicDetailBottomSheetComponent, {
-      data: { comic },
+  deleteComic(comicId: string) {
+    this.closeBottomSheet();
+
+    this.store.dispatch(deleteComicAction({ id: comicId }));
+
+    this.comicsStoreService.getApiState().subscribe((apiState) => {
+      if (
+        apiState?.operation == 'deleteComic' &&
+        apiState.status == 'success'
+      ) {
+        this.navigateToComicListPage();
+      }
     });
+  }
+
+  openBottomSheet() {
+    this._bottomSheet.open(this.bottomSheet);
+  }
+
+  closeBottomSheet() {
+    this._bottomSheet.dismiss();
+  }
+
+  private navigateToComicListPage() {
+    this.router.navigateByUrl('/home/comics');
   }
 }
