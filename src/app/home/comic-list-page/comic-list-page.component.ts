@@ -5,7 +5,10 @@ import { Observable } from 'rxjs';
 import { Comic } from '@features/comics/comic';
 import { Router } from '@angular/router';
 import { selectComics } from '@features/comics/state/comics.selectors';
-import { loadComicsAction } from '@features/comics/state/comics.actions';
+import {
+  incrementComicChapterAction,
+  loadComicsAction,
+} from '@features/comics/state/comics.actions';
 
 @Component({
   selector: 'app-comic-list-page',
@@ -16,10 +19,7 @@ import { loadComicsAction } from '@features/comics/state/comics.actions';
 export class ComicListPageComponent implements OnInit {
   comics$: Observable<readonly Comic[]>;
 
-  constructor(
-    private store: Store,
-    private router: Router
-  ) {
+  constructor(private store: Store, private router: Router) {
     this.comics$ = this.store.select(selectComics);
   }
 
@@ -27,9 +27,37 @@ export class ComicListPageComponent implements OnInit {
     this.store.dispatch(loadComicsAction());
   }
 
-  goToComic(event: { action: string; data: unknown }) {
-    const comicUrlSegment = event.data;
+  getItemsAction(event: { action: string; data: Readonly<Comic> }) {
+    let action: string;
+    let comic: Readonly<Comic>;
+    let comicUrlSegment: string;
 
+    action = event.action;
+    comic = event.data;
+    comicUrlSegment = comic.metadata.urlSegment;
+
+    if (action == 'incrementChapter') {
+      this.incrementComicChapter(comic);
+    }
+
+    if (action == 'goToComicDetail') {
+      this.goToComicDetail(comicUrlSegment);
+    }
+  }
+
+  incrementComicChapter(comic: Readonly<Comic>) {
+    let updatedChapter: number;
+    let comicFields: Partial<Comic>;
+
+    updatedChapter = comic.chapter + 1;
+    comicFields = { chapter: updatedChapter };
+
+    this.store.dispatch(
+      incrementComicChapterAction({ comic, fields: comicFields })
+    );
+  }
+
+  goToComicDetail(comicUrlSegment: string) {
     this.router.navigate(['/home/comics', comicUrlSegment]);
   }
 }

@@ -2,7 +2,7 @@
   <div class="content">
     <app-comic-list-items
       [comics]="(comics$ | async)!"
-      (actionEvent)="goToComic($event)"
+      (actionEvent)="getItemsAction($event)"
     ></app-comic-list-items>
   </div>
   <div class="footer" footer>
