@@ -26,7 +26,8 @@
         <button
           mat-icon-button
           color="primary"
-          aria-label="Increase comic counter by one"
+          (click)="emitIncrementChapterAction(comic)"
+          aria-label="Increment comic chapter by one"
         >
           <mat-icon fontSet="material-symbols-rounded">add</mat-icon>
         </button>
@@ -36,8 +37,8 @@
     <div class="actions">
       <button
         mat-icon-button
+        (click)="emitGoToComicDetailAction(comic)"
         aria-label="Navigate to comic detail"
-        (click)="emitGoToComicAction(comic.metadata.urlSegment)"
       >
         <mat-icon fontSet="material-symbols-rounded">read_more</mat-icon>
       </button>

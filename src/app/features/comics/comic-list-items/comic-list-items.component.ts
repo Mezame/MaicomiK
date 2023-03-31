@@ -13,11 +13,17 @@ export class ComicListItemsComponent {
 
   @Output() actionEvent = new EventEmitter<{
     action: string;
-    data: string;
+    data: Readonly<Comic>;
   }>();
 
-  emitGoToComicAction(data: string) {
-    const action = 'goToComic';
+  emitGoToComicDetailAction(data: Readonly<Comic>) {
+    const action = 'goToComicDetail';
+
+    this.actionEvent.emit({ action, data });
+  }
+
+  emitIncrementChapterAction(data: Readonly<Comic>) {
+    const action = 'incrementChapter';
 
     this.actionEvent.emit({ action, data });
   }
