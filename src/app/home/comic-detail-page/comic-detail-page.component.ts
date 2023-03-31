@@ -40,7 +40,7 @@ export class ComicDetailPageComponent {
     this.comic$ = this.store.select(selectComic(comicUrlSegment)).pipe(
       map((comic) => {
         if (!comic) {
-          this.store.dispatch(loadComicsAction());
+          this.store.dispatch({ type: '[Comic Detail Page] Load Comics' });
 
           return {} as Readonly<Comic>;
         }
