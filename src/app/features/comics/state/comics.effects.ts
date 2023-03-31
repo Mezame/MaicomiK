@@ -17,7 +17,11 @@ import { selectComics } from './comics.selectors';
 export class ComicEffects {
   loadComics$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadComicsAction),
+      ofType(
+        loadComicsAction,
+        '[Comic Detail Page] Load Comics',
+        '[Comic Edit Page] Load Comics'
+      ),
       concatLatestFrom(() => this.store.select(selectComics)),
       mergeMap(([_, comics]) => {
         if (comics?.length > 0) {
