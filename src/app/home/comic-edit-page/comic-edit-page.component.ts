@@ -37,7 +37,7 @@ export class ComicEditPageComponent {
     this.comic$ = this.store.select(selectComic(this.comicUrlSegment)).pipe(
       map((comic) => {
         if (!comic) {
-          this.store.dispatch(loadComicsAction());
+          this.store.dispatch({ type: '[Comic Edit Page] Load Comics' });
 
           return null as unknown as Readonly<Comic>;
         }
