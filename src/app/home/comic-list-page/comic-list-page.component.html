@@ -1,11 +1,11 @@
-<app-primary-layout>
-  <div class="content">
-    <app-comic-list-items
-      [comics]="(comics$ | async)!"
-      (actionEvent)="getItemsAction($event)"
-    ></app-comic-list-items>
-  </div>
-  <div class="footer" footer>
+<app-comic-list-items
+  [comics]="(comics$ | async)!"
+  (actionEvent)="getItemsAction($event)"
+></app-comic-list-items>
+
+<ng-container *appFooterPortal="footer"></ng-container>
+<ng-template #footer>
+  <div class="footer">
     <div class="tab">
       <a
         mat-button
@@ -25,4 +25,4 @@
       </button>
     </div>
   </div>
-</app-primary-layout>
+</ng-template>

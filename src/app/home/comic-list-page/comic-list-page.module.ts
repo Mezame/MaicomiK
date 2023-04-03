@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ComicListItemsModule } from '@features/comics/comic-list-items/comic-list-items.module';
 import { PrimaryLayoutModule } from '@shared/layouts/primary-layout/primary-layout.module';
 import { ComicListPageComponent } from './comic-list-page.component';
+import { FooterPortalModule } from '@shared/layouts/primary-layout/footer-portal/footer-portal.module';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     ComicListItemsModule,
     MatButtonModule,
     MatIconModule,
+    FooterPortalModule,
   ],
 })
 export class ComicListPageModule {}
