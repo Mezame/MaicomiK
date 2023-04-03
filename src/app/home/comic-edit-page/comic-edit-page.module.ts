@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ComicAddEditFormModule } from '@features/comics/comic-add-edit-form/comic-add-edit-form.module';
 import { PrimaryLayoutModule } from '@shared/layouts/primary-layout/primary-layout.module';
 import { ComicEditPageComponent } from './comic-edit-page.component';
+import { FooterPortalModule } from '@shared/layouts/primary-layout/footer-portal/footer-portal.module';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     PrimaryLayoutModule,
     ComicAddEditFormModule,
     MatButtonModule,
+    FooterPortalModule,
   ],
 })
 export class ComicEditPageModule {}

@@ -1,9 +1,7 @@
-<app-primary-layout>
-  <app-comic-detail-content
-    [comic]="(comic$ | async)!"
-    (actionEvent)="getContentAction($event)"
-  ></app-comic-detail-content>
-</app-primary-layout>
+<app-comic-detail-content
+  [comic]="(comic$ | async)!"
+  (actionEvent)="getContentAction($event)"
+></app-comic-detail-content>
 
 <ng-template #bottomSheet>
   <mat-nav-list *ngIf="comic$ | async as comic; else noComic">
@@ -17,7 +15,11 @@
 
     <a
       *ngIf="comic.readers?.length"
-      [routerLink]="['/home/comics', comic?.metadata?.urlSegment, 'reader-sites']"
+      [routerLink]="[
+        '/home/comics',
+        comic?.metadata?.urlSegment,
+        'reader-sites'
+      ]"
       mat-list-item
       (click)="closeBottomSheet()"
     >
