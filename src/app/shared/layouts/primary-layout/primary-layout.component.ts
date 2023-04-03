@@ -3,13 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostListener,
   OnDestroy,
-  OnInit,
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { MatToolbar } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-primary-layout',
@@ -20,9 +17,9 @@ import { MatToolbar } from '@angular/material/toolbar';
 export class PrimaryLayoutComponent implements AfterViewInit, OnDestroy {
   resizeObserver!: ResizeObserver;
 
-  @ViewChild('toolbar') toolbar!: MatToolbar;
-  @ViewChild('body') body!: ElementRef<HTMLDivElement>;
-  @ViewChild('footer') footer!: ElementRef<HTMLDivElement>;
+  @ViewChild('toolbar', { read: ElementRef }) toolbar!: ElementRef<HTMLElement>;
+  @ViewChild('content') content!: ElementRef<HTMLDivElement>;
+  @ViewChild('footer', { read: ElementRef }) footer!: ElementRef<HTMLElement>;
 
   constructor(private renderer: Renderer2) {}
 
@@ -41,16 +38,16 @@ export class PrimaryLayoutComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    this.resizeObserver.observe(this.body.nativeElement);
+    this.resizeObserver.observe(this.content.nativeElement);
   }
 
   ngOnDestroy(): void {
-    this.resizeObserver.unobserve(this.body.nativeElement);
+    this.resizeObserver.unobserve(this.content.nativeElement);
   }
 
   onScroll(event: any) {
     const scrollTop = event.target.scrollTop;
-    const toolbarEl = this.toolbar._elementRef.nativeElement;
+    const toolbarEl = this.toolbar.nativeElement;
 
     if (scrollTop > 28) {
       this.renderer.addClass(toolbarEl, 'sticky-toolbar');
