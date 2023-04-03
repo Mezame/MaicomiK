@@ -1,20 +1,20 @@
-<app-primary-layout>
-  <div class="content">
-    <span class="title-medium">Add comic</span>
+<span class="title-medium">Add comic</span>
 
-    <app-comic-add-edit-form
-      action="addComic"
-      (actionEvent)="getFormAction($event)"
-    ></app-comic-add-edit-form>
-  </div>
-  <div class="footer" footer>
+<app-comic-add-edit-form
+  action="addComic"
+  (actionEvent)="getFormAction($event)"
+></app-comic-add-edit-form>
+
+<ng-container *appFooterPortal="footer"></ng-container>
+<ng-template #footer>
+  <div class="footer">
     <div class="actions">
       <button
         mat-button
         class="label-medium"
         color="primary"
         (click)="cancel()"
-        aria-label="Go to add component"
+        aria-label="Cancel add comic and go to comic list"
       >
         <span>Cancel</span>
       </button>
@@ -25,10 +25,10 @@
         color="primary"
         [disabled]="isSubmitButtonDisabled"
         (click)="addComic()"
-        aria-label="Go to filters"
+        aria-label="Add comic"
       >
         <span>Add comic</span>
       </button>
     </div>
   </div>
-</app-primary-layout>
+</ng-template>

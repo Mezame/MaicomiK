@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Comic } from '@features/comics/comic';
 import { ComicFormValue } from '@features/comics/comic-add-edit-form/comic-form-value';
@@ -13,9 +20,11 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./comic-add-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicAddPageComponent {
+export class ComicAddPageComponent implements AfterViewInit, OnDestroy {
   comic!: Partial<Comic>;
   isSubmitButtonDisabled: boolean;
+
+  @ViewChild('footer') footer!: TemplateRef<any>;
 
   constructor(
     private comicFormService: ComicFormService,
@@ -26,8 +35,14 @@ export class ComicAddPageComponent {
     this.isSubmitButtonDisabled = true;
   }
 
+  ngAfterViewInit(): void {
+    //this.footerService.setFooter(this.footer);
+  }
+
   ngOnDestroy(): void {
     this.comicsStoreService.clearApiState();
+
+    //this.footerService.clearFooter();
   }
 
   getFormAction(event: {
