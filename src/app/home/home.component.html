@@ -1,0 +1,11 @@
+<app-primary-layout>
+  <ng-container content>
+    <router-outlet></router-outlet>
+  </ng-container>
+
+  <ng-container
+    *ngIf="footer$ | async as footer"
+    [ngTemplateOutlet]="footer"
+    footer
+  ></ng-container>
+</app-primary-layout>
