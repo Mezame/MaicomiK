@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class FooterPortalService {
-  private footer: Subject<TemplateRef<any> | null>;
+  private footer: Subject<Readonly<TemplateRef<any>> | null>;
 
   constructor() {
     this.footer = new Subject();
@@ -16,7 +16,7 @@ export class FooterPortalService {
   }
 
   getFooter() {
-    return this.footer;
+    return this.footer.asObservable();
   }
 
   clearFooter() {
