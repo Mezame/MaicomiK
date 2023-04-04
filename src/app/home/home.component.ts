@@ -19,7 +19,7 @@ import { Observable, filter } from 'rxjs';
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   currentUrl: string;
-  footer$!: Observable<TemplateRef<any> | null>;
+  footer$!: Observable<Readonly<TemplateRef<any>> | null>;
 
   @ViewChild('comicListFooter') comicListFooter!: TemplateRef<any>;
 
