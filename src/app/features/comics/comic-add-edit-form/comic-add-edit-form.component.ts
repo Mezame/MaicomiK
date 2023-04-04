@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import { Comic, ComicFormat, ComicStatus } from '../comic';
 import { ComicFormValue } from './comic-form-value';
-import { webUrlValidator } from './validators';
+import { webUrlValidator } from '@shared/validators/web-url-validator';
 
 @Component({
   selector: 'app-comic-add-edit-form',
@@ -98,7 +98,7 @@ export class ComicAddEditFormComponent implements OnInit {
     }
   }
 
-  onValueChange() {
+  onValueChanges() {
     let comicFormValue: Readonly<ComicFormValue>;
     let isComicFormValid: boolean;
     let isComicFormDirty: boolean;
