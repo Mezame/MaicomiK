@@ -6,7 +6,7 @@
 <ng-template #bottomSheet>
   <mat-nav-list *ngIf="comic$ | async as comic; else noComic">
     <a
-      [routerLink]="['/home/comics', comic?.metadata?.urlSegment, 'edit']"
+      [routerLink]="['/home', 'comics', comic?.metadata?.urlSegment, 'edit']"
       mat-list-item
       (click)="closeBottomSheet()"
     >
@@ -14,21 +14,37 @@
     </a>
 
     <a
-      *ngIf="comic.readers?.length"
+      *ngIf="comic.readers?.length; else noReaderSites"
       [routerLink]="[
-        '/home/comics',
+        '/home,',
+        'comics',
         comic?.metadata?.urlSegment,
-        'reader-sites'
+        'readers/edit'
       ]"
       mat-list-item
       (click)="closeBottomSheet()"
     >
       <span>Edit reader sites</span>
     </a>
+    <ng-template #noReaderSites>
+      <a
+        [routerLink]="[
+          '/home',
+          'comics',
+          comic?.metadata?.urlSegment,
+          'readers',
+          'add'
+        ]"
+        mat-list-item
+        (click)="closeBottomSheet()"
+      >
+        <span>Add reader sites</span>
+      </a>
+    </ng-template>
 
     <a
       *ngIf="comic.notes"
-      [routerLink]="['/home/comics', comic?.metadata?.urlSegment, 'notes']"
+      [routerLink]="['/home', 'comics', comic?.metadata?.urlSegment, 'notes']"
       mat-list-item
       (click)="closeBottomSheet()"
     >
