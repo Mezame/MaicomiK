@@ -36,6 +36,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'comics/:comicUrlSegment/readers/add',
+        loadChildren: () =>
+          import(
+            './comic-readers-add-page/comic-readers-add-page.module'
+          ).then((m) => m.ComicReadersAddPageModule),
+      },
+      {
         path: '',
         redirectTo: 'comics',
         pathMatch: 'full',
