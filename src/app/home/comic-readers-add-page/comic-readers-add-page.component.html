@@ -1,0 +1,36 @@
+<span class="title-medium">Adding comic readers</span>
+
+<app-comic-readers-add-edit-form
+*ngIf="comic$ | async as comic"
+  action="addComicReaders"
+  [data]="comic"
+  (actionEvent)="getFormAction($event)"
+></app-comic-readers-add-edit-form>
+
+<ng-container *appFooterPortal="footer"></ng-container>
+<ng-template #footer>
+  <div class="footer">
+    <div class="actions">
+      <button
+        mat-button
+        class="label-medium"
+        color="primary"
+        (click)="cancel()"
+        aria-label="Cancel add comic and go to comic list"
+      >
+        <span>Cancel</span>
+      </button>
+
+      <button
+        mat-flat-button
+        class="add-comic-action label-medium"
+        color="primary"
+        [disabled]="isSubmitButtonDisabled"
+        (click)="addComicReaders()"
+        aria-label="Add comic readers"
+      >
+        <span>Add readers</span>
+      </button>
+    </div>
+  </div>
+</ng-template>
