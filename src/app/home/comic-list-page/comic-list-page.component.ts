@@ -52,12 +52,14 @@ export class ComicListPageComponent implements OnInit {
     updatedChapter = comic.chapter + 1;
     comicFields = { chapter: updatedChapter };
 
-    this.store.dispatch(
-      incrementComicChapterAction({ comic, fields: comicFields })
-    );
+    this.store.dispatch({
+      type: '[Comic List Page] Increment Comic Chapter',
+      comic,
+      fields: comicFields,
+    });
   }
 
   goToComicDetail(comicUrlSegment: string) {
-    this.router.navigate(['/home/comics', comicUrlSegment]);
+    this.router.navigate(['/home', 'comics', comicUrlSegment]);
   }
 }
