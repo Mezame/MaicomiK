@@ -36,11 +36,18 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'comics/:comicUrlSegment/readers/add',
+        path: 'comics/:comicUrlSegment/add-readers',
+        loadChildren: () =>
+          import('./comic-readers-add-page/comic-readers-add-page.module').then(
+            (m) => m.ComicReadersAddPageModule
+          ),
+      },
+      {
+        path: 'comics/:comicUrlSegment/readers/edit',
         loadChildren: () =>
           import(
-            './comic-readers-add-page/comic-readers-add-page.module'
-          ).then((m) => m.ComicReadersAddPageModule),
+            './comic-readers-edit-page/comic-readers-edit-page.module'
+          ).then((m) => m.ComicReadersEditPageModule),
       },
       {
         path: '',
