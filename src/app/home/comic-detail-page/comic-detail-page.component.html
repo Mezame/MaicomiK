@@ -16,10 +16,11 @@
     <a
       *ngIf="comic.readers?.length; else noReaderSites"
       [routerLink]="[
-        '/home,',
+        '/home',
         'comics',
         comic?.metadata?.urlSegment,
-        'readers/edit'
+        'readers',
+        'edit'
       ]"
       mat-list-item
       (click)="closeBottomSheet()"
@@ -32,8 +33,7 @@
           '/home',
           'comics',
           comic?.metadata?.urlSegment,
-          'readers',
-          'add'
+          'add-readers'
         ]"
         mat-list-item
         (click)="closeBottomSheet()"
