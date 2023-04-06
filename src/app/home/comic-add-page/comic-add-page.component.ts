@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
@@ -20,7 +19,7 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./comic-add-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicAddPageComponent implements AfterViewInit, OnDestroy {
+export class ComicAddPageComponent implements OnDestroy {
   comic!: Partial<Comic>;
   isSubmitButtonDisabled: boolean;
 
@@ -35,14 +34,8 @@ export class ComicAddPageComponent implements AfterViewInit, OnDestroy {
     this.isSubmitButtonDisabled = true;
   }
 
-  ngAfterViewInit(): void {
-    //this.footerService.setFooter(this.footer);
-  }
-
   ngOnDestroy(): void {
     this.comicsStoreService.clearApiState();
-
-    //this.footerService.clearFooter();
   }
 
   getFormAction(event: {
