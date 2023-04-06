@@ -78,7 +78,10 @@ export class ComicEffects {
 
   patchComic$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(incrementComicChapterAction),
+      ofType(
+        incrementComicChapterAction,
+        '[Comic List Page] Increment Comic Chapter'
+      ),
       switchMap((action) => {
         const comic = action.comic;
         const fields = action.fields;
