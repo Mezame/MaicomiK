@@ -20,7 +20,8 @@ export class ComicEffects {
       ofType(
         loadComicsAction,
         '[Comic Detail Page] Load Comics',
-        '[Comic Edit Page] Load Comics'
+        '[Comic Edit Page] Load Comics',
+        '[Comic Readers Add Page] Load Comics'
       ),
       concatLatestFrom(() => this.store.select(selectComics)),
       mergeMap(([_, comics]) => {
@@ -57,7 +58,7 @@ export class ComicEffects {
 
   updateComic$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(editComicAction),
+      ofType(editComicAction, '[Comic Readers Add Page] Update Comic'),
       switchMap((action) => {
         const comic = action.comic;
 
