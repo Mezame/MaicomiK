@@ -23,12 +23,12 @@
         <input
           matInput
           placeholder="http://link-example"
-          formControlName="link"
+          formControlName="url"
         />
 
         <mat-error
           class="body-small"
-          *ngIf="cRSForm.controls['link'].errors?.['webUrl']"
+          *ngIf="cRSForm.controls['url'].errors?.['webUrl']"
           >This is not a valid link.</mat-error
         >
       </mat-form-field>
