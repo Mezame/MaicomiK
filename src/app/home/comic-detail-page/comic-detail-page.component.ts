@@ -93,6 +93,19 @@ export class ComicDetailPageComponent {
     });
   }
 
+  deleteComicReaders(comic: Readonly<Comic>) {
+    let comicFields: Partial<Comic>;
+
+    this.closeBottomSheet();
+    comicFields = { readers: null };
+
+    this.store.dispatch({
+      type: '[Comic Detail Page] Delete Comic Readers',
+      comic,
+      fields: comicFields,
+    });
+  }
+
   openBottomSheet() {
     this._bottomSheet.open(this.bottomSheet);
   }
