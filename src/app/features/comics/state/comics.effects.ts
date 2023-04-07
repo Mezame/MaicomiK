@@ -85,7 +85,8 @@ export class ComicEffects {
     this.actions$.pipe(
       ofType(
         incrementComicChapterAction,
-        '[Comic List Page] Increment Comic Chapter'
+        '[Comic List Page] Increment Comic Chapter',
+        '[Comic Detail Page] Delete Comic Readers'
       ),
       switchMap((action) => {
         const comic = action.comic;
