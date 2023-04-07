@@ -26,7 +26,7 @@ export class ComicReadersAddEditFormComponent {
   comicReadersFormArray!: FormArray<
     FormGroup<{
       name: FormControl<string | null>;
-      link: FormControl<string | null>;
+      url: FormControl<string | null>;
     }>
   >;
 
@@ -53,6 +53,25 @@ export class ComicReadersAddEditFormComponent {
     const newComicReadersForm = this.createComicReadersForm();
 
     this.comicReadersFormArray = this.fb.array([newComicReadersForm]);
+
+    if (
+      this.action == 'editComicReaders' &&
+      this.comic.readers &&
+      this.comic.readers.length > 0
+    ) {
+      for (let i = 0; i < this.comic.readers.length; i++) {
+        newComicReadersForm.patchValue({
+          name: this.comic.readers[i].name,
+          url: this.comic.readers[i].url,
+        });
+
+        if (i < 1) {
+          this.cRSArrayCtrl[0] = newComicReadersForm;
+        } else {
+          this.comicReadersFormArray.push(newComicReadersForm);
+        }
+      }
+    }
   }
 
   addComicReadersForm() {
@@ -104,12 +123,12 @@ export class ComicReadersAddEditFormComponent {
   private createComicReadersForm() {
     let comicReadersForm: FormGroup<{
       name: FormControl<string | null>;
-      link: FormControl<string | null>;
+      url: FormControl<string | null>;
     }>;
 
     comicReadersForm = this.fb.group({
       name: ['', Validators.required],
-      link: [null as any, webUrlValidator()],
+      url: [null as any, webUrlValidator()],
     });
 
     return comicReadersForm;
