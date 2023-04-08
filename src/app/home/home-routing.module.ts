@@ -50,6 +50,13 @@ const routes: Routes = [
           ).then((m) => m.ComicReadersEditPageModule),
       },
       {
+        path: 'comics/:comicUrlSegment/add-notes',
+        loadChildren: () =>
+          import('./comic-notes-add-page/comic-notes-add-page.module').then(
+            (m) => m.ComicNotesAddPageModule
+          ),
+      },
+      {
         path: '',
         redirectTo: 'comics',
         pathMatch: 'full',
