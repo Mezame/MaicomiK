@@ -1,1 +1,14 @@
-<p>comic-notes-add-edit-form works!</p>
+<form (change)="onValueChanges()">
+  <mat-form-field appearance="outline" floatLabel="always">
+    <mat-label>Notes</mat-label>
+    <textarea
+      matInput
+      placeholder="These are some comic notes."
+      [formControl]="comicNotesForm"
+    ></textarea>
+
+    <mat-error class="body-small" *ngIf="comicNotesForm.errors?.['required']"
+      >The comic notes are required.</mat-error
+    >
+  </mat-form-field>
+</form>
