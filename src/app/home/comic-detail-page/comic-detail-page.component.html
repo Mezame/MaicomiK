@@ -60,7 +60,7 @@
 
     <a
       *ngIf="comic.notes"
-      [routerLink]="['/home', 'comics', comic?.metadata?.urlSegment, 'notes']"
+      [routerLink]="['/home', 'comics', comic?.metadata?.urlSegment, 'notes', 'edit']"
       mat-list-item
       (click)="closeBottomSheet()"
     >
