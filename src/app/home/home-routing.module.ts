@@ -57,6 +57,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'comics/:comicUrlSegment/notes/edit',
+        loadChildren: () =>
+          import('./comic-notes-edit-page/comic-notes-edit-page.module').then(
+            (m) => m.ComicNotesEditPageModule
+          ),
+      },
+      {
         path: '',
         redirectTo: 'comics',
         pathMatch: 'full',
