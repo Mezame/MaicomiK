@@ -23,7 +23,8 @@ export class ComicEffects {
         '[Comic Edit Page] Load Comics',
         '[Comic Readers Add Page] Load Comics',
         '[Comic Readers Edit Page] Load Comics',
-        '[Comic Notes Add Page] Load Comics'
+        '[Comic Notes Add Page] Load Comics',
+        '[Comic Notes Edit Page] Load Comics'
       ),
       concatLatestFrom(() => this.store.select(selectComics)),
       mergeMap(([_, comics]) => {
@@ -64,7 +65,8 @@ export class ComicEffects {
         editComicAction,
         '[Comic Readers Add Page] Update Comic',
         '[Comic Readers Edit Page] Update Comic',
-        '[Comic Notes Add Page] Update Comic'
+        '[Comic Notes Add Page] Update Comic',
+        '[Comic Notes Edit Page] Update Comic'
       ),
       switchMap((action) => {
         const comic = action.comic;
