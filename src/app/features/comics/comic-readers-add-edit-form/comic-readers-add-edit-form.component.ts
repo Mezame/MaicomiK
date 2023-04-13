@@ -25,8 +25,8 @@ import { Comic } from '../comic';
 export class ComicReadersAddEditFormComponent {
   comicReadersFormArray!: FormArray<
     FormGroup<{
-      name: FormControl<string | null>;
-      url: FormControl<string | null>;
+      name: FormControl<ComicReadersFormValue['name']>;
+      url: FormControl<ComicReadersFormValue['url']>;
     }>
   >;
 
@@ -122,8 +122,8 @@ export class ComicReadersAddEditFormComponent {
 
   private createComicReadersForm() {
     let comicReadersForm: FormGroup<{
-      name: FormControl<string | null>;
-      url: FormControl<string | null>;
+      name: FormControl<ComicReadersFormValue['name']>;
+      url: FormControl<ComicReadersFormValue['url']>;
     }>;
 
     comicReadersForm = this.fb.group({
