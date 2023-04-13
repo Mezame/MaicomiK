@@ -90,7 +90,8 @@ export class ComicEffects {
       ofType(
         incrementComicChapterAction,
         '[Comic List Page] Increment Comic Chapter',
-        '[Comic Detail Page] Delete Comic Readers'
+        '[Comic Detail Page] Delete Comic Readers',
+        '[Comic Detail Page] Delete Comic Notes'
       ),
       switchMap((action) => {
         const comic = action.comic;
