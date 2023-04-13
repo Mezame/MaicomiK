@@ -115,6 +115,6 @@ export class ComicEditPageComponent {
   }
 
   private navigateToComicDetailPage() {
-    this.router.navigate(['/home/comics', this.comicUrlSegment]);
+    this.router.navigate(['/home', 'comics', this.comicUrlSegment]);
   }
 }
