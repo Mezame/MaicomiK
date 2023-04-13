@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Comic } from '@features/comics/comic';
 import { ComicReadersFormValue } from '@features/comics/comic-readers-add-edit-form/comic-readers-form-value';
 import { ComicsStoreService } from '@features/comics/comics-store.service';
-import { editComicAction } from '@features/comics/state/comics.actions';
 import { selectComic } from '@features/comics/state/comics.selectors';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
