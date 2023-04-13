@@ -1,1 +1,39 @@
-<p>comic-notes-edit-page works!</p>
+<span class="title-medium">Editing comic notes</span>
+
+<app-comic-notes-add-edit-form
+  *ngIf="comic$ | async as comic; else noComic"
+  action="editComicNotes"
+  [data]="comic"
+  (actionEvent)="getFormAction($event)"
+></app-comic-notes-add-edit-form>
+<ng-template #noComic>
+  <app-comic-notes-add-edit-form></app-comic-notes-add-edit-form>
+</ng-template>
+
+<ng-container *appFooterPortal="footer"></ng-container>
+<ng-template #footer>
+  <div class="footer">
+    <div class="actions">
+      <button
+        mat-button
+        class="label-medium"
+        color="primary"
+        (click)="cancel()"
+        aria-label="Cancel edit notes and go to comic detail"
+      >
+        <span>Cancel</span>
+      </button>
+
+      <button
+        mat-flat-button
+        class="add-comic-action label-medium"
+        color="primary"
+        [disabled]="isSubmitButtonDisabled"
+        (click)="editComicNotes()"
+        aria-label="Edit comic notes"
+      >
+        <span>Edit notes</span>
+      </button>
+    </div>
+  </div>
+</ng-template>
