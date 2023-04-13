@@ -28,11 +28,11 @@ export class ComicAddEditFormComponent implements OnInit {
   previewImageSrc: string | null;
 
   comicForm!: FormGroup<{
-    title: FormControl<string | null>;
-    format: FormControl<string | null>;
-    status: FormControl<string | null>;
-    chapter: FormControl<string | null>;
-    coverUrl: FormControl<string | null>;
+    title: FormControl<ComicFormValue['title']>;
+    format: FormControl<ComicFormValue['format']>;
+    status: FormControl<ComicFormValue['status']>;
+    chapter: FormControl<ComicFormValue['chapter']>;
+    coverUrl: FormControl<ComicFormValue['coverUrl']>;
   }>;
 
   @Input('data') comic!: Readonly<Comic>;
