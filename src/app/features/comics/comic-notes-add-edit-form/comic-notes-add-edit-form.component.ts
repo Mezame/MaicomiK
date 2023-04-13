@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Comic } from '../comic';
+import { ComicNotesFormValue } from './comic-notes-form-value';
 
 @Component({
   selector: 'app-comic-notes-add-edit-form',
@@ -42,7 +43,7 @@ export class ComicNotesAddEditFormComponent {
   }
 
   onValueChanges() {
-    let comicNotesFormValue: string | null;
+    let comicNotesFormValue: ComicNotesFormValue;
     let isComicNotesFormValid: boolean;
     let isComicNotesFormDirty: boolean;
 
@@ -80,7 +81,7 @@ export class ComicNotesAddEditFormComponent {
   }
 
   emitAddComicNotes(
-    comicNotesFormValue: string | null,
+    comicNotesFormValue: ComicNotesFormValue,
     isComicNotesFormValid = false
   ) {
     const action = 'addComicNotes';
@@ -94,7 +95,7 @@ export class ComicNotesAddEditFormComponent {
   }
 
   emitEditComicNotes(
-    comicNotesFormValue: string | null,
+    comicNotesFormValue: ComicNotesFormValue,
     isComicNotesFormValid = false,
     isComicNotesFormDirty = false
   ) {

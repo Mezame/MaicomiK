@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Comic } from '@features/comics/comic';
+import { ComicNotesFormValue } from '@features/comics/comic-notes-add-edit-form/comic-notes-form-value';
 import { ComicsStoreService } from '@features/comics/comics-store.service';
 import { selectComic } from '@features/comics/state/comics.selectors';
 import { Store } from '@ngrx/store';
@@ -44,13 +45,13 @@ export class ComicNotesAddPageComponent {
   getFormAction(event: {
     action: string;
     data: {
-      comicNotesFormValue: string | null;
+      comicNotesFormValue: ComicNotesFormValue;
       isComicNotesFormValid: boolean;
       originalComic: Readonly<Comic>;
     };
   }) {
     let action: string;
-    let comicNotesFormValue: string | null;
+    let comicNotesFormValue: ComicNotesFormValue;
     let isComicNotesFormValid: boolean;
     let comicNotes: Comic['notes'];
     let originalComic: Readonly<Comic>;
