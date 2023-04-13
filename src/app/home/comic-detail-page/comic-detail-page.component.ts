@@ -11,11 +11,10 @@ import { ComicsStoreService } from '@features/comics/comics-store.service';
 import {
   deleteComicAction,
   incrementComicChapterAction,
-  loadComicsAction,
 } from '@features/comics/state/comics.actions';
 import { selectComic } from '@features/comics/state/comics.selectors';
 import { Store } from '@ngrx/store';
-import { map, Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-comic-detail-page',
