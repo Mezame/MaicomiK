@@ -55,28 +55,30 @@ export class ComicEditPageComponent {
 
   getFormAction(event: {
     action: string;
-    data: Readonly<ComicFormValue>;
-    isFormValid: boolean;
-    isFormDirty?: boolean;
-    originalComic?: Readonly<Comic>;
+    data: {
+      comicFormValue: Readonly<ComicFormValue>;
+      isComicFormValid: boolean;
+      isComicFormDirty?: boolean;
+      originalComic?: Readonly<Comic>;
+    };
   }) {
     let action: string;
     let comicFormValue: Readonly<ComicFormValue>;
-    let isFormValid: boolean | undefined;
-    let isFormDirty: boolean | undefined;
+    let isComicFormValid: boolean;
+    let isComicFormDirty: boolean;
     let originalComic: Readonly<Comic>;
     let editedComicFields: Partial<Comic>;
 
     action = event.action;
-    comicFormValue = { ...event.data };
-    isFormValid = event.isFormValid;
-    isFormDirty = event.isFormDirty;
+    comicFormValue = { ...event.data.comicFormValue };
+    isComicFormValid = event.data.isComicFormValid;
+    isComicFormDirty = event.data.isComicFormDirty!;
 
     if (action == 'editComic') {
-      if (isFormValid && isFormDirty) {
+      if (isComicFormValid && isComicFormDirty) {
         editedComicFields = this.comicFormService.formatChapter(comicFormValue);
 
-        originalComic = event.originalComic!;
+        originalComic = event.data.originalComic!;
 
         this.editedComic = { ...originalComic, ...editedComicFields };
 

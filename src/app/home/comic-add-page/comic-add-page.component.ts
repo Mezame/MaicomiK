@@ -40,20 +40,22 @@ export class ComicAddPageComponent implements OnDestroy {
 
   getFormAction(event: {
     action: string;
-    data: Readonly<ComicFormValue>;
-    isFormValid?: boolean;
+    data: {
+      comicFormValue: Readonly<ComicFormValue>;
+      isComicFormValid: boolean;
+    };
   }) {
     let action: string;
     let comicFormValue: Readonly<ComicFormValue>;
-    let isFormValid: boolean | undefined;
+    let isComicFormValid: boolean;
     let formatedComic: Partial<Comic>;
 
     action = event.action;
-    comicFormValue = { ...event.data };
-    isFormValid = event.isFormValid;
+    comicFormValue = { ...event.data.comicFormValue };
+    isComicFormValid = event.data.isComicFormValid;
 
     if (action == 'addComic') {
-      if (isFormValid) {
+      if (isComicFormValid) {
         formatedComic = this.comicFormService.formatChapter(comicFormValue);
 
         this.comic = { ...formatedComic };
