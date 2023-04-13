@@ -16,7 +16,6 @@ import { Observable, map } from 'rxjs';
 export class ComicReadersEditPageComponent {
   comic$: Observable<Readonly<Comic>>;
   comicUrlSegment: string;
-  comicReaders!: Partial<Comic['readers']>;
   updatedComic!: Readonly<Comic>;
   isSubmitButtonDisabled: boolean;
 
@@ -31,7 +30,9 @@ export class ComicReadersEditPageComponent {
     this.comic$ = this.store.select(selectComic(this.comicUrlSegment)).pipe(
       map((comic) => {
         if (!comic) {
-          this.store.dispatch({ type: '[Comic Readers Edit Page] Load Comics' });
+          this.store.dispatch({
+            type: '[Comic Readers Edit Page] Load Comics',
+          });
 
           return null as unknown as Readonly<Comic>;
         }
