@@ -54,6 +54,10 @@ app-icon .mdc-list-item.mdc-list-item--with-one-line .mdc-list-item__start {
   margin-top: 4px;
 }
 
+.mdc-list-item--with-leading-icon .mdc-list-item__start {
+  height: 16px;
+}
+
 .mdc-list-item--with-one-line.mdc-list-item--with-leading-avatar,
 .mdc-list-item--with-one-line.mdc-list-item--with-leading-icon,
 .mdc-list-item--with-one-line.mdc-list-item--with-leading-thumbnail,
