@@ -106,6 +106,19 @@ export class ComicDetailPageComponent {
     });
   }
 
+  deleteComicNotes(comic: Readonly<Comic>) {
+    let comicFields: Partial<Comic>;
+
+    this.closeBottomSheet();
+    comicFields = { notes: null };
+
+    this.store.dispatch({
+      type: '[Comic Detail Page] Delete Comic Notes',
+      comic,
+      fields: comicFields,
+    });
+  }
+
   openBottomSheet() {
     this._bottomSheet.open(this.bottomSheet);
   }
