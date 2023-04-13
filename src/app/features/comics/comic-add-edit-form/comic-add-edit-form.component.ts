@@ -41,10 +41,12 @@ export class ComicAddEditFormComponent implements OnInit {
 
   @Output() actionEvent = new EventEmitter<{
     action: string;
-    data: Readonly<ComicFormValue>;
-    isFormValid: boolean;
-    isFormDirty?: boolean;
-    originalComic?: Readonly<Comic>;
+    data: {
+      comicFormValue: Readonly<ComicFormValue>;
+      isComicFormValid: boolean;
+      isComicFormDirty?: boolean;
+      originalComic?: Readonly<Comic>;
+    };
   }>();
 
   constructor(private fb: FormBuilder) {
@@ -129,21 +131,36 @@ export class ComicAddEditFormComponent implements OnInit {
     }
   }
 
-  emitAddComic(data: Readonly<ComicFormValue>, isFormValid = false) {
+  emitAddComic(
+    comicFormValue: Readonly<ComicFormValue>,
+    isComicFormValid = false
+  ) {
     const action = 'addComic';
+    const data = {
+      comicFormValue,
+      isComicFormValid,
+    };
 
-    this.actionEvent.emit({ action, data, isFormValid });
+    this.actionEvent.emit({ action, data });
   }
 
   emitEditComic(
-    data: Readonly<ComicFormValue>,
-    isFormValid = false,
-    isFormDirty = false
+    comicFormValue: Readonly<ComicFormValue>,
+    isComicFormValid = false,
+    isComicFormDirty = false
   ) {
     const action = 'editComic';
-    const originalComic = this.comic;
+    const data = {
+      comicFormValue,
+      isComicFormValid,
+      isComicFormDirty,
+      originalComic: this.comic,
+    };
 
-    this.actionEvent.emit({ action, data, isFormValid, isFormDirty, originalComic });
+    this.actionEvent.emit({
+      action,
+      data,
+    });
   }
 
   setPreviewImageSrc() {
