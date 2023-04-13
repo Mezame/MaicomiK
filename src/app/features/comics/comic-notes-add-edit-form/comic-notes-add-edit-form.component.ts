@@ -16,7 +16,7 @@ import { ComicNotesFormValue } from './comic-notes-form-value';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicNotesAddEditFormComponent {
-  comicNotesForm!: FormControl<string | null>;
+  comicNotesForm!: FormControl<ComicNotesFormValue>;
 
   @Input('data') comic!: Readonly<Comic>;
 
@@ -25,7 +25,7 @@ export class ComicNotesAddEditFormComponent {
   @Output() actionEvent = new EventEmitter<{
     action: string;
     data: {
-      comicNotesFormValue: string | null;
+      comicNotesFormValue: ComicNotesFormValue;
       isComicNotesFormValid: boolean;
       isComicNotesFormDirty?: boolean;
       originalComic: Readonly<Comic>;
