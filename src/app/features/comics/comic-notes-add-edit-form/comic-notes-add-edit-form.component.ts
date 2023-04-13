@@ -26,6 +26,7 @@ export class ComicNotesAddEditFormComponent {
     data: {
       comicNotesFormValue: string | null;
       isComicNotesFormValid: boolean;
+      isComicNotesFormDirty?: boolean;
       originalComic: Readonly<Comic>;
     };
   }>();
@@ -34,14 +35,20 @@ export class ComicNotesAddEditFormComponent {
 
   ngOnInit(): void {
     this.comicNotesForm = this.fb.control('', Validators.required);
+
+    if (this.action == 'editComicNotes' && this.comic.notes) {
+      this.comicNotesForm.patchValue(this.comic.notes);
+    }
   }
 
   onValueChanges() {
     let comicNotesFormValue: string | null;
     let isComicNotesFormValid: boolean;
+    let isComicNotesFormDirty: boolean;
 
     comicNotesFormValue = this.comicNotesForm.value;
     isComicNotesFormValid = this.comicNotesForm.valid;
+    isComicNotesFormDirty = this.comicNotesForm.dirty;
 
     if (this.action == 'addComicNotes') {
       if (!isComicNotesFormValid) {
@@ -51,6 +58,24 @@ export class ComicNotesAddEditFormComponent {
       }
 
       this.emitAddComicNotes(comicNotesFormValue, isComicNotesFormValid);
+    }
+
+    if (this.action == 'editComicNotes') {
+      if (!isComicNotesFormValid || !isComicNotesFormDirty) {
+        this.emitEditComicNotes(
+          '',
+          isComicNotesFormValid,
+          isComicNotesFormDirty
+        );
+
+        return;
+      }
+
+      this.emitEditComicNotes(
+        comicNotesFormValue,
+        isComicNotesFormValid,
+        isComicNotesFormDirty
+      );
     }
   }
 
@@ -62,6 +87,22 @@ export class ComicNotesAddEditFormComponent {
     const data = {
       comicNotesFormValue,
       isComicNotesFormValid,
+      originalComic: this.comic,
+    };
+
+    this.actionEvent.emit({ action, data });
+  }
+
+  emitEditComicNotes(
+    comicNotesFormValue: string | null,
+    isComicNotesFormValid = false,
+    isComicNotesFormDirty = false
+  ) {
+    const action = 'editComicNotes';
+    const data = {
+      comicNotesFormValue,
+      isComicNotesFormValid,
+      isComicNotesFormDirty,
       originalComic: this.comic,
     };
 
