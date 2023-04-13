@@ -15,7 +15,6 @@ import { Observable, map } from 'rxjs';
 export class ComicNotesAddPageComponent {
   comic$: Observable<Readonly<Comic>>;
   comicUrlSegment: string;
-  comicReaders!: Partial<Comic['notes']>;
   updatedComic!: Readonly<Comic>;
   isSubmitButtonDisabled: boolean;
 
