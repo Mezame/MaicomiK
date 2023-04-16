@@ -59,6 +59,7 @@ export class ComicEditPageComponent {
       comicFormValue: Readonly<ComicFormValue>;
       isComicFormValid: boolean;
       isComicFormDirty?: boolean;
+      hasChanges?: boolean;
       originalComic?: Readonly<Comic>;
     };
   }) {
@@ -66,6 +67,7 @@ export class ComicEditPageComponent {
     let comicFormValue: Readonly<ComicFormValue>;
     let isComicFormValid: boolean;
     let isComicFormDirty: boolean;
+    let hasChanges: boolean;
     let originalComic: Readonly<Comic>;
     let editedComicFields: Partial<Comic>;
 
@@ -73,9 +75,10 @@ export class ComicEditPageComponent {
     comicFormValue = { ...event.data.comicFormValue };
     isComicFormValid = event.data.isComicFormValid;
     isComicFormDirty = event.data.isComicFormDirty!;
+    hasChanges = event.data.hasChanges!;
 
     if (action == 'editComic') {
-      if (isComicFormValid && isComicFormDirty) {
+      if (isComicFormValid && isComicFormDirty && hasChanges) {
         editedComicFields = this.comicFormService.formatChapter(comicFormValue);
 
         originalComic = event.data.originalComic!;

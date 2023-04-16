@@ -15,6 +15,7 @@ import {
 import { Comic, ComicFormat, ComicStatus } from '../comic';
 import { ComicFormValue } from './comic-form-value';
 import { webUrlValidator } from '@shared/validators/web-url-validator';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-comic-add-edit-form',
@@ -26,6 +27,7 @@ export class ComicAddEditFormComponent implements OnInit {
   formatList: ComicFormat[];
   statusList: ComicStatus[];
   previewImageSrc: string | null;
+  currentComicFormValue!: Partial<ComicFormValue>;
 
   comicForm!: FormGroup<{
     title: FormControl<ComicFormValue['title']>;
@@ -45,6 +47,7 @@ export class ComicAddEditFormComponent implements OnInit {
       comicFormValue: Readonly<ComicFormValue>;
       isComicFormValid: boolean;
       isComicFormDirty?: boolean;
+      hasChanges?: boolean;
       originalComic?: Readonly<Comic>;
     };
   }>();
@@ -76,34 +79,65 @@ export class ComicAddEditFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setInitialValues();
+
+    if (this.action == 'editComic') {
+      this.setCurrentValues();
+
+      this.currentComicFormValue = { ...this.comicForm.value };
+
+      this.setPreviewImageSrc();
+
+      this.comicForm.valueChanges.subscribe((_) => {
+        this.onValueChanges();
+      });
+    }
+  }
+
+  setInitialValues() {
     this.comicForm = this.fb.group({
-      title: ['', Validators.required],
+      title: ['', { validators: Validators.required, updateOn: 'blur' }],
       format: ['', Validators.required],
       status: ['', Validators.required],
       chapter: [
         '',
-        [Validators.required, Validators.pattern('^[0-9]\\d*(\\.\\d+)?$')],
+        {
+          validators: [
+            Validators.required,
+            Validators.pattern('^[0-9]\\d*(\\.\\d+)?$'),
+          ],
+          updateOn: 'blur',
+        },
       ],
-      coverUrl: ['', [Validators.required, webUrlValidator()]],
+      coverUrl: [
+        '',
+        {
+          validators: [Validators.required, webUrlValidator()],
+          updateOn: 'blur',
+        },
+      ],
     });
+  }
 
-    if (this.action == 'editComic') {
-      this.comicForm.patchValue({
-        title: this.comic.title,
-        format: this.comic.format,
-        status: this.comic.status,
-        chapter: this.comic.chapter?.toString(),
-        coverUrl: this.comic.coverUrl,
-      });
+  setCurrentValues() {
+    this.comicForm.patchValue({
+      title: this.comic.title,
+      format: this.comic.format,
+      status: this.comic.status,
+      chapter: this.comic.chapter?.toString(),
+      coverUrl: this.comic.coverUrl,
+    });
+  }
 
-      this.setPreviewImageSrc();
-    }
+  setPreviewImageSrc() {
+    this.previewImageSrc = this.comicForm.value.coverUrl!;
   }
 
   onValueChanges() {
     let comicFormValue: Readonly<ComicFormValue>;
     let isComicFormValid: boolean;
     let isComicFormDirty: boolean;
+    let hasChanges: boolean;
 
     comicFormValue = { ...this.comicForm.value } as Readonly<ComicFormValue>;
     isComicFormValid = this.comicForm.valid;
@@ -120,14 +154,27 @@ export class ComicAddEditFormComponent implements OnInit {
     }
 
     if (this.action == 'editComic') {
-      if (!isComicFormValid || !isComicFormDirty) {
-        this.emitEditComic({} as any, isComicFormValid, isComicFormDirty);
+      hasChanges = !_.isEqual(comicFormValue, this.currentComicFormValue);
+
+      console.log(hasChanges);
+
+      if (!isComicFormValid || !isComicFormDirty || !hasChanges) {
+        this.emitEditComic(
+          {} as any,
+          isComicFormValid,
+          isComicFormDirty,
+          hasChanges
+        );
 
         return;
       }
 
-      /* ToDo: Check if updated value is different from the current value */
-      this.emitEditComic(comicFormValue, isComicFormValid, isComicFormDirty);
+      this.emitEditComic(
+        comicFormValue,
+        isComicFormValid,
+        isComicFormDirty,
+        hasChanges
+      );
     }
   }
 
@@ -147,13 +194,15 @@ export class ComicAddEditFormComponent implements OnInit {
   emitEditComic(
     comicFormValue: Readonly<ComicFormValue>,
     isComicFormValid = false,
-    isComicFormDirty = false
+    isComicFormDirty = false,
+    hasChanges = false
   ) {
     const action = 'editComic';
     const data = {
       comicFormValue,
       isComicFormValid,
       isComicFormDirty,
+      hasChanges,
       originalComic: this.comic,
     };
 
@@ -161,9 +210,5 @@ export class ComicAddEditFormComponent implements OnInit {
       action,
       data,
     });
-  }
-
-  setPreviewImageSrc() {
-    this.previewImageSrc = this.comicForm.value.coverUrl!;
   }
 }
