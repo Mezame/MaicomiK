@@ -12,10 +12,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Comic, ComicFormat, ComicStatus } from '../comic';
-import { ComicFormValue } from './comic-form-value';
 import { webUrlValidator } from '@shared/validators/web-url-validator';
 import * as _ from 'lodash';
+import { Comic, ComicFormat, ComicStatus } from '../comic';
+import { ComicFormValue } from './comic-form-value';
 
 @Component({
   selector: 'app-comic-add-edit-form',
@@ -155,8 +155,6 @@ export class ComicAddEditFormComponent implements OnInit {
 
     if (this.action == 'editComic') {
       hasChanges = !_.isEqual(comicFormValue, this.currentComicFormValue);
-
-      console.log(hasChanges);
 
       if (!isComicFormValid || !isComicFormDirty || !hasChanges) {
         this.emitEditComic(
