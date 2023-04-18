@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { FooterPortalService } from '@shared/layouts/primary-layout/footer-portal/footer-portal.service';
+import { FooterPortalService } from '@shared/layouts/footer-portal/footer-portal.service';
 import { Observable, filter } from 'rxjs';
 
 @Component({

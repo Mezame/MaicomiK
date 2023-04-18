@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ComicAddEditFormModule } from '@features/comics/comic-add-edit-form/comic-add-edit-form.module';
 import { PrimaryLayoutModule } from '@shared/layouts/primary-layout/primary-layout.module';
 import { ComicAddPageComponent } from './comic-add-page.component';
-import { FooterPortalModule } from '@shared/layouts/primary-layout/footer-portal/footer-portal.module';
+import { FooterPortalModule } from '@shared/layouts/footer-portal/footer-portal.module';
 
 const routes: Routes = [
   {

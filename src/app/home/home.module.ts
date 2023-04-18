@@ -10,7 +10,7 @@ import { HomeComponent } from './home.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { PrimaryLayoutModule } from '@shared/layouts/primary-layout/primary-layout.module';
-import { FooterPortalModule } from '@shared/layouts/primary-layout/footer-portal/footer-portal.module';
+import { FooterPortalModule } from '@shared/layouts/footer-portal/footer-portal.module';
 
 @NgModule({
   declarations: [HomeComponent],
