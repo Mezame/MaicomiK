@@ -24,6 +24,14 @@ export class PrimaryLayoutComponent implements AfterViewInit, OnDestroy {
   constructor(private renderer: Renderer2) {}
 
   ngAfterViewInit(): void {
+    this.setResizeObserver();
+  }
+
+  ngOnDestroy(): void {
+    this.removeResizeObserver();
+  }
+
+  setResizeObserver() {
     const deviceHeight = window.innerHeight;
     const maxBodyContent = deviceHeight - 80 - 56;
     const footerEl = this.footer.nativeElement;
@@ -41,7 +49,7 @@ export class PrimaryLayoutComponent implements AfterViewInit, OnDestroy {
     this.resizeObserver.observe(this.content.nativeElement);
   }
 
-  ngOnDestroy(): void {
+  removeResizeObserver() {
     this.resizeObserver.unobserve(this.content.nativeElement);
   }
 
