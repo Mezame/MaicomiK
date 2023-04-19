@@ -1,0 +1,15 @@
+<app-toolbar #toolbar>
+  <div class="fake-icon-button-space"></div>
+  <app-logo></app-logo>
+  <button mat-icon-button aria-label="Open side menu" (click)="goBack()">
+    <app-icon>close</app-icon>
+  </button>
+</app-toolbar>
+
+<div class="content" (scroll)="onScroll($event)" #content>
+  <ng-content select="[content]"></ng-content>
+</div>
+
+<app-footer #footer>
+  <ng-content select="[footer]"></ng-content>
+</app-footer>
