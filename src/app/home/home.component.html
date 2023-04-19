@@ -1,11 +1,37 @@
-<app-primary-layout>
-  <ng-container content>
-    <router-outlet></router-outlet>
-  </ng-container>
+<ng-container
+  *ngIf="layout == 'primaryLayout'"
+  [ngTemplateOutlet]="primaryLayout"
+></ng-container>
 
-  <ng-container
-    *ngIf="footer$ | async as footer"
-    [ngTemplateOutlet]="footer"
-    footer
-  ></ng-container>
-</app-primary-layout>
+<ng-container
+  *ngIf="layout == 'fullModalLayout'"
+  [ngTemplateOutlet]="fullModalLayout"
+></ng-container>
+
+<ng-template #primaryLayout>
+  <app-primary-layout>
+    <ng-container content>
+      <router-outlet></router-outlet>
+    </ng-container>
+
+    <ng-container
+      *ngIf="footer$ | async as footer"
+      [ngTemplateOutlet]="footer"
+      footer
+    ></ng-container>
+  </app-primary-layout>
+</ng-template>
+
+<ng-template #fullModalLayout>
+  <app-full-modal-layout [backUrl]="getBackUrl()">
+    <ng-container content>
+      <router-outlet></router-outlet>
+    </ng-container>
+
+    <ng-container
+      *ngIf="footer$ | async as footer"
+      [ngTemplateOutlet]="footer"
+      footer
+    ></ng-container>
+  </app-full-modal-layout>
+</ng-template>
