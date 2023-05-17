@@ -6,7 +6,7 @@ import {
   OnInit,
   TemplateRef,
 } from '@angular/core';
-import { ActivationEnd, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { FooterPortalService } from '@shared/layouts/footer-portal/footer-portal.service';
 import { Observable, filter } from 'rxjs';
 
