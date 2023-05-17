@@ -6,7 +6,7 @@ import {
   OnInit,
   TemplateRef,
 } from '@angular/core';
-import { ActivationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { FooterPortalService } from '@shared/layouts/footer-portal/footer-portal.service';
 import { Observable, filter } from 'rxjs';
 
@@ -30,21 +30,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentUrl = '';
 
     this.router.events
-      .pipe(filter((event) => event instanceof ActivationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        if (event.snapshot._urlSegment.segments.length < 3) {
+        let segmentsCount: number;
+
+        this.currentUrl = event.url;
+        segmentsCount = this.getSegmentsCount(this.currentUrl);
+
+        if (segmentsCount < 3) {
           this.isComicListRoute = true;
         } else {
           this.isComicListRoute = false;
         }
 
-        if (event.snapshot._urlSegment.segments.length == 3) {
+        if (segmentsCount == 3) {
           this.isComicDetailRoute = true;
         } else {
           this.isComicDetailRoute = false;
         }
-
-        this.currentUrl = event.snapshot._routerState.url;
 
         this.setLayout();
       });
@@ -79,5 +82,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     backUrl = this.currentUrl.slice(0, currentUrlIndex);
 
     return backUrl;
+  }
+
+  getSegmentsCount(url: string) {
+    let segmentsCount: number;
+
+    segmentsCount = (url.match(new RegExp('/', 'g')) || []).length;
+
+    return segmentsCount;
   }
 }
