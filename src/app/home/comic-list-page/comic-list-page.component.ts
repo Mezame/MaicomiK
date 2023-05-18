@@ -5,10 +5,7 @@ import { Observable } from 'rxjs';
 import { Comic } from '@features/comics/comic';
 import { Router } from '@angular/router';
 import { selectComics } from '@features/comics/state/comics.selectors';
-import {
-  incrementComicChapterAction,
-  loadComicsAction,
-} from '@features/comics/state/comics.actions';
+import { loadComicsAction } from '@features/comics/state/comics.actions';
 
 @Component({
   selector: 'app-comic-list-page',
