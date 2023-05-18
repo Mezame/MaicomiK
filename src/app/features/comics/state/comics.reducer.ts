@@ -22,7 +22,7 @@ export const comicsReducer = createReducer(
 
     newState = state.filter((c) => c.metadata.id != comic.metadata.id);
 
-    newState = [...state, comic];
+    newState = [...newState, comic];
 
     return newState;
   }),
