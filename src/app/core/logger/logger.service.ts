@@ -5,20 +5,25 @@ import { environment } from '@environments/environment';
   providedIn: 'root',
 })
 export class Logger {
-  logs: string[] = [];
-  isDevMode: boolean = environment.isDevMode;
+  isDevMode: boolean;
+  logs: string[];
+
+  constructor() {
+    this.isDevMode = environment.isDevMode;
+    this.logs = [];
+  }
 
   log: (message: string) => void = this.info;
-
-  info(message: string) {
-    if (!this.isDevMode) return;
-
-    console.log(message);
-  }
 
   error(message: string) {
     if (!this.isDevMode) return;
 
     console.error(message);
+  }
+
+  info(message: string) {
+    if (!this.isDevMode) return;
+
+    console.log(message);
   }
 }
