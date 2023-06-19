@@ -6,7 +6,9 @@ import { ComicFormValue } from './comic-form-value';
   providedIn: 'root',
 })
 export class ComicFormService {
-  constructor() {}
+  constructor() {
+    /* Empty */
+  }
 
   formatChapter(comicFormValue: Readonly<ComicFormValue>) {
     let chapter: number;
