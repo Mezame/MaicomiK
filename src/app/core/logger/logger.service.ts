@@ -10,8 +10,6 @@ export class Logger {
 
   log: (message: string) => void = this.info;
 
-  constructor() {}
-
   info(message: string) {
     if (!this.isDevMode) return;
 
