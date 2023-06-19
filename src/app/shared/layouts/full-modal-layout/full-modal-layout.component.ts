@@ -69,6 +69,6 @@ export class FullModalLayoutComponent implements AfterViewInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigateByUrl(this.backUrl);
+    this.router.navigateByUrl(this.backUrl).catch((error) => error);
   }
 }

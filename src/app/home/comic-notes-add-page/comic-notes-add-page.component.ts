@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Comic } from '@features/comics/comic';
-import { ComicNotesFormValue } from '@features/comics/comic-notes-add-edit-form/comic-notes-form-value';
+import { ComicNotesFormValue } from '@features/comics/comic-notes-add-edit-form/comic-notes-form';
 import { ComicsStoreService } from '@features/comics/comics-store.service';
 import { selectComic } from '@features/comics/state/comics.selectors';
 import { Store } from '@ngrx/store';
@@ -103,6 +103,8 @@ export class ComicNotesAddPageComponent {
   }
 
   private navigateToComicDetailPage() {
-    this.router.navigate(['/home', 'comics', this.comicUrlSegment]);
+    this.router
+      .navigate(['/home', 'comics', this.comicUrlSegment])
+      .catch((error) => error);
   }
 }
