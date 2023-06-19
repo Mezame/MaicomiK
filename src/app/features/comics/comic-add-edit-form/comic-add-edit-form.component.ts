@@ -6,9 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {
-  FormBuilder, Validators
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { webUrlValidator } from '@shared/validators/web-url-validator';
 import * as _ from 'lodash';
 import { Comic, ComicFormat, ComicStatus } from '../comic';
@@ -21,14 +19,13 @@ import { ComicForm, ComicFormValue } from './comic-form';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicAddEditFormComponent implements OnInit {
+  comicForm!: ComicForm;
+  currentComicFormValue!: Partial<ComicFormValue>;
   formatList: ComicFormat[];
   statusList: ComicStatus[];
   previewImageSrc: string | null;
-  currentComicFormValue!: Partial<ComicFormValue>;
-  comicForm!: ComicForm;
 
   @Input('data') comic!: Readonly<Comic>;
-
   @Input() action!: string;
 
   @Output() actionEvent = new EventEmitter<{
@@ -84,43 +81,35 @@ export class ComicAddEditFormComponent implements OnInit {
     });
   }
 
-  setInitialValues() {
-    this.comicForm = this.fb.group({
-      title: ['', { validators: Validators.required, updateOn: 'blur' }],
-      format: ['' as ComicFormat, Validators.required],
-      status: ['' as ComicStatus, Validators.required],
-      chapter: [
-        '',
-        {
-          validators: [
-            Validators.required,
-            Validators.pattern('^[0-9]\\d*(\\.\\d+)?$'),
-          ],
-          updateOn: 'blur',
-        },
-      ],
-      coverUrl: [
-        '',
-        {
-          validators: [Validators.required, webUrlValidator()],
-          updateOn: 'blur',
-        },
-      ],
-    });
+  emitAddComic(comicFormValue: ComicFormValue, isComicFormValid = false) {
+    const action = 'addComic';
+    const data = {
+      comicFormValue,
+      isComicFormValid,
+    };
+
+    this.actionEvent.emit({ action, data });
   }
 
-  setCurrentValues() {
-    this.comicForm.patchValue({
-      title: this.comic.title,
-      format: this.comic.format,
-      status: this.comic.status,
-      chapter: this.comic.chapter?.toString(),
-      coverUrl: this.comic.coverUrl,
-    });
-  }
+  emitEditComic(
+    comicFormValue: ComicFormValue,
+    isComicFormValid = false,
+    isComicFormDirty = false,
+    hasChanges = false
+  ) {
+    const action = 'editComic';
+    const data = {
+      comicFormValue,
+      isComicFormValid,
+      isComicFormDirty,
+      hasChanges,
+      originalComic: this.comic,
+    };
 
-  setPreviewImageSrc() {
-    this.previewImageSrc = this.comicForm.value.coverUrl!;
+    this.actionEvent.emit({
+      action,
+      data,
+    });
   }
 
   onValueChanges() {
@@ -166,37 +155,42 @@ export class ComicAddEditFormComponent implements OnInit {
     }
   }
 
-  emitAddComic(
-    comicFormValue: ComicFormValue,
-    isComicFormValid = false
-  ) {
-    const action = 'addComic';
-    const data = {
-      comicFormValue,
-      isComicFormValid,
-    };
-
-    this.actionEvent.emit({ action, data });
+  setPreviewImageSrc() {
+    this.previewImageSrc = this.comicForm.value.coverUrl!;
   }
 
-  emitEditComic(
-    comicFormValue: ComicFormValue,
-    isComicFormValid = false,
-    isComicFormDirty = false,
-    hasChanges = false
-  ) {
-    const action = 'editComic';
-    const data = {
-      comicFormValue,
-      isComicFormValid,
-      isComicFormDirty,
-      hasChanges,
-      originalComic: this.comic,
-    };
+  private setCurrentValues() {
+    this.comicForm.patchValue({
+      title: this.comic.title,
+      format: this.comic.format,
+      status: this.comic.status,
+      chapter: this.comic.chapter?.toString(),
+      coverUrl: this.comic.coverUrl,
+    });
+  }
 
-    this.actionEvent.emit({
-      action,
-      data,
+  private setInitialValues() {
+    this.comicForm = this.fb.group({
+      title: ['', { validators: Validators.required, updateOn: 'blur' }],
+      format: ['' as ComicFormat, Validators.required],
+      status: ['' as ComicStatus, Validators.required],
+      chapter: [
+        '',
+        {
+          validators: [
+            Validators.required,
+            Validators.pattern('^[0-9]\\d*(\\.\\d+)?$'),
+          ],
+          updateOn: 'blur',
+        },
+      ],
+      coverUrl: [
+        '',
+        {
+          validators: [Validators.required, webUrlValidator()],
+          updateOn: 'blur',
+        },
+      ],
     });
   }
 }
