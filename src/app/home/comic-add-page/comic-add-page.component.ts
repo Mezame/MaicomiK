@@ -90,6 +90,6 @@ export class ComicAddPageComponent implements OnDestroy {
   }
 
   private navigateToComicListPage() {
-    this.router.navigate(['/home', 'comics']);
+    this.router.navigate(['/home', 'comics']).catch((error) => error);
   }
 }
