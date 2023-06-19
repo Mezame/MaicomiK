@@ -1,5 +1,5 @@
 <form (change)="onValueChanges()">
-  <ng-container *ngFor="let cRSForm of cRSArrayCtrl; index as i; count as c">
+  <ng-container *ngFor="let cRSForm of comicReadersFormArrayCtrl; index as i">
     <mat-divider *ngIf="i > 0" class="divider"></mat-divider>
 
     <div class="form" [formGroup]="cRSForm">
@@ -33,7 +33,7 @@
         >
       </mat-form-field>
 
-      <div *ngIf="c > 1">
+      <div *ngIf="comicReadersFormArrayCount > 1">
         <button
           mat-button
           class="label-medium"
