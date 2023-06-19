@@ -33,8 +33,8 @@ export class ComicAddEditFormComponent implements OnInit {
     data: {
       comicFormValue: ComicFormValue;
       isComicFormValid: boolean;
-      isComicFormDirty?: boolean;
       hasChanges?: boolean;
+      isComicFormDirty?: boolean;
       originalComic?: Readonly<Comic>;
     };
   }>();
@@ -93,6 +93,7 @@ export class ComicAddEditFormComponent implements OnInit {
 
   emitEditComic(
     comicFormValue: ComicFormValue,
+    originalComic: Readonly<Comic>,
     isComicFormValid = false,
     isComicFormDirty = false,
     hasChanges = false
@@ -103,7 +104,7 @@ export class ComicAddEditFormComponent implements OnInit {
       isComicFormValid,
       isComicFormDirty,
       hasChanges,
-      originalComic: this.comic,
+      originalComic,
     };
 
     this.actionEvent.emit({
@@ -138,6 +139,7 @@ export class ComicAddEditFormComponent implements OnInit {
       if (!isComicFormValid || !isComicFormDirty || !hasChanges) {
         this.emitEditComic(
           {} as any,
+          {} as any,
           isComicFormValid,
           isComicFormDirty,
           hasChanges
@@ -148,6 +150,7 @@ export class ComicAddEditFormComponent implements OnInit {
 
       this.emitEditComic(
         comicFormValue,
+        this.comic,
         isComicFormValid,
         isComicFormDirty,
         hasChanges
