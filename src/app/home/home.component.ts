@@ -1,8 +1,6 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
   OnInit,
   TemplateRef,
 } from '@angular/core';
