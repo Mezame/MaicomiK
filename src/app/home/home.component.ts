@@ -16,7 +16,7 @@ import { Observable, filter } from 'rxjs';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HomeComponent implements OnInit {
   currentUrl: string;
   isComicListRoute!: boolean;
   isComicDetailRoute!: boolean;
@@ -59,15 +59,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.footer$ = this.footerPortalService.getFooter();
   }
 
-  ngAfterViewInit(): void {}
-
-  ngOnDestroy(): void {}
-
   setLayout() {
+    console.log(this.isComicListRoute);
     if (
       this.isComicListRoute ||
       (this.isComicDetailRoute && this.currentUrl !== '/home/comics/add-comic')
     ) {
+      console.log('primaryLayout');
       this.layout = 'primaryLayout';
     } else {
       this.layout = 'fullModalLayout';
@@ -87,7 +85,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   getSegmentsCount(url: string) {
     let segmentsCount: number;
 
-    segmentsCount = (url.match(new RegExp('/', 'g')) || []).length;
+    segmentsCount = (url.match(/\//g) ?? []).length;
 
     return segmentsCount;
   }
