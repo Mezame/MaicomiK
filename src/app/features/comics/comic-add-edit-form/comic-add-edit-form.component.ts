@@ -7,15 +7,12 @@ import {
   Output,
 } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
+  FormBuilder, Validators
 } from '@angular/forms';
 import { webUrlValidator } from '@shared/validators/web-url-validator';
 import * as _ from 'lodash';
 import { Comic, ComicFormat, ComicStatus } from '../comic';
-import { ComicFormValue } from './comic-form-value';
+import { ComicForm, ComicFormValue } from './comic-form-value';
 
 @Component({
   selector: 'app-comic-add-edit-form',
@@ -28,14 +25,7 @@ export class ComicAddEditFormComponent implements OnInit {
   statusList: ComicStatus[];
   previewImageSrc: string | null;
   currentComicFormValue!: Partial<ComicFormValue>;
-
-  comicForm!: FormGroup<{
-    title: FormControl<ComicFormValue['title']>;
-    format: FormControl<ComicFormValue['format']>;
-    status: FormControl<ComicFormValue['status']>;
-    chapter: FormControl<ComicFormValue['chapter']>;
-    coverUrl: FormControl<ComicFormValue['coverUrl']>;
-  }>;
+  comicForm!: ComicForm;
 
   @Input('data') comic!: Readonly<Comic>;
 
@@ -87,18 +77,18 @@ export class ComicAddEditFormComponent implements OnInit {
       this.currentComicFormValue = { ...this.comicForm.value };
 
       this.setPreviewImageSrc();
-
-      this.comicForm.valueChanges.subscribe((_) => {
-        this.onValueChanges();
-      });
     }
+
+    this.comicForm.valueChanges.subscribe((_) => {
+      this.onValueChanges();
+    });
   }
 
   setInitialValues() {
     this.comicForm = this.fb.group({
       title: ['', { validators: Validators.required, updateOn: 'blur' }],
-      format: ['', Validators.required],
-      status: ['', Validators.required],
+      format: ['' as ComicFormat, Validators.required],
+      status: ['' as ComicStatus, Validators.required],
       chapter: [
         '',
         {
