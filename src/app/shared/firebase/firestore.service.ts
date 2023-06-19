@@ -13,7 +13,7 @@ import {
   Timestamp,
   updateDoc,
 } from '@angular/fire/firestore';
-import { LoggerService } from '@core/logger/logger.service';
+import { Logger } from '@core/logger/logger.service';
 import { Observable } from 'rxjs';
 
 export interface FirestoreResponse {
@@ -29,7 +29,7 @@ export interface FirestoreResponse {
 export class FirestoreService {
   constructor(
     private firestore: Firestore,
-    private loggerService: LoggerService
+    private logger: Logger
   ) {}
 
   /**
@@ -69,7 +69,7 @@ export class FirestoreService {
 
       docRefId = docRef.id;
 
-      this.loggerService.log(
+      this.logger.log(
         `FirestoreGlobalService: addDocument: added document w/ id=${docRefId}`
       );
 
@@ -100,7 +100,7 @@ export class FirestoreService {
         throw new Error('could not add document');
       }
 
-      this.loggerService.log(
+      this.logger.log(
         `FirestoreGlobalService: setDocument: added document w/ id=${id}`
       );
 
@@ -145,7 +145,7 @@ export class FirestoreService {
         throw new Error('could not add document');
       }
 
-      this.loggerService.log(
+      this.logger.log(
         `FirestoreGlobalService: setDocumentNoId: added document w/ id=${docRefId}`
       );
 
@@ -188,7 +188,7 @@ export class FirestoreService {
         throw new Error('could not update document');
       }
 
-      this.loggerService.log(
+      this.logger.log(
         `FirestoreGlobalService: updateDocument: updated document w/ id=${id}`
       );
 
@@ -231,7 +231,7 @@ export class FirestoreService {
         throw new Error('could not patch document');
       }
 
-      this.loggerService.log(
+      this.logger.log(
         `FirestoreGlobalService: patchDocument: patched document w/ id=${id}`
       );
 
@@ -259,7 +259,7 @@ export class FirestoreService {
         throw new Error('could not delete document');
       }
 
-      this.loggerService.log(
+      this.logger.log(
         `FirestoreGlobalService: deleteDocument: deleted document w/ id=${id}`
       );
 

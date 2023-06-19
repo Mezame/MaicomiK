@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoggerService } from '@core/logger/logger.service';
+import { Logger } from '@core/logger/logger.service';
 import {
   FirebaseErrorHandlerService,
   HandleError,
@@ -24,7 +24,7 @@ export class ComicsService {
     private firestoreService: FirestoreService,
     private firebaseErrorHandlerService: FirebaseErrorHandlerService,
     private comicsStoreService: ComicsStoreService,
-    private loggerService: LoggerService
+    private logger: Logger
   ) {
     const id = 'ynYZI4n3XarUz7tlW4zU68uHSm25';
 
@@ -41,7 +41,7 @@ export class ComicsService {
     return this.firestoreService.getCollection(this.path).pipe(
       map((docData) => docData as readonly Comic[]),
       tap((comics) => {
-        this.loggerService.log(
+        this.logger.log(
           `${this.serviceName}: ${operation}: got ${comics.length} comics`
         );
       }),
@@ -65,7 +65,7 @@ export class ComicsService {
 
         this.setApiState(operation, 'success');
 
-        this.loggerService.log(
+        this.logger.log(
           `${this.serviceName}: ${operation}: added comic`
         );
       }),
@@ -89,7 +89,7 @@ export class ComicsService {
 
         this.setApiState(operation, 'success');
 
-        this.loggerService.log(
+        this.logger.log(
           `${this.serviceName}: ${operation}: updated comic`
         );
       }),
@@ -113,7 +113,7 @@ export class ComicsService {
 
         this.setApiState(operation, 'success');
 
-        this.loggerService.log(
+        this.logger.log(
           `${this.serviceName}: ${operation}: patched comic`
         );
       }),

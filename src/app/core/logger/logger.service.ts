@@ -4,7 +4,7 @@ import { environment } from '@environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class LoggerService {
+export class Logger {
   logs: string[] = [];
   isDevMode: boolean = environment.isDevMode;
 
