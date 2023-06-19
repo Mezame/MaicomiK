@@ -5,9 +5,9 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Comic } from '../comic';
-import { ComicNotesFormValue } from './comic-notes-form-value';
+import { ComicNotesForm, ComicNotesFormValue } from './comic-notes-form';
 
 @Component({
   selector: 'app-comic-notes-add-edit-form',
@@ -16,7 +16,7 @@ import { ComicNotesFormValue } from './comic-notes-form-value';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicNotesAddEditFormComponent {
-  comicNotesForm!: FormControl<ComicNotesFormValue>;
+  comicNotesForm!: ComicNotesForm;
 
   @Input('data') comic!: Readonly<Comic>;
   @Input() action!: string;
@@ -34,22 +34,23 @@ export class ComicNotesAddEditFormComponent {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.comicNotesForm = this.fb.control('', Validators.required);
+    this.setInitialComicNotesFormValues();
 
     if (this.action == 'editComicNotes' && this.comic.notes) {
-      this.comicNotesForm.patchValue(this.comic.notes);
+      this.setCurrentComicNotesFormValues();
     }
   }
 
   emitAddComicNotes(
     comicNotesFormValue: ComicNotesFormValue,
+    originalComic: Readonly<Comic>,
     isComicNotesFormValid = false
   ) {
     const action = 'addComicNotes';
     const data = {
       comicNotesFormValue,
       isComicNotesFormValid,
-      originalComic: this.comic,
+      originalComic,
     };
 
     this.actionEvent.emit({ action, data });
@@ -57,6 +58,7 @@ export class ComicNotesAddEditFormComponent {
 
   emitEditComicNotes(
     comicNotesFormValue: ComicNotesFormValue,
+    originalComic: Readonly<Comic>,
     isComicNotesFormValid = false,
     isComicNotesFormDirty = false
   ) {
@@ -65,7 +67,7 @@ export class ComicNotesAddEditFormComponent {
       comicNotesFormValue,
       isComicNotesFormValid,
       isComicNotesFormDirty,
-      originalComic: this.comic,
+      originalComic,
     };
 
     this.actionEvent.emit({ action, data });
@@ -82,18 +84,23 @@ export class ComicNotesAddEditFormComponent {
 
     if (this.action == 'addComicNotes') {
       if (!isComicNotesFormValid) {
-        this.emitAddComicNotes('', isComicNotesFormValid);
+        this.emitAddComicNotes('', {} as any, isComicNotesFormValid);
 
         return;
       }
 
-      this.emitAddComicNotes(comicNotesFormValue, isComicNotesFormValid);
+      this.emitAddComicNotes(
+        comicNotesFormValue,
+        this.comic,
+        isComicNotesFormValid
+      );
     }
 
     if (this.action == 'editComicNotes') {
       if (!isComicNotesFormValid || !isComicNotesFormDirty) {
         this.emitEditComicNotes(
           '',
+          {} as any,
           isComicNotesFormValid,
           isComicNotesFormDirty
         );
@@ -103,9 +110,18 @@ export class ComicNotesAddEditFormComponent {
 
       this.emitEditComicNotes(
         comicNotesFormValue,
+        this.comic,
         isComicNotesFormValid,
         isComicNotesFormDirty
       );
     }
+  }
+
+  private setCurrentComicNotesFormValues() {
+    this.comicNotesForm.patchValue(this.comic.notes!);
+  }
+
+  private setInitialComicNotesFormValues() {
+    this.comicNotesForm = this.fb.control('', Validators.required);
   }
 }
