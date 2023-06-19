@@ -19,7 +19,6 @@ export class ComicNotesAddEditFormComponent {
   comicNotesForm!: FormControl<ComicNotesFormValue>;
 
   @Input('data') comic!: Readonly<Comic>;
-
   @Input() action!: string;
 
   @Output() actionEvent = new EventEmitter<{
@@ -40,6 +39,36 @@ export class ComicNotesAddEditFormComponent {
     if (this.action == 'editComicNotes' && this.comic.notes) {
       this.comicNotesForm.patchValue(this.comic.notes);
     }
+  }
+
+  emitAddComicNotes(
+    comicNotesFormValue: ComicNotesFormValue,
+    isComicNotesFormValid = false
+  ) {
+    const action = 'addComicNotes';
+    const data = {
+      comicNotesFormValue,
+      isComicNotesFormValid,
+      originalComic: this.comic,
+    };
+
+    this.actionEvent.emit({ action, data });
+  }
+
+  emitEditComicNotes(
+    comicNotesFormValue: ComicNotesFormValue,
+    isComicNotesFormValid = false,
+    isComicNotesFormDirty = false
+  ) {
+    const action = 'editComicNotes';
+    const data = {
+      comicNotesFormValue,
+      isComicNotesFormValid,
+      isComicNotesFormDirty,
+      originalComic: this.comic,
+    };
+
+    this.actionEvent.emit({ action, data });
   }
 
   onValueChanges() {
@@ -78,35 +107,5 @@ export class ComicNotesAddEditFormComponent {
         isComicNotesFormDirty
       );
     }
-  }
-
-  emitAddComicNotes(
-    comicNotesFormValue: ComicNotesFormValue,
-    isComicNotesFormValid = false
-  ) {
-    const action = 'addComicNotes';
-    const data = {
-      comicNotesFormValue,
-      isComicNotesFormValid,
-      originalComic: this.comic,
-    };
-
-    this.actionEvent.emit({ action, data });
-  }
-
-  emitEditComicNotes(
-    comicNotesFormValue: ComicNotesFormValue,
-    isComicNotesFormValid = false,
-    isComicNotesFormDirty = false
-  ) {
-    const action = 'editComicNotes';
-    const data = {
-      comicNotesFormValue,
-      isComicNotesFormValid,
-      isComicNotesFormDirty,
-      originalComic: this.comic,
-    };
-
-    this.actionEvent.emit({ action, data });
   }
 }
