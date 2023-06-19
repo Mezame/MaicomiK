@@ -114,48 +114,9 @@ export class ComicAddEditFormComponent implements OnInit {
   }
 
   onValueChanges() {
-    let comicFormValue: ComicFormValue;
-    let isComicFormValid: boolean;
-    let isComicFormDirty: boolean;
-    let hasChanges: boolean;
+    this.tryToEmitAddComic();
 
-    comicFormValue = { ...this.comicForm.value } as ComicFormValue;
-    isComicFormValid = this.comicForm.valid;
-    isComicFormDirty = this.comicForm.dirty;
-
-    if (this.action == 'addComic') {
-      if (!isComicFormValid) {
-        this.emitAddComic({} as any, isComicFormValid);
-
-        return;
-      }
-
-      this.emitAddComic(comicFormValue, isComicFormValid);
-    }
-
-    if (this.action == 'editComic') {
-      hasChanges = !_.isEqual(comicFormValue, this.currentComicFormValue);
-
-      if (!isComicFormValid || !isComicFormDirty || !hasChanges) {
-        this.emitEditComic(
-          {} as any,
-          {} as any,
-          isComicFormValid,
-          isComicFormDirty,
-          hasChanges
-        );
-
-        return;
-      }
-
-      this.emitEditComic(
-        comicFormValue,
-        this.comic,
-        isComicFormValid,
-        isComicFormDirty,
-        hasChanges
-      );
-    }
+    this.tryToEmitEditComic();
   }
 
   setPreviewImageSrc() {
@@ -195,5 +156,58 @@ export class ComicAddEditFormComponent implements OnInit {
         },
       ],
     });
+  }
+
+  private tryToEmitAddComic() {
+    let comicFormValue: ComicFormValue;
+    let isComicFormValid: boolean;
+
+    comicFormValue = { ...this.comicForm.value } as ComicFormValue;
+    isComicFormValid = this.comicForm.valid;
+
+    if (this.action == 'addComic') {
+      if (!isComicFormValid) {
+        this.emitAddComic({} as any, isComicFormValid);
+
+        return;
+      }
+
+      this.emitAddComic(comicFormValue, isComicFormValid);
+    }
+  }
+
+  private tryToEmitEditComic() {
+    let comicFormValue: ComicFormValue;
+    let isComicFormValid: boolean;
+    let isComicFormDirty: boolean;
+    let hasChanges: boolean;
+
+    comicFormValue = { ...this.comicForm.value } as ComicFormValue;
+    isComicFormValid = this.comicForm.valid;
+    isComicFormDirty = this.comicForm.dirty;
+
+    if (this.action == 'editComic') {
+      hasChanges = !_.isEqual(comicFormValue, this.currentComicFormValue);
+
+      if (!isComicFormValid || !isComicFormDirty || !hasChanges) {
+        this.emitEditComic(
+          {} as any,
+          {} as any,
+          isComicFormValid,
+          isComicFormDirty,
+          hasChanges
+        );
+
+        return;
+      }
+
+      this.emitEditComic(
+        comicFormValue,
+        this.comic,
+        isComicFormValid,
+        isComicFormDirty,
+        hasChanges
+      );
+    }
   }
 }

@@ -93,28 +93,6 @@ export class ComicReadersAddEditFormComponent {
     this.tryToEmitAddComicReaders();
   }
 
-  tryToEmitAddComicReaders() {
-    let comicReadersFormValue: ComicReadersFormValue[];
-    let isComicReadersFormValid: boolean;
-
-    comicReadersFormValue = [
-      ...this.comicReadersFormArray.value,
-    ] as ComicReadersFormValue[];
-    isComicReadersFormValid = this.comicReadersFormArray.valid;
-
-    if (!isComicReadersFormValid) {
-      this.emitAddComicReaders([], {} as any, isComicReadersFormValid);
-
-      return;
-    }
-
-    this.emitAddComicReaders(
-      comicReadersFormValue,
-      this.comic,
-      isComicReadersFormValid
-    );
-  }
-
   private createComicReadersForm() {
     let comicReadersForm: ComicReadersForm;
 
@@ -139,5 +117,27 @@ export class ComicReadersAddEditFormComponent {
         this.comicReadersFormArray.push(comicReadersForm);
       }
     }
+  }
+
+  private tryToEmitAddComicReaders() {
+    let comicReadersFormValue: ComicReadersFormValue[];
+    let isComicReadersFormValid: boolean;
+
+    comicReadersFormValue = [
+      ...this.comicReadersFormArray.value,
+    ] as ComicReadersFormValue[];
+    isComicReadersFormValid = this.comicReadersFormArray.valid;
+
+    if (!isComicReadersFormValid) {
+      this.emitAddComicReaders([], {} as any, isComicReadersFormValid);
+
+      return;
+    }
+
+    this.emitAddComicReaders(
+      comicReadersFormValue,
+      this.comic,
+      isComicReadersFormValid
+    );
   }
 }
