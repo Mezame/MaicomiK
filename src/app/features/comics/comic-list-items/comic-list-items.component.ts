@@ -14,21 +14,25 @@ import { Comic } from '../comic';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicListItemsComponent {
-  @Input() comics: readonly Comic[] = [];
+  @Input() comics: readonly Comic[];
 
   @Output() actionEvent = new EventEmitter<{
     action: string;
     data: Readonly<Comic>;
   }>();
 
-  emitGoToComicDetailAction(data: Readonly<Comic>) {
-    const action = 'goToComicDetail';
-
-    this.actionEvent.emit({ action, data });
+  constructor() {
+    this.comics = [];
   }
 
   emitIncrementChapterAction(data: Readonly<Comic>) {
     const action = 'incrementChapter';
+
+    this.actionEvent.emit({ action, data });
+  }
+
+  emitGoToComicDetailAction(data: Readonly<Comic>) {
+    const action = 'goToComicDetail';
 
     this.actionEvent.emit({ action, data });
   }
