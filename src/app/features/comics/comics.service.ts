@@ -122,7 +122,7 @@ export class ComicsService {
   }
 
   deleteComic(id: string) {
-    const operation = 'patchComic';
+    const operation = 'deleteComic';
 
     return from(this.firestoreService.deleteDocument(this.path, id)).pipe(
       tap((res) => {
