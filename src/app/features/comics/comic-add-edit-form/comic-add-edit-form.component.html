@@ -17,10 +17,7 @@
   <div class="">
     <mat-form-field appearance="outline" floatLabel="always">
       <mat-label>Format</mat-label>
-      <mat-select
-        placeholder="Select format"
-        formControlName="format"
-      >
+      <mat-select placeholder="Select format" formControlName="format">
         <mat-option *ngFor="let format of formatList" [value]="format">{{
           format | titlecase
         }}</mat-option>
@@ -35,10 +32,7 @@
   <div class="">
     <mat-form-field appearance="outline" floatLabel="always">
       <mat-label>Status</mat-label>
-      <mat-select
-        placeholder="Select status"
-        formControlName="status"
-      >
+      <mat-select placeholder="Select status" formControlName="status">
         <mat-option *ngFor="let status of statusList" [value]="status">{{
           status | titlecase
         }}</mat-option>
@@ -86,6 +80,10 @@
   </div>
 
   <div *ngIf="previewImageSrc" class="preview-image">
-    <img [src]="previewImageSrc" (error)="previewImageSrc = null" />
+    <img
+      [src]="previewImageSrc"
+      (error)="previewImageSrc = null"
+      alt="comic preview image"
+    />
   </div>
 </form>
