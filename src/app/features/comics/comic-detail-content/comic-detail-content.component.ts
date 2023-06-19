@@ -15,8 +15,6 @@ export class ComicDetailContentComponent {
     data: Readonly<Comic>;
   }>();
 
-  constructor() {}
-
   emitIncrementChapterAction(data: Readonly<Comic>) {
     const action = 'incrementChapter';
 
