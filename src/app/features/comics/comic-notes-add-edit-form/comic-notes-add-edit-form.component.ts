@@ -74,13 +74,24 @@ export class ComicNotesAddEditFormComponent {
   }
 
   onValueChanges() {
+    this.tryToEmitAddComicNotes();
+    this.tryToEmitEditComicNotes();
+  }
+
+  private setCurrentComicNotesFormValues() {
+    this.comicNotesForm.patchValue(this.comic.notes!);
+  }
+
+  private setInitialComicNotesFormValues() {
+    this.comicNotesForm = this.fb.control('', Validators.required);
+  }
+
+  private tryToEmitAddComicNotes() {
     let comicNotesFormValue: ComicNotesFormValue;
     let isComicNotesFormValid: boolean;
-    let isComicNotesFormDirty: boolean;
 
     comicNotesFormValue = this.comicNotesForm.value;
     isComicNotesFormValid = this.comicNotesForm.valid;
-    isComicNotesFormDirty = this.comicNotesForm.dirty;
 
     if (this.action == 'addComicNotes') {
       if (!isComicNotesFormValid) {
@@ -95,6 +106,16 @@ export class ComicNotesAddEditFormComponent {
         isComicNotesFormValid
       );
     }
+  }
+
+  private tryToEmitEditComicNotes() {
+    let comicNotesFormValue: ComicNotesFormValue;
+    let isComicNotesFormValid: boolean;
+    let isComicNotesFormDirty: boolean;
+
+    comicNotesFormValue = this.comicNotesForm.value;
+    isComicNotesFormValid = this.comicNotesForm.valid;
+    isComicNotesFormDirty = this.comicNotesForm.dirty;
 
     if (this.action == 'editComicNotes') {
       if (!isComicNotesFormValid || !isComicNotesFormDirty) {
@@ -115,13 +136,5 @@ export class ComicNotesAddEditFormComponent {
         isComicNotesFormDirty
       );
     }
-  }
-
-  private setCurrentComicNotesFormValues() {
-    this.comicNotesForm.patchValue(this.comic.notes!);
-  }
-
-  private setInitialComicNotesFormValues() {
-    this.comicNotesForm = this.fb.control('', Validators.required);
   }
 }

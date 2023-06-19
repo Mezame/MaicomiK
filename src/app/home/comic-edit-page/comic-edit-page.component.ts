@@ -1,17 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Comic } from '@features/comics/comic';
-import { ComicFormValue } from '@features/comics/comic-add-edit-form/comic-form-value';
+import { ComicFormValue } from '@features/comics/comic-add-edit-form/comic-form';
 import { ComicFormService } from '@features/comics/comic-add-edit-form/comic-form.service';
 import { ComicsStoreService } from '@features/comics/comics-store.service';
-import { ComicsService } from '@features/comics/comics.service';
-import {
-  editComicAction,
-  loadComicsAction,
-} from '@features/comics/state/comics.actions';
+import { editComicAction } from '@features/comics/state/comics.actions';
 import { selectComic } from '@features/comics/state/comics.selectors';
 import { Store } from '@ngrx/store';
-import { map, Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-comic-edit-page',
@@ -118,6 +114,8 @@ export class ComicEditPageComponent {
   }
 
   private navigateToComicDetailPage() {
-    this.router.navigate(['/home', 'comics', this.comicUrlSegment]);
+    this.router
+      .navigate(['/home', 'comics', this.comicUrlSegment])
+      .catch((error) => error);
   }
 }
