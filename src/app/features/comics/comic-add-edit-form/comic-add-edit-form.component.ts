@@ -12,7 +12,7 @@ import {
 import { webUrlValidator } from '@shared/validators/web-url-validator';
 import * as _ from 'lodash';
 import { Comic, ComicFormat, ComicStatus } from '../comic';
-import { ComicForm, ComicFormValue } from './comic-form-value';
+import { ComicForm, ComicFormValue } from './comic-form';
 
 @Component({
   selector: 'app-comic-add-edit-form',
@@ -34,7 +34,7 @@ export class ComicAddEditFormComponent implements OnInit {
   @Output() actionEvent = new EventEmitter<{
     action: string;
     data: {
-      comicFormValue: Readonly<ComicFormValue>;
+      comicFormValue: ComicFormValue;
       isComicFormValid: boolean;
       isComicFormDirty?: boolean;
       hasChanges?: boolean;
@@ -124,12 +124,12 @@ export class ComicAddEditFormComponent implements OnInit {
   }
 
   onValueChanges() {
-    let comicFormValue: Readonly<ComicFormValue>;
+    let comicFormValue: ComicFormValue;
     let isComicFormValid: boolean;
     let isComicFormDirty: boolean;
     let hasChanges: boolean;
 
-    comicFormValue = { ...this.comicForm.value } as Readonly<ComicFormValue>;
+    comicFormValue = { ...this.comicForm.value } as ComicFormValue;
     isComicFormValid = this.comicForm.valid;
     isComicFormDirty = this.comicForm.dirty;
 
@@ -167,7 +167,7 @@ export class ComicAddEditFormComponent implements OnInit {
   }
 
   emitAddComic(
-    comicFormValue: Readonly<ComicFormValue>,
+    comicFormValue: ComicFormValue,
     isComicFormValid = false
   ) {
     const action = 'addComic';
@@ -180,7 +180,7 @@ export class ComicAddEditFormComponent implements OnInit {
   }
 
   emitEditComic(
-    comicFormValue: Readonly<ComicFormValue>,
+    comicFormValue: ComicFormValue,
     isComicFormValid = false,
     isComicFormDirty = false,
     hasChanges = false
