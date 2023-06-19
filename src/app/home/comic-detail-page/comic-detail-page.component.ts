@@ -127,6 +127,6 @@ export class ComicDetailPageComponent {
   }
 
   private navigateToComicListPage() {
-    this.router.navigateByUrl('/home/comics');
+    this.router.navigate(['/home', 'comics']);
   }
 }
