@@ -1,7 +1,6 @@
-import { fakeAsync, flush, flushMicrotasks, TestBed } from '@angular/core/testing';
+import { fakeAsync, flushMicrotasks, TestBed } from '@angular/core/testing';
 import { FirestoreService } from '@shared/firebase/firestore.service';
 import { comicsMock } from '@testing/comics.mock';
-import { of, throwError } from 'rxjs';
 import { Comic } from './comic';
 
 import { ComicsService } from './comics.service';
