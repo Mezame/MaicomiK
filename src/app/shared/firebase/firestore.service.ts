@@ -27,10 +27,7 @@ export interface FirestoreResponse {
   providedIn: 'root',
 })
 export class FirestoreService {
-  constructor(
-    private firestore: Firestore,
-    private logger: Logger
-  ) {}
+  constructor(private firestore: Firestore, private logger: Logger) {}
 
   /**
    * Get a stream of documents from Firestore.
@@ -58,20 +55,20 @@ export class FirestoreService {
     let collRef: CollectionReference<DocumentData>;
     let docRef: DocumentReference<DocumentData>;
     let docRefId: string;
+    const message = `FirestoreGlobalService: addDocument: added document w/ id=${docRefId!}`;
+    const errorMessage = 'could not add document';
 
     try {
       collRef = collection(this.firestore, path);
       docRef = await addDoc(collRef, document);
 
       if (!docRef.id) {
-        throw new Error('could not add document');
+        throw new Error(errorMessage);
       }
 
       docRefId = docRef.id;
 
-      this.logger.log(
-        `FirestoreGlobalService: addDocument: added document w/ id=${docRefId}`
-      );
+      this.logger.log(message);
 
       return { success: true, id: docRefId } as FirestoreResponse;
     } catch (error) {
@@ -89,6 +86,8 @@ export class FirestoreService {
   async setDocument(path: string, id: string, document: any) {
     let docRef: DocumentReference<DocumentData>;
     let res: any;
+    const message = `FirestoreGlobalService: setDocument: added document w/ id=${id}`;
+    const errorMessage = 'could not add document';
 
     try {
       docRef = doc(this.firestore, path, id);
@@ -97,12 +96,10 @@ export class FirestoreService {
       res = await setDoc(docRef, document);
 
       if (res !== undefined) {
-        throw new Error('could not add document');
+        throw new Error(errorMessage);
       }
 
-      this.logger.log(
-        `FirestoreGlobalService: setDocument: added document w/ id=${id}`
-      );
+      this.logger.log(message);
 
       return { success: true } as FirestoreResponse;
     } catch (error) {
@@ -123,6 +120,8 @@ export class FirestoreService {
     let currentTimestamp: Timestamp;
     let newDocument: any;
     let res: any;
+    const message = `FirestoreGlobalService: setDocumentNoId: added document w/ id=${docRefId!}`;
+    const errorMessage = 'could not add document';
 
     try {
       collRef = collection(this.firestore, path);
@@ -142,12 +141,10 @@ export class FirestoreService {
       res = await setDoc(docRef, newDocument);
 
       if (res !== undefined) {
-        throw new Error('could not add document');
+        throw new Error(errorMessage);
       }
 
-      this.logger.log(
-        `FirestoreGlobalService: setDocumentNoId: added document w/ id=${docRefId}`
-      );
+      this.logger.log(message);
 
       return {
         success: true,
@@ -171,6 +168,8 @@ export class FirestoreService {
     let currentTimestamp: Timestamp;
     let updatedDocument: any;
     let res: any;
+    const message = `FirestoreGlobalService: updateDocument: updated document w/ id=${id}`;
+    const errorMessage = 'could not update document';
 
     try {
       docRef = doc(this.firestore, `${path}/${id}`);
@@ -185,12 +184,10 @@ export class FirestoreService {
       res = await updateDoc(docRef, updatedDocument);
 
       if (res !== undefined) {
-        throw new Error('could not update document');
+        throw new Error(errorMessage);
       }
 
-      this.logger.log(
-        `FirestoreGlobalService: updateDocument: updated document w/ id=${id}`
-      );
+      this.logger.log(message);
 
       return { success: true, document: updatedDocument } as FirestoreResponse;
     } catch (error) {
@@ -211,6 +208,8 @@ export class FirestoreService {
     let currentTimestamp: Timestamp;
     let patchedDocument: any;
     let res: any;
+    const message = `FirestoreGlobalService: patchDocument: patched document w/ id=${id}`;
+    const errorMessage = 'could not patch document';
 
     try {
       docRef = doc(this.firestore, `${path}/${id}`);
@@ -228,12 +227,10 @@ export class FirestoreService {
       });
 
       if (res !== undefined) {
-        throw new Error('could not patch document');
+        throw new Error(errorMessage);
       }
 
-      this.logger.log(
-        `FirestoreGlobalService: patchDocument: patched document w/ id=${id}`
-      );
+      this.logger.log(message);
 
       return { success: true, document: patchedDocument } as FirestoreResponse;
     } catch (error) {
@@ -250,18 +247,18 @@ export class FirestoreService {
   async deleteDocument(path: string, id: string) {
     let docRef: DocumentReference<DocumentData>;
     let res: any;
+    const message = `FirestoreGlobalService: deleteDocument: deleted document w/ id=${id}`;
+    const errorMessage = 'could not delete document';
 
     try {
       docRef = doc(this.firestore, `${path}/${id}`);
       res = await deleteDoc(docRef);
 
       if (res !== undefined) {
-        throw new Error('could not delete document');
+        throw new Error(errorMessage);
       }
 
-      this.logger.log(
-        `FirestoreGlobalService: deleteDocument: deleted document w/ id=${id}`
-      );
+      this.logger.log(message);
 
       return { success: true, id } as FirestoreResponse;
     } catch (error) {

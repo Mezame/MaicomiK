@@ -8,7 +8,7 @@ import {
   FirestoreResponse,
   FirestoreService,
 } from '@shared/firebase/firestore.service';
-import { catchError, from, map, tap } from 'rxjs';
+import { Observable, catchError, from, map, tap } from 'rxjs';
 import { Comic } from './comic';
 import { ApiState, ComicsStoreService } from './comics-store.service';
 
@@ -16,18 +16,22 @@ import { ApiState, ComicsStoreService } from './comics-store.service';
   providedIn: 'root',
 })
 export class ComicsService {
+  private feature: string;
+  private featurePlural: string;
+  private handleError: HandleError;
   private path: string;
   private serviceName: string;
-  private handleError: HandleError;
 
   constructor(
+    private comicsStoreService: ComicsStoreService,
     private firestoreService: FirestoreService,
     private firebaseErrorHandlerService: FirebaseErrorHandlerService,
-    private comicsStoreService: ComicsStoreService,
     private logger: Logger
   ) {
     const id = 'ynYZI4n3XarUz7tlW4zU68uHSm25';
 
+    this.feature = 'comic';
+    this.featurePlural = 'comics';
     this.path = `users/${id}/comics`;
     this.serviceName = 'ComicsService';
     this.handleError = this.firebaseErrorHandlerService.createHandleError(
@@ -35,119 +39,91 @@ export class ComicsService {
     );
   }
 
-  getComics() {
+  getComics(): Observable<readonly Comic[]> {
     const operation = 'getComics';
+    const message = (comicsLength: number) =>
+      `${this.serviceName}: ${operation}: got ${comicsLength} ${this.featurePlural}`;
 
     return this.firestoreService.getCollection(this.path).pipe(
       map((docData) => docData as readonly Comic[]),
       tap((comics) => {
-        this.logger.log(
-          `${this.serviceName}: ${operation}: got ${comics.length} comics`
-        );
+        this.setApiState(operation, 'success');
+
+        this.logger.log(message(comics.length));
       }),
       catchError(this.handleError<readonly Comic[]>(operation, []))
     );
   }
 
-  addComic(comic: Partial<Comic>) {
+  addComic(comic: Partial<Comic>): Observable<FirestoreResponse> {
     const newComic = this.addMetadataUrlSegment(comic);
     const operation = 'addComic';
+    const message = `${this.serviceName}: ${operation}: added ${this.feature}`;
 
     return from(
       this.firestoreService.setDocumentNoId(this.path, newComic)
     ).pipe(
-      tap((res) => {
-        if (res.error) {
-          this.setApiState(operation, 'failure');
+      tap((response) => {
+        this.onResponseSetApiState(response, operation);
 
-          throw res.error;
-        }
-
-        this.setApiState(operation, 'success');
-
-        this.logger.log(
-          `${this.serviceName}: ${operation}: added comic`
-        );
+        this.logger.log(message);
       }),
       catchError(this.handleError<FirestoreResponse>(operation))
     );
   }
 
-  updateComic(comic: Readonly<Comic>) {
+  updateComic(comic: Readonly<Comic>): Observable<FirestoreResponse> {
     const id = comic.metadata.id;
     const operation = 'updateComic';
+    const message = `${this.serviceName}: ${operation}: updated ${this.feature}`;
 
     return from(
       this.firestoreService.updateDocument(this.path, id, comic)
     ).pipe(
-      tap((res) => {
-        if (res.error) {
-          this.setApiState(operation, 'failure');
+      tap((response) => {
+        this.onResponseSetApiState(response, operation);
 
-          throw res.error;
-        }
-
-        this.setApiState(operation, 'success');
-
-        this.logger.log(
-          `${this.serviceName}: ${operation}: updated comic`
-        );
+        this.logger.log(message);
       }),
       catchError(this.handleError<FirestoreResponse>(operation))
     );
   }
 
-  patchComic(comic: Readonly<Comic>, fields: Partial<Comic>) {
+  patchComic(
+    comic: Readonly<Comic>,
+    fields: Partial<Comic>
+  ): Observable<FirestoreResponse> {
     const id = comic.metadata.id;
     const operation = 'patchComic';
+    const message = `${this.serviceName}: ${operation}: patched ${this.feature}`;
 
     return from(
       this.firestoreService.patchDocument(this.path, id, comic, fields)
     ).pipe(
-      tap((res) => {
-        if (res.error) {
-          this.setApiState(operation, 'failure');
+      tap((response) => {
+        this.onResponseSetApiState(response, operation);
 
-          throw res.error;
-        }
-
-        this.setApiState(operation, 'success');
-
-        this.logger.log(
-          `${this.serviceName}: ${operation}: patched comic`
-        );
+        this.logger.log(message);
       }),
       catchError(this.handleError<FirestoreResponse>(operation))
     );
   }
 
-  deleteComic(id: string) {
+  deleteComic(id: string): Observable<FirestoreResponse> {
     const operation = 'deleteComic';
+    const message = `${this.serviceName}: ${operation}: deleted ${this.feature}`;
 
     return from(this.firestoreService.deleteDocument(this.path, id)).pipe(
-      tap((res) => {
-        if (res.error) {
-          this.setApiState(operation, 'failure');
+      tap((response) => {
+        this.onResponseSetApiState(response, operation);
 
-          throw res.error;
-        }
-
-        this.setApiState(operation, 'success');
-
-        console.log(`${this.serviceName}: ${operation}: deleted comic`);
+        this.logger.log(message);
       }),
       catchError(this.handleError<FirestoreResponse>(operation))
     );
   }
 
-  private setApiState(operation: string, status: ApiState['status']) {
-    this.comicsStoreService.setApiState({
-      operation,
-      status,
-    });
-  }
-
-  private addMetadataUrlSegment(comic: Partial<Comic>) {
+  private addMetadataUrlSegment(comic: Partial<Comic>): Readonly<Comic> {
     let comicWithMetadataUrlSegment: Readonly<Comic>;
     let urlSegment: string;
     const metadata = {
@@ -165,5 +141,25 @@ export class ComicsService {
     comicWithMetadataUrlSegment = { ...comic, metadata } as Readonly<Comic>;
 
     return comicWithMetadataUrlSegment;
+  }
+
+  private onResponseSetApiState(
+    response: FirestoreResponse,
+    operation: string
+  ): void {
+    if (response.error) {
+      this.setApiState(operation, 'failure');
+
+      throw response.error;
+    }
+
+    this.setApiState(operation, 'success');
+  }
+
+  private setApiState(operation: string, status: ApiState['status']): void {
+    this.comicsStoreService.setApiState({
+      operation,
+      status,
+    });
   }
 }
