@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { environment } from '@environments/environment';
+import { Injectable, isDevMode } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -11,17 +10,17 @@ export class Logger {
   log: (message: string) => void = this.info;
 
   constructor() {
-    this.isDevMode = environment.isDevMode;
+    this.isDevMode = isDevMode();
     this.logs = [];
   }
 
-  error(message: string) {
+  error(message: string): void {
     if (!this.isDevMode) return;
 
     console.error(message);
   }
 
-  info(message: string) {
+  info(message: string): void {
     if (!this.isDevMode) return;
 
     console.log(message);
