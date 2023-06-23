@@ -6,7 +6,7 @@ import {
   ApiState,
   ComicsStoreService,
 } from '@features/comics/comics-store.service';
-import { addComicAction } from '@features/comics/state/comics.actions';
+import { addComicAction } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
 
