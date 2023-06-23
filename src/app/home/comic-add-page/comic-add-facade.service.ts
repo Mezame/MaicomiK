@@ -29,10 +29,14 @@ export class ComicAddFacadeService {
   }
 
   formatComicChapter(comicFormValue: ComicFormValue): Comic {
-    return this.comicFormService.formatChapter(comicFormValue);
+    const comic = this.comicFormService.formatChapter(comicFormValue);
+
+    return comic;
   }
 
   getApiState(): Observable<ApiState | null> {
-    return this.comicsStoreService.getApiState().pipe(take(1));
+    const apiState = this.comicsStoreService.getApiState().pipe(take(1));
+
+    return apiState;
   }
 }
