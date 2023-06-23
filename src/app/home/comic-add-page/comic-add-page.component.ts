@@ -8,10 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { Comic } from '@features/comics/comic';
 import { ComicFormValue } from '@features/comics/comic-add-edit-form/comic-form';
-import { ComicFormService } from '@features/comics/comic-add-edit-form/comic-form.service';
-import { ComicsStoreService } from '@features/comics/comics-store.service';
-import { addComicAction } from '@features/comics/state/comics.actions';
-import { Store } from '@ngrx/store';
+import { ComicAddFacadeService } from './comic-add-facade.service';
 
 @Component({
   selector: 'app-comic-add-page',
@@ -26,27 +23,25 @@ export class ComicAddPageComponent implements OnDestroy {
   @ViewChild('footer') footer!: TemplateRef<any>;
 
   constructor(
-    private comicFormService: ComicFormService,
-    private store: Store,
-    private comicsStoreService: ComicsStoreService,
+    private comicAddFacadeService: ComicAddFacadeService,
     private router: Router
   ) {
     this.isSubmitButtonDisabled = true;
   }
 
   ngOnDestroy(): void {
-    this.comicsStoreService.clearApiState();
+    this.comicAddFacadeService.clearApiState();
   }
 
   getFormAction(event: {
     action: string;
     data: {
-      comicFormValue: Readonly<ComicFormValue>;
+      comicFormValue: ComicFormValue;
       isComicFormValid: boolean;
     };
   }) {
     let action: string;
-    let comicFormValue: Readonly<ComicFormValue>;
+    let comicFormValue: ComicFormValue;
     let isComicFormValid: boolean;
     let formatedComic: Partial<Comic>;
 
@@ -56,7 +51,8 @@ export class ComicAddPageComponent implements OnDestroy {
 
     if (action == 'addComic') {
       if (isComicFormValid) {
-        formatedComic = this.comicFormService.formatChapter(comicFormValue);
+        formatedComic =
+          this.comicAddFacadeService.formatComicChapter(comicFormValue);
 
         this.comic = { ...formatedComic };
 
@@ -70,9 +66,9 @@ export class ComicAddPageComponent implements OnDestroy {
   addComic() {
     this.isSubmitButtonDisabled = true;
 
-    this.store.dispatch(addComicAction({ comic: this.comic }));
+    this.comicAddFacadeService.addComic(this.comic);
 
-    this.comicsStoreService.getApiState().subscribe((apiState) => {
+    this.comicAddFacadeService.getApiState().subscribe((apiState) => {
       if (apiState?.operation == 'addComic' && apiState.status == 'failure') {
         setTimeout(() => {
           this.isSubmitButtonDisabled = false;
