@@ -8,12 +8,12 @@ export class Logger {
   isDevMode: boolean;
   logs: string[];
 
+  log: (message: string) => void = this.info;
+
   constructor() {
     this.isDevMode = environment.isDevMode;
     this.logs = [];
   }
-
-  log: (message: string) => void = this.info;
 
   error(message: string) {
     if (!this.isDevMode) return;
