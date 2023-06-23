@@ -7,14 +7,8 @@ import {
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Comic } from '@features/comics/comic';
-import { ComicsStoreService } from '@features/comics/comics-store.service';
-import {
-  deleteComicAction,
-  incrementComicChapterAction,
-} from '@features/comics/state/comics.actions';
-import { selectComic } from '@features/comics/state/comics.selectors';
-import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
+import { ComicDetailFacadeService } from './comic-detail-facade.service';
 
 @Component({
   selector: 'app-comic-detail-page',
@@ -28,28 +22,17 @@ export class ComicDetailPageComponent {
   @ViewChild('bottomSheet') bottomSheet!: TemplateRef<any>;
 
   constructor(
-    private route: ActivatedRoute,
-    private store: Store,
     private _bottomSheet: MatBottomSheet,
-    private comicsStoreService: ComicsStoreService,
+    private comicDetailFacadeService: ComicDetailFacadeService,
+    private route: ActivatedRoute,
     private router: Router
   ) {
     const comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
 
-    this.comic$ = this.store.select(selectComic(comicUrlSegment)).pipe(
-      map((comic) => {
-        if (!comic) {
-          this.store.dispatch({ type: '[Comic Detail Page] Load Comics' });
-
-          return {} as Readonly<Comic>;
-        }
-
-        return comic;
-      })
-    );
+    this.comic$ = this.comicDetailFacadeService.getComic(comicUrlSegment);
   }
 
-  getContentAction(event: { action: string; data: Readonly<Comic> }) {
+  onContentAction(event: { action: string; data: Readonly<Comic> }): void {
     let action: string;
     let comic: Readonly<Comic>;
 
@@ -65,24 +48,22 @@ export class ComicDetailPageComponent {
     }
   }
 
-  incrementComicChapter(comic: Readonly<Comic>) {
+  incrementComicChapter(comic: Readonly<Comic>): void {
     let updatedChapter: number;
     let comicFields: Partial<Comic>;
 
     updatedChapter = comic.chapter + 1;
     comicFields = { chapter: updatedChapter };
 
-    this.store.dispatch(
-      incrementComicChapterAction({ comic, fields: comicFields })
-    );
+    this.comicDetailFacadeService.incrementComicChapter(comic, comicFields);
   }
 
-  deleteComic(comicId: string) {
+  deleteComic(comicId: string): void {
     this.closeBottomSheet();
 
-    this.store.dispatch(deleteComicAction({ id: comicId }));
+    this.comicDetailFacadeService.deleteComic(comicId);
 
-    this.comicsStoreService.getApiState().subscribe((apiState) => {
+    this.comicDetailFacadeService.getApiState().subscribe((apiState) => {
       if (
         apiState?.operation == 'deleteComic' &&
         apiState.status == 'success'
@@ -92,41 +73,33 @@ export class ComicDetailPageComponent {
     });
   }
 
-  deleteComicReaders(comic: Readonly<Comic>) {
+  deleteComicReaders(comic: Readonly<Comic>): void {
     let comicFields: Partial<Comic>;
 
     this.closeBottomSheet();
     comicFields = { readers: null };
 
-    this.store.dispatch({
-      type: '[Comic Detail Page] Delete Comic Readers',
-      comic,
-      fields: comicFields,
-    });
+    this.comicDetailFacadeService.deleteComicReaders(comic, comicFields);
   }
 
-  deleteComicNotes(comic: Readonly<Comic>) {
+  deleteComicNotes(comic: Readonly<Comic>): void {
     let comicFields: Partial<Comic>;
 
     this.closeBottomSheet();
     comicFields = { notes: null };
 
-    this.store.dispatch({
-      type: '[Comic Detail Page] Delete Comic Notes',
-      comic,
-      fields: comicFields,
-    });
+    this.comicDetailFacadeService.deleteComicNotes(comic, comicFields);
   }
 
-  openBottomSheet() {
+  openBottomSheet(): void {
     this._bottomSheet.open(this.bottomSheet);
   }
 
-  closeBottomSheet() {
+  closeBottomSheet(): void {
     this._bottomSheet.dismiss();
   }
 
-  private navigateToComicListPage() {
+  private navigateToComicListPage(): void {
     this.router.navigate(['/home', 'comics']).catch((error) => error);
   }
 }
