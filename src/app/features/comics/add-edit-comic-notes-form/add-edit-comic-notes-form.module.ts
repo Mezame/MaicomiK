@@ -15,4 +15,4 @@ import { MatInputModule } from '@angular/material/input';
   ],
   exports: [AddEditComicNotesFormComponent],
 })
-export class ComicNotesAddEditFormModule {}
+export class AddEditComicNotesFormModule {}
