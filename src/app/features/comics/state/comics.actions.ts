@@ -1,5 +1,5 @@
 import { createAction, createActionGroup, props } from '@ngrx/store';
-import { Comic } from '../comic';
+import { Comic } from '../models';
 
 export const loadComicsAction = createAction('[Comic List Page] Load Comics');
 

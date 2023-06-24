@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Comic } from '../comic';
+import { Comic } from '../models';
 
 export const selectComics = createFeatureSelector<readonly Comic[]>('comics');
 

@@ -9,7 +9,7 @@ import {
   FirestoreService,
 } from '@shared/firebase/firestore.service';
 import { Observable, catchError, from, map, take, tap } from 'rxjs';
-import { Comic } from './comic';
+import { Comic } from '../models';
 import { ApiState, ComicsStoreService } from './comics-store.service';
 
 @Injectable({

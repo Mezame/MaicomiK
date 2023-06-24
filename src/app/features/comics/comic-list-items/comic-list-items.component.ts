@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Comic } from '../comic';
+import { Comic } from '../models';
 
 @Component({
   selector: 'app-comic-list-items',
