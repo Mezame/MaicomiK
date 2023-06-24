@@ -1,11 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-
-import { Comic } from '@features/comics/comic';
 import { Router } from '@angular/router';
-import { selectComics } from '@features/comics/state/comics.selectors';
-import { loadComicsAction } from '@features/comics/state/comics.actions';
+import { Comic } from '@features/comics/comic';
+import { Observable } from 'rxjs';
+import { ComicListFacadeService } from './comic-list-facade.service';
 
 @Component({
   selector: 'app-comic-list-page',
@@ -16,12 +13,16 @@ import { loadComicsAction } from '@features/comics/state/comics.actions';
 export class ComicListPageComponent implements OnInit {
   comics$: Observable<readonly Comic[]>;
 
-  constructor(private store: Store, private router: Router) {
-    this.comics$ = this.store.select(selectComics);
+  constructor(
+    private comicListFacadeService: ComicListFacadeService,
+    private router: Router
+  ) {
+    //this.comics$ = this.store.select(selectComics);
+    this.comics$ = this.comicListFacadeService.getComics();
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadComicsAction());
+    //this.store.dispatch(loadComicsAction());
   }
 
   getItemsAction(event: { action: string; data: Readonly<Comic> }) {
@@ -49,11 +50,7 @@ export class ComicListPageComponent implements OnInit {
     updatedChapter = comic.chapter + 1;
     comicFields = { chapter: updatedChapter };
 
-    this.store.dispatch({
-      type: '[Comic List Page] Increment Comic Chapter',
-      comic,
-      fields: comicFields,
-    });
+    this.comicListFacadeService.incrementComicChapter(comic, comicFields);
   }
 
   goToComicDetail(comicUrlSegment: string) {
