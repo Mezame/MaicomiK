@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ComicNotesAddEditFormModule } from '@features/comics/comic-notes-add-edit-form/comic-notes-add-edit-form.module';
+import { ComicNotesAddEditFormModule } from '@features/comics/add-edit-comic-notes-form/add-edit-comic-notes-form.module';
 import { FooterPortalModule } from '@shared/layouts/footer-portal/footer-portal.module';
 import { ComicNotesEditPageComponent } from './comic-notes-edit-page.component';
 

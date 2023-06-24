@@ -9,12 +9,12 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Comic, ComicNotesForm, ComicNotesFormValue } from '../models';
 
 @Component({
-  selector: 'app-comic-notes-add-edit-form',
-  templateUrl: './comic-notes-add-edit-form.component.html',
-  styleUrls: ['./comic-notes-add-edit-form.component.scss'],
+  selector: 'app-add-edit-comic-notes-form',
+  templateUrl: './add-edit-comic-notes-form.component.html',
+  styleUrls: ['./add-edit-comic-notes-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicNotesAddEditFormComponent {
+export class AddEditComicNotesFormComponent {
   comicNotesForm!: ComicNotesForm;
 
   @Input('data') comic!: Readonly<Comic>;
