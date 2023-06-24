@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Comic } from '@features/comics/comic';
-import { ComicFormValue } from '@features/comics/comic-add-edit-form/comic-form';
-import { ComicFormService } from '@features/comics/comic-add-edit-form/comic-form.service';
+import { ComicFormValue } from '@features/comics/add-edit-comic-form/comic-form';
+import { ComicFormService } from '@features/comics/add-edit-comic-form/comic-form.service';
 import {
   ApiState,
   ComicsStoreService,
