@@ -6,7 +6,7 @@ export interface Comic {
   format: ComicFormat;
   status: ComicStatus;
   chapter: number;
-  readers?: [{ name: string; url?: string | null }] | null;
+  readers?: ComicReader[] | null;
   notes?: string | null;
   metadata: {
     id: string;
@@ -14,6 +14,11 @@ export interface Comic {
     createdAt: Timestamp | null;
     updatedAt: Timestamp | null;
   };
+}
+
+export interface ComicReader {
+  name: string;
+  url?: string | null;
 }
 
 export type ComicFormat = 'manga' | 'manhwa' | 'manhua' | 'webtoon';
