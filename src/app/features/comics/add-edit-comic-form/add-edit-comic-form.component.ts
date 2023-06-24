@@ -13,7 +13,7 @@ import { Comic, ComicFormat, ComicStatus } from '../comic';
 import { ComicForm, ComicFormValue } from './comic-form';
 
 @Component({
-  selector: 'app-comic-add-edit-form',
+  selector: 'app-add-edit-comic-form',
   templateUrl: './add-edit-comic-form.component.html',
   styleUrls: ['./add-edit-comic-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
