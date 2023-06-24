@@ -5,11 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
-import { ComicReadersAddEditFormComponent } from './comic-readers-add-edit-form.component';
+import { AddEditComicReadersFormComponent } from './add-edit-comic-readers-form.component';
 
 @NgModule({
-  declarations: [ComicReadersAddEditFormComponent],
+  declarations: [AddEditComicReadersFormComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -18,6 +17,6 @@ import { ComicReadersAddEditFormComponent } from './comic-readers-add-edit-form.
     MatButtonModule,
     MatDividerModule,
   ],
-  exports: [ComicReadersAddEditFormComponent],
+  exports: [AddEditComicReadersFormComponent],
 })
-export class ComicReadersAddEditFormModule {}
+export class AddEditComicReadersFormModule {}

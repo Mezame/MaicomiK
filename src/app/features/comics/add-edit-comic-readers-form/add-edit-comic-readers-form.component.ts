@@ -15,12 +15,12 @@ import {
 } from '../models';
 
 @Component({
-  selector: 'app-comic-readers-add-edit-form',
-  templateUrl: './comic-readers-add-edit-form.component.html',
-  styleUrls: ['./comic-readers-add-edit-form.component.scss'],
+  selector: 'app-add-edit-comic-readers-form',
+  templateUrl: './add-edit-comic-readers-form.component.html',
+  styleUrls: ['./add-edit-comic-readers-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicReadersAddEditFormComponent {
+export class AddEditComicReadersFormComponent {
   comicReadersFormArray!: ComicReadersFormArray;
 
   @Input('data') comic!: Readonly<Comic>;
