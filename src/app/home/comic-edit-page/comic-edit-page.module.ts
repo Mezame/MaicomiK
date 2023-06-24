@@ -2,11 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
-
-import { ComicAddEditFormModule } from '@features/comics/add-edit-comic-form/add-edit-comic-form.module';
+import { AddEditComicFormModule } from '@features/comics/add-edit-comic-form/add-edit-comic-form.module';
+import { FooterPortalModule } from '@shared/layouts/footer-portal/footer-portal.module';
 import { PrimaryLayoutModule } from '@shared/layouts/primary-layout/primary-layout.module';
 import { ComicEditPageComponent } from './comic-edit-page.component';
-import { FooterPortalModule } from '@shared/layouts/footer-portal/footer-portal.module';
 
 const routes: Routes = [
   {
@@ -21,7 +20,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     PrimaryLayoutModule,
-    ComicAddEditFormModule,
+    AddEditComicFormModule,
     MatButtonModule,
     FooterPortalModule,
   ],

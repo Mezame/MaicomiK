@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Comic } from '@features/comics/comic';
+import { Comic } from '@features/comics/models';
 import {
   loadComicsAction,
   selectComics

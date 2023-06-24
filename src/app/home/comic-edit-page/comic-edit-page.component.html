@@ -1,13 +1,13 @@
 <span class="title-medium">Editing comic</span>
 
-<app-comic-add-edit-form
+<app-add-edit-comic-form
   *ngIf="comic$ | async as comic; else noComic"
   action="editComic"
   [data]="comic"
   (actionEvent)="getFormAction($event)"
-></app-comic-add-edit-form>
+></app-add-edit-comic-form>
 <ng-template #noComic>
-  <app-comic-add-edit-form></app-comic-add-edit-form>
+  <app-add-edit-comic-form></app-add-edit-comic-form>
 </ng-template>
 
 <ng-container *appFooterPortal="footer"></ng-container>

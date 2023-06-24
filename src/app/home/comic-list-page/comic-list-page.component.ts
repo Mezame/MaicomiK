@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Comic } from '@features/comics/comic';
+import { Comic } from '@features/comics/models';
 import { Observable } from 'rxjs';
 import { ComicListFacadeService } from './comic-list-facade.service';
 

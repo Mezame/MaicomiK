@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Comic } from '@features/comics/comic';
+import { Comic } from '@features/comics/models';
 import { Observable } from 'rxjs';
 import { ComicDetailFacadeService } from './comic-detail-facade.service';
 

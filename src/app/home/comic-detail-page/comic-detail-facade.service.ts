@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Comic } from '@features/comics/comic';
+import { Comic } from '@features/comics/models';
 import {
   ApiState,
   ComicsStoreService,
-} from '@features/comics/comics-store.service';
+} from '@features/comics/services/comics-store.service';
 import {
   deleteComicAction,
   incrementComicChapterAction,
