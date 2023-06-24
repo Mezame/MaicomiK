@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Comic } from '@features/comics/comic';
-import { ComicFormValue } from '@features/comics/add-edit-comic-form/comic-form';
+import { ComicFormValue } from '@features/comics/comic-form';
 import { AddComicFacadeService } from './add-comic-facade.service';
 
 @Component({

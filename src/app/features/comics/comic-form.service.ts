@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Comic } from '../comic';
+import { Comic } from './comic';
 import { ComicFormValue } from './comic-form';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { ComicFormat, ComicStatus } from '../comic';
+import { ComicFormat, ComicStatus } from './comic';
 
 export interface ComicFormValue {
   title: string | null;

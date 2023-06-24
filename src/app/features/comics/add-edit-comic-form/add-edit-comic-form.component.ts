@@ -10,7 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { webUrlValidator } from '@shared/validators/web-url-validator';
 import * as _ from 'lodash';
 import { Comic, ComicFormat, ComicStatus } from '../comic';
-import { ComicForm, ComicFormValue } from './comic-form';
+import { ComicForm, ComicFormValue } from '../comic-form';
 
 @Component({
   selector: 'app-add-edit-comic-form',
