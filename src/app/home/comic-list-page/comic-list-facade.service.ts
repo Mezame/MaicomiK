@@ -16,7 +16,7 @@ export class ComicListFacadeService {
   getComics(): Observable<readonly Comic[]> {
     const comics$ = this.store.select(selectComics).pipe(
       map((comics) => {
-        if (comics?.length <= 0) {
+        if (!comics) {
           this.store.dispatch(loadComicsAction());
 
           return [];
