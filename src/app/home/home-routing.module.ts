@@ -38,16 +38,16 @@ const routes: Routes = [
       {
         path: 'comics/:comicUrlSegment/add-readers',
         loadChildren: () =>
-          import('./comic-readers-add-page/comic-readers-add-page.module').then(
-            (m) => m.ComicReadersAddPageModule
+          import('./add-comic-readers-page/add-comic-readers-page.module').then(
+            (m) => m.AddComicReadersPageModule
           ),
       },
       {
         path: 'comics/:comicUrlSegment/readers/edit',
         loadChildren: () =>
           import(
-            './comic-readers-edit-page/comic-readers-edit-page.module'
-          ).then((m) => m.ComicReadersEditPageModule),
+            './edit-comic-readers-page/edit-comic-readers-page.module'
+          ).then((m) => m.EditComicReadersPageModule),
       },
       {
         path: 'comics/:comicUrlSegment/add-notes',
@@ -59,8 +59,8 @@ const routes: Routes = [
       {
         path: 'comics/:comicUrlSegment/notes/edit',
         loadChildren: () =>
-          import('./comic-notes-edit-page/comic-notes-edit-page.module').then(
-            (m) => m.ComicNotesEditPageModule
+          import('./edit-comic-notes-page/edit-comic-notes-page.module').then(
+            (m) => m.EditComicNotesPageModule
           ),
       },
       {

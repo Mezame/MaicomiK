@@ -7,12 +7,12 @@ import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 
 @Component({
-  selector: 'app-comic-readers-add-page',
-  templateUrl: './comic-readers-add-page.component.html',
-  styleUrls: ['./comic-readers-add-page.component.scss'],
+  selector: 'app-edit-comic-readers-page',
+  templateUrl: './edit-comic-readers-page.component.html',
+  styleUrls: ['./edit-comic-readers-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicReadersAddPageComponent {
+export class EditComicReadersPageComponent {
   comic$: Observable<Readonly<Comic>>;
   comicUrlSegment: string;
   updatedComic!: Readonly<Comic>;
@@ -29,9 +29,11 @@ export class ComicReadersAddPageComponent {
     this.comic$ = this.store.select(selectComic(this.comicUrlSegment)).pipe(
       map((comic) => {
         if (!comic) {
-          this.store.dispatch({ type: '[Comic Readers Add Page] Load Comics' });
+          this.store.dispatch({
+            type: '[Comic Readers Edit Page] Load Comics',
+          });
 
-          return {} as unknown as Readonly<Comic>;
+          return null as unknown as Readonly<Comic>;
         }
 
         return comic;
@@ -75,11 +77,11 @@ export class ComicReadersAddPageComponent {
     }
   }
 
-  addComicReaders() {
+  editComicReaders() {
     this.isSubmitButtonDisabled = true;
 
     this.store.dispatch({
-      type: '[Comic Readers Add Page] Update Comic',
+      type: '[Comic Readers Edit Page] Update Comic',
       comic: this.updatedComic,
     });
 

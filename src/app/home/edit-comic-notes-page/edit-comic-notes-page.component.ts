@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Comic, ComicReadersFormValue } from '@features/comics/models';
+import { Comic, ComicNotesFormValue } from '@features/comics/models';
 import { ComicsStoreService } from '@features/comics/services/comics-store.service';
 import { selectComic } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 
 @Component({
-  selector: 'app-comic-readers-edit-page',
-  templateUrl: './comic-readers-edit-page.component.html',
-  styleUrls: ['./comic-readers-edit-page.component.scss'],
+  selector: 'app-edit-comic-notes-page',
+  templateUrl: './edit-comic-notes-page.component.html',
+  styleUrls: ['./edit-comic-notes-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicReadersEditPageComponent {
+export class EditComicNotesPageComponent {
   comic$: Observable<Readonly<Comic>>;
   comicUrlSegment: string;
   updatedComic!: Readonly<Comic>;
@@ -29,9 +29,7 @@ export class ComicReadersEditPageComponent {
     this.comic$ = this.store.select(selectComic(this.comicUrlSegment)).pipe(
       map((comic) => {
         if (!comic) {
-          this.store.dispatch({
-            type: '[Comic Readers Edit Page] Load Comics',
-          });
+          this.store.dispatch({ type: '[Comic Notes Edit Page] Load Comics' });
 
           return null as unknown as Readonly<Comic>;
         }
@@ -46,29 +44,30 @@ export class ComicReadersEditPageComponent {
   getFormAction(event: {
     action: string;
     data: {
-      comicReadersFormValue: readonly ComicReadersFormValue[];
-      isComicReadersFormValid: boolean;
+      comicNotesFormValue: ComicNotesFormValue;
+      isComicNotesFormValid: boolean;
+      isComicNotesFormDirty?: boolean;
       originalComic: Readonly<Comic>;
     };
   }) {
     let action: string;
-    let comicReadersFormValue: readonly ComicReadersFormValue[];
-    let isComicReadersFormValid: boolean;
-    let comicReaders: Comic['readers'];
+    let comicNotesFormValue: ComicNotesFormValue;
+    let isComicNotesFormValid: boolean;
+    let isComicNotesFormDirty: boolean;
+    let comicNotes: Comic['notes'];
     let originalComic: Readonly<Comic>;
 
     action = event.action;
-    comicReadersFormValue = [...event.data.comicReadersFormValue];
-    isComicReadersFormValid = event.data.isComicReadersFormValid;
+    comicNotesFormValue = event.data.comicNotesFormValue;
+    isComicNotesFormValid = event.data.isComicNotesFormValid;
+    isComicNotesFormDirty = event.data.isComicNotesFormDirty!;
     originalComic = { ...event.data.originalComic };
 
-    if (action == 'addComicReaders') {
-      if (isComicReadersFormValid) {
-        comicReaders = [
-          ...comicReadersFormValue,
-        ] as unknown as Comic['readers'];
+    if (action == 'editComicNotes') {
+      if (isComicNotesFormValid && isComicNotesFormDirty) {
+        comicNotes = comicNotesFormValue as Comic['notes'];
 
-        this.updatedComic = { ...originalComic, readers: comicReaders };
+        this.updatedComic = { ...originalComic, notes: comicNotes };
 
         this.isSubmitButtonDisabled = false;
       } else {
@@ -77,11 +76,11 @@ export class ComicReadersEditPageComponent {
     }
   }
 
-  editComicReaders() {
+  editComicNotes() {
     this.isSubmitButtonDisabled = true;
 
     this.store.dispatch({
-      type: '[Comic Readers Edit Page] Update Comic',
+      type: '[Comic Notes Edit Page] Update Comic',
       comic: this.updatedComic,
     });
 

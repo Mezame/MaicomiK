@@ -4,17 +4,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
 import { AddEditComicReadersFormModule } from '@features/comics/add-edit-comic-readers-form/add-edit-comic-readers-form.module';
 import { FooterPortalModule } from '@shared/layouts/footer-portal/footer-portal.module';
-import { ComicReadersAddPageComponent } from './comic-readers-add-page.component';
+import { EditComicReadersPageComponent } from './edit-comic-readers-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ComicReadersAddPageComponent,
+    component: EditComicReadersPageComponent,
   },
 ];
 
 @NgModule({
-  declarations: [ComicReadersAddPageComponent],
+  declarations: [EditComicReadersPageComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -23,4 +23,4 @@ const routes: Routes = [
     FooterPortalModule,
   ],
 })
-export class ComicReadersAddPageModule {}
+export class EditComicReadersPageModule {}

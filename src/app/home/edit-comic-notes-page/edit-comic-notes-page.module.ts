@@ -4,12 +4,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
 import { AddEditComicNotesFormModule } from '@features/comics/add-edit-comic-notes-form/add-edit-comic-notes-form.module';
 import { FooterPortalModule } from '@shared/layouts/footer-portal/footer-portal.module';
-import { ComicNotesEditPageComponent } from './comic-notes-edit-page.component';
+import { EditComicNotesPageComponent } from './edit-comic-notes-page.component';
 
-const routes: Routes = [{ path: '', component: ComicNotesEditPageComponent }];
+const routes: Routes = [{ path: '', component: EditComicNotesPageComponent }];
 
 @NgModule({
-  declarations: [ComicNotesEditPageComponent],
+  declarations: [EditComicNotesPageComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -18,4 +18,4 @@ const routes: Routes = [{ path: '', component: ComicNotesEditPageComponent }];
     FooterPortalModule,
   ],
 })
-export class ComicNotesEditPageModule {}
+export class EditComicNotesPageModule {}
