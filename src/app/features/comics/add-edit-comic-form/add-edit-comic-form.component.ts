@@ -10,6 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { webUrlValidator } from '@shared/validators/web-url-validator';
 import * as _ from 'lodash';
 import {
+  AddEditComicActionEvent,
   Comic,
   ComicForm,
   ComicFormValue,
@@ -33,16 +34,7 @@ export class AddEditComicFormComponent implements OnInit {
   @Input('data') comic!: Readonly<Comic>;
   @Input() action!: string;
 
-  @Output() actionEvent = new EventEmitter<{
-    action: string;
-    data: {
-      comicFormValue: ComicFormValue;
-      isComicFormValid: boolean;
-      hasChanges?: boolean;
-      isComicFormDirty?: boolean;
-      originalComic?: Readonly<Comic>;
-    };
-  }>();
+  @Output() actionEvent = new EventEmitter<AddEditComicActionEvent>();
 
   constructor(private fb: FormBuilder) {
     this.formatList = ['manga', 'manhua', 'manhwa', 'webtoon'];
