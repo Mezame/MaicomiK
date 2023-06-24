@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, EMPTY, map, mergeMap, of, switchMap } from 'rxjs';
-import { ComicsService } from '../comics.service';
+import { EMPTY, catchError, map, mergeMap, of, switchMap } from 'rxjs';
+import { ComicsDataService } from '../services/comics-data.service';
 import {
-  addComicAction,
-  editComicAction,
   ComicsApiActions,
+  addComicAction,
+  deleteComicAction,
+  editComicAction,
   incrementComicChapterAction,
   loadComicsAction,
-  deleteComicAction,
 } from './comics.actions';
 import { selectComics } from './comics.selectors';
 
@@ -32,7 +32,7 @@ export class ComicEffects {
           return EMPTY;
         }
 
-        return this.comicsService
+        return this.comicsDataService
           .getComics()
           .pipe(map((comics) => ComicsApiActions.gotComics({ comics })));
       })
@@ -45,7 +45,7 @@ export class ComicEffects {
       switchMap((action) => {
         const comic = action.comic;
 
-        return this.comicsService.addComic(comic).pipe(
+        return this.comicsDataService.addComic(comic).pipe(
           map((res) => {
             if (res.error) {
               throw new Error('comics api failure');
@@ -71,7 +71,7 @@ export class ComicEffects {
       switchMap((action) => {
         const comic = action.comic;
 
-        return this.comicsService.updateComic(comic).pipe(
+        return this.comicsDataService.updateComic(comic).pipe(
           map((res) => {
             if (res.error) {
               throw new Error('comics api failure');
@@ -97,7 +97,7 @@ export class ComicEffects {
         const comic = action.comic;
         const fields = action.fields;
 
-        return this.comicsService.patchComic(comic, fields).pipe(
+        return this.comicsDataService.patchComic(comic, fields).pipe(
           map((res) => {
             if (res.error) {
               throw new Error('comics api failure');
@@ -117,7 +117,7 @@ export class ComicEffects {
       switchMap((action) => {
         const id = action.id;
 
-        return this.comicsService.deleteComic(id).pipe(
+        return this.comicsDataService.deleteComic(id).pipe(
           map((res) => {
             if (res.error) {
               throw new Error('comics api failure');
@@ -133,7 +133,7 @@ export class ComicEffects {
 
   constructor(
     private actions$: Actions,
-    private comicsService: ComicsService,
+    private comicsDataService: ComicsDataService,
     private store: Store
   ) {}
 }
