@@ -5,17 +5,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddEditComicFormModule } from '@features/comics/add-edit-comic-form/add-edit-comic-form.module';
 import { FooterPortalModule } from '@shared/layouts/footer-portal/footer-portal.module';
 import { PrimaryLayoutModule } from '@shared/layouts/primary-layout/primary-layout.module';
-import { ComicEditPageComponent } from './comic-edit-page.component';
+import { EditComicPageComponent } from './edit-comic-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ComicEditPageComponent,
+    component: EditComicPageComponent,
   },
 ];
 
 @NgModule({
-  declarations: [ComicEditPageComponent],
+  declarations: [EditComicPageComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -25,4 +25,4 @@ const routes: Routes = [
     FooterPortalModule,
   ],
 })
-export class ComicEditPageModule {}
+export class EditComicPageModule {}

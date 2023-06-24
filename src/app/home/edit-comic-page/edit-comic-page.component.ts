@@ -1,36 +1,36 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Comic } from '@features/comics/comic';
+import { Comic } from '@features/comics/models';
 import { ComicFormValue } from '@features/comics/models/comic-form';
 import { Observable } from 'rxjs';
-import { ComicEditFacadeService } from './comic-edit-facade.service';
+import { EditComicFacadeService } from './edit-comic-facade.service';
 
 @Component({
-  selector: 'app-comic-edit-page',
-  templateUrl: './comic-edit-page.component.html',
-  styleUrls: ['./comic-edit-page.component.scss'],
+  selector: 'app-edit-comic-page',
+  templateUrl: './edit-comic-page.component.html',
+  styleUrls: ['./edit-comic-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicEditPageComponent {
+export class EditComicPageComponent {
   comic$: Observable<Readonly<Comic>>;
   comicUrlSegment: string;
   editedComic!: Readonly<Comic>;
   isSubmitButtonDisabled: boolean;
 
   constructor(
-    private comicEditFacadeService: ComicEditFacadeService,
+    private editComicFacadeService: EditComicFacadeService,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
 
-    this.comic$ = this.comicEditFacadeService.getComic(this.comicUrlSegment);
+    this.comic$ = this.editComicFacadeService.getComic(this.comicUrlSegment);
 
     this.isSubmitButtonDisabled = true;
   }
 
   ngOnDestroy(): void {
-    this.comicEditFacadeService.clearApiState();
+    this.editComicFacadeService.clearApiState();
   }
 
   getFormAction(event: {
@@ -60,7 +60,7 @@ export class ComicEditPageComponent {
     if (action == 'editComic') {
       if (isComicFormValid && isComicFormDirty && hasChanges) {
         editedComicFields =
-          this.comicEditFacadeService.formatComicChapter(comicFormValue);
+          this.editComicFacadeService.formatComicChapter(comicFormValue);
 
         originalComic = event.data.originalComic!;
 
@@ -76,9 +76,9 @@ export class ComicEditPageComponent {
   editComic() {
     this.isSubmitButtonDisabled = true;
 
-    this.comicEditFacadeService.editComic(this.editedComic);
+    this.editComicFacadeService.editComic(this.editedComic);
 
-    this.comicEditFacadeService.getApiState().subscribe((apiState) => {
+    this.editComicFacadeService.getApiState().subscribe((apiState) => {
       if (
         apiState?.operation == 'updateComic' &&
         apiState.status == 'failure'

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ComicEditPageComponent } from './comic-edit-page.component';
+import { ComicEditPageComponent } from './edit-comic-page.component';
 
 describe('ComicEditPageComponent', () => {
   let component: ComicEditPageComponent;
