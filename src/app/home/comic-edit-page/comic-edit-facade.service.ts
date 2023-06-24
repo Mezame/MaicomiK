@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Comic } from '@features/comics/comic';
-import { ComicFormValue } from '@features/comics/comic-form';
-import { ComicFormService } from '@features/comics/comic-form.service';
+import { Comic } from '@features/comics/models';
+import { ComicFormValue } from '@features/comics/models/comic-form';
+import { ComicFormService } from '@features/comics/services/comic-form.service';
 import {
   ApiState,
   ComicsStoreService,
-} from '@features/comics/comics-store.service';
+} from '@features/comics/services/comics-store.service';
 import { editComicAction, selectComic } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, map, take } from 'rxjs';

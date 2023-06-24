@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Comic } from '@features/comics/comic';
-import { ComicFormValue } from '@features/comics/comic-form';
+import { ComicFormValue } from '@features/comics/models/comic-form';
 import { Observable } from 'rxjs';
 import { ComicEditFacadeService } from './comic-edit-facade.service';
 

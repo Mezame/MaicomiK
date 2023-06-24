@@ -1,5 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Comic } from '../comic';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import { Comic } from '../models';
 
 @Component({
   selector: 'app-comic-detail-content',
@@ -12,16 +18,16 @@ export class ComicDetailContentComponent {
 
   @Output() actionEvent = new EventEmitter<{
     action: string;
-    data: Readonly<Comic>;
+    data: Comic;
   }>();
 
-  emitIncrementChapterAction(data: Readonly<Comic>) {
+  emitIncrementChapterAction(data: Comic) {
     const action = 'incrementChapter';
 
     this.actionEvent.emit({ action, data });
   }
 
-  emitOpenBottomSheetAction(data: Readonly<Comic>) {
+  emitOpenBottomSheetAction(data: Comic) {
     const action = 'openBottomSheet';
 
     this.actionEvent.emit({ action, data });

@@ -6,8 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Comic } from '@features/comics/comic';
-import { ComicFormValue } from '@features/comics/comic-form';
+import { Comic, ComicFormValue } from '@features/comics/models';
 import { AddComicFacadeService } from './add-comic-facade.service';
 
 @Component({

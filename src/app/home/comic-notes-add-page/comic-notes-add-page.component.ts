@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Comic } from '@features/comics/comic';
-import { ComicNotesFormValue } from '@features/comics/comic-notes-add-edit-form/comic-notes-form';
-import { ComicsStoreService } from '@features/comics/comics-store.service';
-import { selectComic } from '@features/comics/state/comics.selectors';
+import { Comic, ComicNotesFormValue } from '@features/comics/models';
+import { ComicsStoreService } from '@features/comics/services/comics-store.service';
+import { selectComic } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 

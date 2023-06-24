@@ -6,8 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Comic } from '../comic';
-import { ComicNotesForm, ComicNotesFormValue } from './comic-notes-form';
+import { Comic, ComicNotesForm, ComicNotesFormValue } from '../models';
 
 @Component({
   selector: 'app-comic-notes-add-edit-form',

@@ -7,12 +7,12 @@ import {
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { webUrlValidator } from '@shared/validators/web-url-validator';
-import { Comic } from '../comic';
 import {
+  Comic,
   ComicReadersForm,
   ComicReadersFormArray,
   ComicReadersFormValue,
-} from './comic-readers-form';
+} from '../models';
 
 @Component({
   selector: 'app-comic-readers-add-edit-form',
