@@ -52,8 +52,8 @@ const routes: Routes = [
       {
         path: 'comics/:comicUrlSegment/add-notes',
         loadChildren: () =>
-          import('./comic-notes-add-page/comic-notes-add-page.module').then(
-            (m) => m.ComicNotesAddPageModule
+          import('./add-comic-notes-page/add-comic-notes-page.module').then(
+            (m) => m.AddComicNotesPageModule
           ),
       },
       {

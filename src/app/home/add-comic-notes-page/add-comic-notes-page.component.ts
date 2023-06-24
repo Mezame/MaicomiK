@@ -7,12 +7,12 @@ import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 
 @Component({
-  selector: 'app-comic-notes-add-page',
-  templateUrl: './comic-notes-add-page.component.html',
-  styleUrls: ['./comic-notes-add-page.component.scss'],
+  selector: 'app-add-comic-notes-page',
+  templateUrl: './add-comic-notes-page.component.html',
+  styleUrls: ['./add-comic-notes-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicNotesAddPageComponent {
+export class AddComicNotesPageComponent {
   comic$: Observable<Readonly<Comic>>;
   comicUrlSegment: string;
   updatedComic!: Readonly<Comic>;
