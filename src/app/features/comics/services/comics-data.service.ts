@@ -15,7 +15,7 @@ import { ApiState, ComicsStoreService } from './comics-store.service';
 @Injectable({
   providedIn: 'root',
 })
-export class ComicsService {
+export class ComicsDataService {
   private feature: string;
   private featurePlural: string;
   private handleError: HandleError;

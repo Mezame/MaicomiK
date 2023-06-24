@@ -1,13 +1,11 @@
-import { fakeAsync, flush, flushMicrotasks, TestBed } from '@angular/core/testing';
+import { fakeAsync, flushMicrotasks, TestBed } from '@angular/core/testing';
 import { FirestoreService } from '@shared/firebase/firestore.service';
 import { comicsMock } from '@testing/comics.mock';
-import { of, throwError } from 'rxjs';
-import { Comic } from './comic';
+import { ComicsDataService } from './comics-data.service';
+import { Comic } from '../models/comic';
 
-import { ComicsService } from './comics.service';
-
-describe('ComicsService', () => {
-  let comicsService: ComicsService;
+describe('ComicsDataService', () => {
+  let comicsDataService: ComicsDataService;
   let firestoreService: jasmine.SpyObj<FirestoreService>;
   let expectedComics: Comic[];
   let comicIdMock: string;
@@ -27,7 +25,7 @@ describe('ComicsService', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        ComicsService,
+        ComicsDataService,
         {
           provide: FirestoreService,
           useValue: firestoreServiceSpy,
@@ -35,14 +33,14 @@ describe('ComicsService', () => {
       ],
     });
 
-    comicsService = TestBed.inject(ComicsService);
+    comicsDataService = TestBed.inject(ComicsDataService);
     firestoreService = TestBed.inject(
       FirestoreService
     ) as jasmine.SpyObj<FirestoreService>;
   });
 
   it('should be created', () => {
-    expect(comicsService).toBeTruthy();
+    expect(comicsDataService).toBeTruthy();
   });
 
   describe('#getComics', () => {
@@ -54,7 +52,7 @@ describe('ComicsService', () => {
         })
       );
 
-      comicsService.getComics().subscribe({
+      comicsDataService.getComics().subscribe({
         next: (comics) =>
           expect(comics)
             .withContext('should return expected comics')
@@ -70,7 +68,7 @@ describe('ComicsService', () => {
         Promise.resolve({ error: new Error('some error') })
       );
 
-      comicsService.getComics().subscribe({
+      comicsDataService.getComics().subscribe({
         next: (comics) =>
           expect(comics.length)
             .withContext('should have empty array')
