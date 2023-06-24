@@ -14,11 +14,11 @@ import { ComicForm, ComicFormValue } from './comic-form';
 
 @Component({
   selector: 'app-comic-add-edit-form',
-  templateUrl: './comic-add-edit-form.component.html',
-  styleUrls: ['./comic-add-edit-form.component.scss'],
+  templateUrl: './add-edit-comic-form.component.html',
+  styleUrls: ['./add-edit-comic-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicAddEditFormComponent implements OnInit {
+export class AddEditComicFormComponent implements OnInit {
   comicForm!: ComicForm;
   currentComicFormValue!: Partial<ComicFormValue>;
   formatList: ComicFormat[];

@@ -4,11 +4,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
-import { ComicAddEditFormComponent } from './comic-add-edit-form.component';
+import { AddEditComicFormComponent } from './add-edit-comic-form.component';
 
 @NgModule({
-  declarations: [ComicAddEditFormComponent],
+  declarations: [AddEditComicFormComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -16,6 +15,6 @@ import { ComicAddEditFormComponent } from './comic-add-edit-form.component';
     MatInputModule,
     MatSelectModule,
   ],
-  exports: [ComicAddEditFormComponent],
+  exports: [AddEditComicFormComponent],
 })
-export class ComicAddEditFormModule {}
+export class AddEditComicFormModule {}
