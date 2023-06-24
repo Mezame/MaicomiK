@@ -8,7 +8,7 @@ import {
   FirestoreResponse,
   FirestoreService,
 } from '@shared/firebase/firestore.service';
-import { Observable, catchError, from, map, tap } from 'rxjs';
+import { Observable, catchError, from, map, take, tap } from 'rxjs';
 import { Comic } from './comic';
 import { ApiState, ComicsStoreService } from './comics-store.service';
 
@@ -45,13 +45,20 @@ export class ComicsService {
       `${this.serviceName}: ${operation}: got ${comicsLength} ${this.featurePlural}`;
 
     return this.firestoreService.getCollection(this.path).pipe(
+      take(1),
       map((docData) => docData as readonly Comic[]),
       tap((comics) => {
+        if (!comics) {
+          this.setApiState(operation, 'failure');
+
+          throw Error('empty comics');
+        }
+
         this.setApiState(operation, 'success');
 
         this.logger.log(message(comics.length));
       }),
-      catchError(this.handleError<readonly Comic[]>(operation, []))
+      catchError(this.handleError<readonly Comic[]>(operation))
     );
   }
 
