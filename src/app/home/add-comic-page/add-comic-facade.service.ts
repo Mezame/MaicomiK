@@ -13,7 +13,7 @@ import { Observable, take } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ComicAddFacadeService {
+export class AddComicFacadeService {
   constructor(
     private comicFormService: ComicFormService,
     private comicsStoreService: ComicsStoreService,

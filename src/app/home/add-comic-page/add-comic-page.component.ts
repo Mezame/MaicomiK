@@ -8,29 +8,29 @@ import {
 import { Router } from '@angular/router';
 import { Comic } from '@features/comics/comic';
 import { ComicFormValue } from '@features/comics/add-edit-comic-form/comic-form';
-import { ComicAddFacadeService } from './comic-add-facade.service';
+import { AddComicFacadeService } from './add-comic-facade.service';
 
 @Component({
-  selector: 'app-comic-add-page',
-  templateUrl: './comic-add-page.component.html',
-  styleUrls: ['./comic-add-page.component.scss'],
+  selector: 'app-add-comic-page',
+  templateUrl: './add-comic-page.component.html',
+  styleUrls: ['./add-comic-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicAddPageComponent implements OnDestroy {
+export class AddComicPageComponent implements OnDestroy {
   comic!: Partial<Comic>;
   isSubmitButtonDisabled: boolean;
 
   @ViewChild('footer') footer!: TemplateRef<any>;
 
   constructor(
-    private comicAddFacadeService: ComicAddFacadeService,
+    private addComicFacadeService: AddComicFacadeService,
     private router: Router
   ) {
     this.isSubmitButtonDisabled = true;
   }
 
   ngOnDestroy(): void {
-    this.comicAddFacadeService.clearApiState();
+    this.addComicFacadeService.clearApiState();
   }
 
   getFormAction(event: {
@@ -52,7 +52,7 @@ export class ComicAddPageComponent implements OnDestroy {
     if (action == 'addComic') {
       if (isComicFormValid) {
         formatedComic =
-          this.comicAddFacadeService.formatComicChapter(comicFormValue);
+          this.addComicFacadeService.formatComicChapter(comicFormValue);
 
         this.comic = { ...formatedComic };
 
@@ -66,9 +66,9 @@ export class ComicAddPageComponent implements OnDestroy {
   addComic() {
     this.isSubmitButtonDisabled = true;
 
-    this.comicAddFacadeService.addComic(this.comic);
+    this.addComicFacadeService.addComic(this.comic);
 
-    this.comicAddFacadeService.getApiState().subscribe((apiState) => {
+    this.addComicFacadeService.getApiState().subscribe((apiState) => {
       if (apiState?.operation == 'addComic' && apiState.status == 'failure') {
         setTimeout(() => {
           this.isSubmitButtonDisabled = false;
