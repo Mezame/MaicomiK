@@ -3,7 +3,7 @@ import { ReplaySubject } from 'rxjs';
 
 export interface ApiState {
   operation: string;
-  status: 'loading' | 'success' | 'failure';
+  status: 'failure' | 'loading' | 'success';
 }
 
 @Injectable({
