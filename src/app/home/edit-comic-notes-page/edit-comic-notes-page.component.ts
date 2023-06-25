@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Comic, ComicNotesFormValue } from '@features/comics/models';
-import { ComicsStoreService } from '@features/comics/services/comics-store.service';
-import { selectComic } from '@features/comics/state';
-import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
+import { EditComicNotesFacadeService } from './edit-comic-notes-facade.service';
 
 @Component({
   selector: 'app-edit-comic-notes-page',
@@ -15,27 +13,18 @@ import { Observable, map } from 'rxjs';
 export class EditComicNotesPageComponent {
   comic$: Observable<Readonly<Comic>>;
   comicUrlSegment: string;
-  updatedComic!: Readonly<Comic>;
+  updatedComic!: Comic;
   isSubmitButtonDisabled: boolean;
 
   constructor(
+    private editComicNotesFacadeService: EditComicNotesFacadeService,
     private route: ActivatedRoute,
-    private store: Store,
-    private comicsStoreService: ComicsStoreService,
     private router: Router
   ) {
     this.comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
 
-    this.comic$ = this.store.select(selectComic(this.comicUrlSegment)).pipe(
-      map((comic) => {
-        if (!comic) {
-          this.store.dispatch({ type: '[Comic Notes Edit Page] Load Comics' });
-
-          return null as unknown as Readonly<Comic>;
-        }
-
-        return comic;
-      })
+    this.comic$ = this.editComicNotesFacadeService.getComic(
+      this.comicUrlSegment
     );
 
     this.isSubmitButtonDisabled = true;
@@ -79,12 +68,9 @@ export class EditComicNotesPageComponent {
   editComicNotes() {
     this.isSubmitButtonDisabled = true;
 
-    this.store.dispatch({
-      type: '[Comic Notes Edit Page] Update Comic',
-      comic: this.updatedComic,
-    });
+    this.editComicNotesFacadeService.editComicNotes(this.updatedComic);
 
-    this.comicsStoreService.getApiState().subscribe((apiState) => {
+    this.editComicNotesFacadeService.getApiState().subscribe((apiState) => {
       if (
         apiState?.operation == 'updateComic' &&
         apiState.status == 'failure'
