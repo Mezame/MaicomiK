@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
+import { ApiState, AppStoreService } from '@core/services/app-store.service';
 import { Comic } from '@features/comics/models';
-import {
-  ApiState,
-  ComicsStoreService,
-} from '@features/comics/services/comics-store.service';
 import {
   deleteComicAction,
   incrementComicChapterAction,
@@ -16,10 +13,7 @@ import { Observable, map, take } from 'rxjs';
   providedIn: 'root',
 })
 export class ComicDetailFacadeService {
-  constructor(
-    private comicsStoreService: ComicsStoreService,
-    private store: Store
-  ) {}
+  constructor(private appStoreService: AppStoreService, private store: Store) {}
 
   deleteComic(comicId: string): void {
     this.store.dispatch(deleteComicAction({ id: comicId }));
@@ -45,7 +39,7 @@ export class ComicDetailFacadeService {
   }
 
   getApiState(): Observable<ApiState | null> {
-    const apiState = this.comicsStoreService.getApiState().pipe(take(1));
+    const apiState = this.appStoreService.getApiState().pipe(take(1));
 
     return apiState;
   }
