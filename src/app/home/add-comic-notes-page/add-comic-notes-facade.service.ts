@@ -20,7 +20,7 @@ export class AddComicNotesFacadeService {
   addComicNotes(comic: Comic): void {
     this.store.dispatch({
       type: '[Comic Notes Add Page] Update Comic',
-      comic: comic,
+      comic,
     });
   }
 
