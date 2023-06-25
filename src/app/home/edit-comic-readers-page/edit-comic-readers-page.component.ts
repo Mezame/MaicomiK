@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Comic, ComicReadersFormValue } from '@features/comics/models';
-import { ComicsStoreService } from '@features/comics/services/comics-store.service';
-import { selectComic } from '@features/comics/state';
-import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
+import { EditComicReadersFacadeService } from './edit-comic-readers-facade.service';
 
 @Component({
   selector: 'app-edit-comic-readers-page',
@@ -15,29 +13,18 @@ import { Observable, map } from 'rxjs';
 export class EditComicReadersPageComponent {
   comic$: Observable<Readonly<Comic>>;
   comicUrlSegment: string;
-  updatedComic!: Readonly<Comic>;
+  updatedComic!: Comic;
   isSubmitButtonDisabled: boolean;
 
   constructor(
+    private editComicReadersFacadeService: EditComicReadersFacadeService,
     private route: ActivatedRoute,
-    private store: Store,
-    private comicsStoreService: ComicsStoreService,
     private router: Router
   ) {
     this.comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
 
-    this.comic$ = this.store.select(selectComic(this.comicUrlSegment)).pipe(
-      map((comic) => {
-        if (!comic) {
-          this.store.dispatch({
-            type: '[Comic Readers Edit Page] Load Comics',
-          });
-
-          return null as unknown as Readonly<Comic>;
-        }
-
-        return comic;
-      })
+    this.comic$ = this.editComicReadersFacadeService.getComic(
+      this.comicUrlSegment
     );
 
     this.isSubmitButtonDisabled = true;
@@ -80,12 +67,9 @@ export class EditComicReadersPageComponent {
   editComicReaders() {
     this.isSubmitButtonDisabled = true;
 
-    this.store.dispatch({
-      type: '[Comic Readers Edit Page] Update Comic',
-      comic: this.updatedComic,
-    });
+    this.editComicReadersFacadeService.editComicReaders(this.updatedComic);
 
-    this.comicsStoreService.getApiState().subscribe((apiState) => {
+    this.editComicReadersFacadeService.getApiState().subscribe((apiState) => {
       if (
         apiState?.operation == 'updateComic' &&
         apiState.status == 'failure'
