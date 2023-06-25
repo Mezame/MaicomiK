@@ -63,7 +63,7 @@ export class AddEditComicFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setInitialValues();
+    this.setInitialFormValues();
 
     if (this.action == 'editComic') {
       this.setCurrentValues();
@@ -74,7 +74,7 @@ export class AddEditComicFormComponent implements OnInit {
     }
 
     this.comicForm.valueChanges.subscribe((_) => {
-      this.onValueChanges();
+      this.onComicFormValueChanges();
     });
   }
 
@@ -110,7 +110,7 @@ export class AddEditComicFormComponent implements OnInit {
     });
   }
 
-  onValueChanges() {
+  onComicFormValueChanges() {
     this.tryToEmitAddComic();
 
     this.tryToEmitEditComic();
@@ -130,7 +130,7 @@ export class AddEditComicFormComponent implements OnInit {
     });
   }
 
-  private setInitialValues() {
+  private setInitialFormValues() {
     this.comicForm = this.fb.group({
       title: ['', { validators: Validators.required, updateOn: 'blur' }],
       format: ['' as ComicFormat, Validators.required],
