@@ -16,15 +16,15 @@ export class AppStoreService {
     this.apiState$ = new ReplaySubject(1);
   }
 
+  clearApiState() {
+    this.apiState$.next(null);
+  }
+
   getApiState() {
     return this.apiState$.asObservable();
   }
 
   setApiState(apiState: ApiState) {
     this.apiState$.next(apiState);
-  }
-
-  clearApiState() {
-    this.apiState$.next(null);
   }
 }
