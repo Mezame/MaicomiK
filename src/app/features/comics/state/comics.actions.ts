@@ -10,7 +10,7 @@ export const addComicAction = createAction(
 
 export const editComicAction = createAction(
   '[Comic Edit Page] Edit Comic',
-  props<{ comic: Readonly<Comic> }>()
+  props<{ comic: Comic }>()
 );
 
 export const deleteComicAction = createAction(
@@ -20,7 +20,7 @@ export const deleteComicAction = createAction(
 
 export const incrementComicChapterAction = createAction(
   '[Comic Detail Page] Increment Comic Chapter',
-  props<{ comic: Readonly<Comic>; fields: Partial<Comic> }>()
+  props<{ comic: Comic; fields: Partial<Comic> }>()
 );
 
 export const ComicsApiActions = createActionGroup({
