@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FirebaseError } from '@angular/fire/app';
-import { Logger } from '@core/logger/logger.service';
+import { Logger } from '@core/services/logger.service';
 import { Observable, of } from 'rxjs';
 
 export type HandleError = <T>(

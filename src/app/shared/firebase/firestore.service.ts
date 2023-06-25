@@ -13,7 +13,7 @@ import {
   Timestamp,
   updateDoc,
 } from '@angular/fire/firestore';
-import { Logger } from '@core/logger/logger.service';
+import { Logger } from '@core/services/logger.service';
 import { Observable } from 'rxjs';
 
 export interface FirestoreResponse {
