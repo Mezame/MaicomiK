@@ -9,7 +9,7 @@ export interface ApiState {
 @Injectable({
   providedIn: 'root',
 })
-export class ComicsStoreService {
+export class AppStoreService {
   private apiState$: ReplaySubject<ApiState | null>;
 
   constructor() {
