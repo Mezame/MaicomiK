@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 
 export interface ApiState {
   operation: string;
@@ -16,15 +16,17 @@ export class AppStoreService {
     this.apiState$ = new ReplaySubject(1);
   }
 
-  clearApiState() {
+  clearApiState(): void {
     this.apiState$.next(null);
   }
 
-  getApiState() {
-    return this.apiState$.asObservable();
+  getApiState(): Observable<ApiState | null> {
+    const apiState$ = this.apiState$.asObservable();
+
+    return apiState$;
   }
 
-  setApiState(apiState: ApiState) {
+  setApiState(apiState: ApiState): void {
     this.apiState$.next(apiState);
   }
 }
