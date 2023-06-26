@@ -1,5 +1,6 @@
 import { Comic } from './comic';
 import { ComicFormValue } from './comic-form';
+import { ComicNotesFormValue } from './comic-notes-form';
 
 interface EventBus {
   name: string;
@@ -13,5 +14,14 @@ export interface AddEditComicEvent extends EventBus {
     hasChanges?: boolean;
     isComicFormDirty?: boolean;
     originalComic?: Readonly<Comic>;
+  };
+}
+
+export interface AddEditComicNotesEvent extends EventBus {
+  data: {
+    comicNotesFormValue: ComicNotesFormValue;
+    isComicNotesFormValid: boolean;
+    isComicNotesFormDirty?: boolean;
+    originalComic: Readonly<Comic>;
   };
 }
