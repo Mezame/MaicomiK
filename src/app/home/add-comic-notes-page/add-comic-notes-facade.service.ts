@@ -18,6 +18,10 @@ export class AddComicNotesFacadeService {
     });
   }
 
+  clearApiState(): void {
+    this.appStoreService.clearApiState();
+  }
+
   getApiState(): Observable<ApiState | null> {
     const apiState = this.appStoreService.getApiState().pipe(take(1));
 
