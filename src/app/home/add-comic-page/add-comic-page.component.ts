@@ -11,6 +11,7 @@ import {
   AddEditComicEvent,
   Comic,
   ComicFormValue,
+  EventBus,
 } from '@features/comics/models';
 import { AddComicFacadeService } from './add-comic-facade.service';
 
@@ -61,7 +62,7 @@ export class AddComicPageComponent implements OnInit, OnDestroy {
     this.navigateToComicListPage();
   }
 
-  onEventBus(event: AddEditComicEvent): void {
+  onEventBus(event: EventBus): void {
     let eventName: string;
 
     eventName = event.name;
