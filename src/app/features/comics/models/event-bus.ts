@@ -34,3 +34,11 @@ export interface AddEditComicReadersEvent extends EventBus {
     originalComic: Readonly<Comic>;
   };
 }
+
+export interface GoToComicDetailEvent extends EventBus {
+  data: Readonly<Comic>;
+}
+
+export interface IncrementComicChapterEvent extends EventBus {
+  data: Readonly<Comic>;
+}
