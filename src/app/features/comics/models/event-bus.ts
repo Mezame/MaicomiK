@@ -2,9 +2,9 @@ import { Comic } from './comic';
 import { ComicFormValue } from './comic-form';
 import { ComicNotesFormValue } from './comic-notes-form';
 
-interface EventBus {
+export interface EventBus {
   name: string;
-  data?: {};
+  data: any;
 }
 
 export interface AddEditComicEvent extends EventBus {
