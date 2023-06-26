@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -14,7 +15,7 @@ import { Comic, ComicNotesForm, ComicNotesFormValue } from '../models';
   styleUrls: ['./add-edit-comic-notes-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddEditComicNotesFormComponent {
+export class AddEditComicNotesFormComponent implements OnInit {
   comicNotesForm!: ComicNotesForm;
 
   @Input('data') comic!: Readonly<Comic>;
