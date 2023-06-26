@@ -11,6 +11,10 @@ import { Observable, map, take } from 'rxjs';
 export class EditComicReadersFacadeService {
   constructor(private appStoreService: AppStoreService, private store: Store) {}
 
+  clearApiState(): void {
+    this.appStoreService.clearApiState();
+  }
+
   editComicReaders(comic: Comic): void {
     this.store.dispatch({
       type: '[Comic Readers Edit Page] Update Comic',
