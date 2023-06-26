@@ -1,12 +1,12 @@
 import { Comic } from './comic';
 import { ComicFormValue } from './comic-form';
 
-interface ActionEvent {
-  action: string;
-  data: {};
+interface EventBus {
+  name: string;
+  data?: {};
 }
 
-export interface AddEditComicActionEvent extends ActionEvent {
+export interface AddEditComicEvent extends EventBus {
   data: {
     comicFormValue: ComicFormValue;
     isComicFormValid: boolean;

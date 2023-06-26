@@ -1,4 +1,4 @@
-export * from './action-event';
+export * from './event-bus';
 export * from './comic';
 export * from './comic-form';
 export * from './comic-notes-form';
