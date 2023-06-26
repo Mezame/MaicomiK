@@ -8,6 +8,7 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { webUrlValidator } from '@shared/validators/web-url-validator';
 import {
+  AddEditComicReadersEvent,
   Comic,
   ComicReadersForm,
   ComicReadersFormArray,
@@ -24,17 +25,9 @@ export class AddEditComicReadersFormComponent {
   comicReadersFormArray!: ComicReadersFormArray;
 
   @Input('data') comic!: Readonly<Comic>;
+  @Input() container!: string;
 
-  @Input() action!: string;
-
-  @Output() actionEvent = new EventEmitter<{
-    action: string;
-    data: {
-      comicReadersFormValue: ComicReadersFormValue[];
-      isComicReadersFormValid: boolean;
-      originalComic: Readonly<Comic>;
-    };
-  }>();
+  @Output() eventBus!: EventEmitter<AddEditComicReadersEvent>;
 
   constructor(private fb: FormBuilder) {}
 
@@ -49,18 +42,18 @@ export class AddEditComicReadersFormComponent {
   ngOnInit(): void {
     const newComicReadersForm = this.createComicReadersForm();
 
-    this.comicReadersFormArray = this.fb.array([newComicReadersForm]);
+    this.setInitialValues(newComicReadersForm);
 
     if (
-      this.action == 'editComicReaders' &&
+      this.container == 'editComicReaders' &&
       this.comic.readers &&
       this.comic.readers.length > 0
     ) {
-      this.setCurrentValues(newComicReadersForm);
+      this.setCurrentComicReadersFormValues(newComicReadersForm);
     }
   }
 
-  addComicReadersForm() {
+  addComicReadersForm(): void {
     const newComicReadersForm = this.createComicReadersForm();
 
     this.comicReadersFormArray.push(newComicReadersForm);
@@ -73,53 +66,32 @@ export class AddEditComicReadersFormComponent {
     originalComic: Readonly<Comic>,
     isComicReadersFormValid = false
   ) {
-    const action = 'addComicReaders';
-    const data = {
+    let eventName: string;
+    let data: AddEditComicReadersEvent['data'];
+    let event: AddEditComicReadersEvent;
+
+    eventName = 'addComicReaders';
+    data = {
       comicReadersFormValue,
       isComicReadersFormValid,
       originalComic,
     };
+    event = { name: eventName, data };
 
-    this.actionEvent.emit({ action, data });
+    this.eventBus.emit(event);
   }
 
-  onValueChanges() {
+  onComicReadersFormValueChanges(): void {
     this.tryToEmitAddComicReaders();
   }
 
-  removeComicReadersForm(index: number) {
+  onRemoveComicReaders(index: number): void {
     this.comicReadersFormArray.removeAt(index);
 
     this.tryToEmitAddComicReaders();
   }
 
-  private createComicReadersForm() {
-    let comicReadersForm: ComicReadersForm;
-
-    comicReadersForm = this.fb.group({
-      name: ['', Validators.required],
-      url: [null as any, webUrlValidator()],
-    });
-
-    return comicReadersForm;
-  }
-
-  private setCurrentValues(comicReadersForm: ComicReadersForm) {
-    for (let i = 0; i < this.comic.readers!.length; i++) {
-      comicReadersForm.patchValue({
-        name: this.comic.readers![i].name,
-        url: this.comic.readers![i].url,
-      });
-
-      if (i < 1) {
-        this.comicReadersFormArrayCtrl[0] = comicReadersForm;
-      } else {
-        this.comicReadersFormArray.push(comicReadersForm);
-      }
-    }
-  }
-
-  private tryToEmitAddComicReaders() {
+  tryToEmitAddComicReaders(): void {
     let comicReadersFormValue: ComicReadersFormValue[];
     let isComicReadersFormValid: boolean;
 
@@ -139,5 +111,39 @@ export class AddEditComicReadersFormComponent {
       this.comic,
       isComicReadersFormValid
     );
+  }
+
+  private createComicReadersForm(): ComicReadersForm {
+    let comicReadersForm: ComicReadersForm;
+
+    comicReadersForm = this.fb.group({
+      name: ['', Validators.required],
+      url: [null as ComicReadersFormValue['url'], webUrlValidator()],
+    });
+
+    return comicReadersForm;
+  }
+
+  private setCurrentComicReadersFormValues(
+    comicReadersForm: ComicReadersForm
+  ): void {
+    for (let i = 0; i < this.comic.readers!.length; i++) {
+      comicReadersForm.patchValue({
+        name: this.comic.readers![i].name,
+        url: this.comic.readers![i].url,
+      });
+
+      if (i < 1) {
+        this.comicReadersFormArrayCtrl[0] = comicReadersForm;
+      } else {
+        this.comicReadersFormArray.push(comicReadersForm);
+      }
+    }
+  }
+
+  private setInitialValues(newComicReadersForm: ComicReadersForm): void {
+    this.comicReadersFormArray = this.fb.array([newComicReadersForm]);
+
+    this.eventBus = new EventEmitter<AddEditComicReadersEvent>();
   }
 }

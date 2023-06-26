@@ -1,4 +1,4 @@
-<form (change)="onValueChanges()">
+<form (change)="onComicReadersFormValueChanges()">
   <ng-container *ngFor="let cRSForm of comicReadersFormArrayCtrl; index as i">
     <mat-divider *ngIf="i > 0" class="divider"></mat-divider>
 
@@ -38,7 +38,7 @@
           mat-button
           class="label-medium"
           color="primary"
-          (click)="removeComicReadersForm(i)"
+          (click)="onRemoveComicReaders(i)"
         >
           <span>Remove reader</span>
         </button>
