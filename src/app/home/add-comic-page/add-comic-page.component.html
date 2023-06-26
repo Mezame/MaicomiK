@@ -1,8 +1,8 @@
 <span class="title-medium">Adding comic</span>
 
 <app-add-edit-comic-form
-  action="addComic"
-  (actionEvent)="getFormAction($event)"
+  container="addComicPage"
+  (eventBus)="getFormAction($event)"
 ></app-add-edit-comic-form>
 
 <ng-container *appFooterPortal="footer"></ng-container>

@@ -10,7 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { webUrlValidator } from '@shared/validators/web-url-validator';
 import * as _ from 'lodash';
 import {
-  AddEditComicActionEvent,
+  AddEditComicEvent,
   Comic,
   ComicForm,
   ComicFormValue,
@@ -27,20 +27,16 @@ import {
 export class AddEditComicFormComponent implements OnInit {
   comicForm!: ComicForm;
   currentComicFormValue!: Partial<ComicFormValue>;
-  formatList: ComicFormat[];
-  statusList: ComicStatus[];
-  previewImageSrc: string | null;
+  formatList!: ComicFormat[];
+  statusList!: ComicStatus[];
+  previewImageSrc!: string | null;
 
   @Input('data') comic!: Readonly<Comic>;
-  @Input() action!: string;
+  @Input() container!: string;
 
-  @Output() actionEvent = new EventEmitter<AddEditComicActionEvent>();
+  @Output() eventBus!: EventEmitter<AddEditComicEvent>;
 
-  constructor(private fb: FormBuilder) {
-    this.formatList = ['manga', 'manhua', 'manhwa', 'webtoon'];
-    this.statusList = ['reading', 'paused', 'planning', 'completed'];
-    this.previewImageSrc = null;
-  }
+  constructor(private fb: FormBuilder) {}
 
   get titleCtrl() {
     return this.comicForm.controls['title'];
@@ -63,10 +59,12 @@ export class AddEditComicFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setInitialFormValues();
+    this.setInitialValues();
 
-    if (this.action == 'editComic') {
-      this.setCurrentValues();
+    this.setInitialComicFormValues();
+
+    if (this.container == 'editComicPage') {
+      this.setCurrentComicFormValues();
 
       this.currentComicFormValue = { ...this.comicForm.value };
 
@@ -78,14 +76,19 @@ export class AddEditComicFormComponent implements OnInit {
     });
   }
 
-  emitAddComic(comicFormValue: ComicFormValue, isComicFormValid = false) {
-    const action = 'addComic';
-    const data = {
+  emitAddComic(comicFormValue: ComicFormValue, isComicFormValid = false): void {
+    let eventName: string;
+    let data: AddEditComicEvent['data'];
+    let event: AddEditComicEvent;
+
+    eventName = 'addComic';
+    data = {
       comicFormValue,
       isComicFormValid,
     };
+    event = { name: eventName, data };
 
-    this.actionEvent.emit({ action, data });
+    this.eventBus.emit(event);
   }
 
   emitEditComic(
@@ -94,20 +97,22 @@ export class AddEditComicFormComponent implements OnInit {
     isComicFormValid = false,
     isComicFormDirty = false,
     hasChanges = false
-  ) {
-    const action = 'editComic';
-    const data = {
+  ): void {
+    let eventName: string;
+    let data: AddEditComicEvent['data'];
+    let event: AddEditComicEvent;
+
+    eventName = 'editComic';
+    data = {
       comicFormValue,
       isComicFormValid,
       isComicFormDirty,
       hasChanges,
       originalComic,
     };
+    event = { name: eventName, data };
 
-    this.actionEvent.emit({
-      action,
-      data,
-    });
+    this.eventBus.emit(event);
   }
 
   onComicFormValueChanges() {
@@ -120,7 +125,7 @@ export class AddEditComicFormComponent implements OnInit {
     this.previewImageSrc = this.comicForm.value.coverUrl!;
   }
 
-  private setCurrentValues() {
+  private setCurrentComicFormValues() {
     this.comicForm.patchValue({
       title: this.comic.title,
       format: this.comic.format,
@@ -130,7 +135,15 @@ export class AddEditComicFormComponent implements OnInit {
     });
   }
 
-  private setInitialFormValues() {
+  private setInitialValues() {
+    this.formatList = ['manga', 'manhua', 'manhwa', 'webtoon'];
+    this.statusList = ['reading', 'paused', 'planning', 'completed'];
+    this.previewImageSrc = null;
+
+    this.eventBus = new EventEmitter<AddEditComicEvent>();
+  }
+
+  private setInitialComicFormValues() {
     this.comicForm = this.fb.group({
       title: ['', { validators: Validators.required, updateOn: 'blur' }],
       format: ['' as ComicFormat, Validators.required],
@@ -162,7 +175,7 @@ export class AddEditComicFormComponent implements OnInit {
     comicFormValue = { ...this.comicForm.value } as ComicFormValue;
     isComicFormValid = this.comicForm.valid;
 
-    if (this.action == 'addComic') {
+    if (this.container == 'addComicPage') {
       if (!isComicFormValid) {
         this.emitAddComic({} as any, isComicFormValid);
 
@@ -183,7 +196,7 @@ export class AddEditComicFormComponent implements OnInit {
     isComicFormValid = this.comicForm.valid;
     isComicFormDirty = this.comicForm.dirty;
 
-    if (this.action == 'editComic') {
+    if (this.container == 'editComicPage') {
       hasChanges = !_.isEqual(comicFormValue, this.currentComicFormValue);
 
       if (!isComicFormValid || !isComicFormDirty || !hasChanges) {
