@@ -115,60 +115,7 @@ export class AddEditComicFormComponent implements OnInit {
     this.eventBus.emit(event);
   }
 
-  onComicFormValueChanges() {
-    this.tryToEmitAddComic();
-
-    this.tryToEmitEditComic();
-  }
-
-  setPreviewImageSrc() {
-    this.previewImageSrc = this.comicForm.value.coverUrl!;
-  }
-
-  private setCurrentComicFormValues() {
-    this.comicForm.patchValue({
-      title: this.comic.title,
-      format: this.comic.format,
-      status: this.comic.status,
-      chapter: this.comic.chapter?.toString(),
-      coverUrl: this.comic.coverUrl,
-    });
-  }
-
-  private setInitialValues() {
-    this.formatList = ['manga', 'manhua', 'manhwa', 'webtoon'];
-    this.statusList = ['reading', 'paused', 'planning', 'completed'];
-    this.previewImageSrc = null;
-
-    this.eventBus = new EventEmitter<AddEditComicEvent>();
-  }
-
-  private setInitialComicFormValues() {
-    this.comicForm = this.fb.group({
-      title: ['', { validators: Validators.required, updateOn: 'blur' }],
-      format: ['' as ComicFormat, Validators.required],
-      status: ['' as ComicStatus, Validators.required],
-      chapter: [
-        '',
-        {
-          validators: [
-            Validators.required,
-            Validators.pattern('^[0-9]\\d*(\\.\\d+)?$'),
-          ],
-          updateOn: 'blur',
-        },
-      ],
-      coverUrl: [
-        '',
-        {
-          validators: [Validators.required, webUrlValidator()],
-          updateOn: 'blur',
-        },
-      ],
-    });
-  }
-
-  private tryToEmitAddComic() {
+  tryToEmitAddComic(): void {
     let comicFormValue: ComicFormValue;
     let isComicFormValid: boolean;
 
@@ -186,7 +133,7 @@ export class AddEditComicFormComponent implements OnInit {
     }
   }
 
-  private tryToEmitEditComic() {
+  tryToEmitEditComic(): void {
     let comicFormValue: ComicFormValue;
     let isComicFormValid: boolean;
     let isComicFormDirty: boolean;
@@ -219,5 +166,58 @@ export class AddEditComicFormComponent implements OnInit {
         hasChanges
       );
     }
+  }
+
+  private onComicFormValueChanges(): void {
+    this.tryToEmitAddComic();
+
+    this.tryToEmitEditComic();
+  }
+
+  private setCurrentComicFormValues(): void {
+    this.comicForm.patchValue({
+      title: this.comic.title,
+      format: this.comic.format,
+      status: this.comic.status,
+      chapter: this.comic.chapter?.toString(),
+      coverUrl: this.comic.coverUrl,
+    });
+  }
+
+  private setInitialValues(): void {
+    this.formatList = ['manga', 'manhua', 'manhwa', 'webtoon'];
+    this.statusList = ['reading', 'paused', 'planning', 'completed'];
+    this.previewImageSrc = null;
+
+    this.eventBus = new EventEmitter<AddEditComicEvent>();
+  }
+
+  private setInitialComicFormValues(): void {
+    this.comicForm = this.fb.group({
+      title: ['', { validators: Validators.required, updateOn: 'blur' }],
+      format: ['' as ComicFormat, Validators.required],
+      status: ['' as ComicStatus, Validators.required],
+      chapter: [
+        '',
+        {
+          validators: [
+            Validators.required,
+            Validators.pattern('^[0-9]\\d*(\\.\\d+)?$'),
+          ],
+          updateOn: 'blur',
+        },
+      ],
+      coverUrl: [
+        '',
+        {
+          validators: [Validators.required, webUrlValidator()],
+          updateOn: 'blur',
+        },
+      ],
+    });
+  }
+
+  private setPreviewImageSrc(): void {
+    this.previewImageSrc = this.comicForm.value.coverUrl!;
   }
 }
