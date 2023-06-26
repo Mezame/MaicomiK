@@ -2,7 +2,7 @@
 
 <app-add-edit-comic-form
   container="addComicPage"
-  (eventBus)="getFormAction($event)"
+  (eventBus)="onEventBus($event)"
 ></app-add-edit-comic-form>
 
 <ng-container *appFooterPortal="footer"></ng-container>
@@ -13,7 +13,7 @@
         mat-button
         class="label-medium"
         color="primary"
-        (click)="cancel()"
+        (click)="cancelAddComic()"
         aria-label="Cancel add comic and go to comic list"
       >
         <span>Cancel</span>

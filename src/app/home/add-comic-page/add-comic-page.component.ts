@@ -2,11 +2,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
+  OnInit,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Comic, ComicFormValue } from '@features/comics/models';
+import {
+  AddEditComicEvent,
+  Comic,
+  ComicFormValue,
+} from '@features/comics/models';
 import { AddComicFacadeService } from './add-comic-facade.service';
 
 @Component({
@@ -15,54 +20,26 @@ import { AddComicFacadeService } from './add-comic-facade.service';
   styleUrls: ['./add-comic-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddComicPageComponent implements OnDestroy {
+export class AddComicPageComponent implements OnInit, OnDestroy {
   comic!: Partial<Comic>;
-  isSubmitButtonDisabled: boolean;
+  isSubmitButtonDisabled!: boolean;
 
   @ViewChild('footer') footer!: TemplateRef<any>;
 
   constructor(
     private addComicFacadeService: AddComicFacadeService,
     private router: Router
-  ) {
-    this.isSubmitButtonDisabled = true;
+  ) {}
+
+  ngOnInit(): void {
+    this.setInitialValues();
   }
 
   ngOnDestroy(): void {
     this.addComicFacadeService.clearApiState();
   }
 
-  getFormAction(event: {
-    action: string;
-    data: {
-      comicFormValue: ComicFormValue;
-      isComicFormValid: boolean;
-    };
-  }) {
-    let action: string;
-    let comicFormValue: ComicFormValue;
-    let isComicFormValid: boolean;
-    let formatedComic: Partial<Comic>;
-
-    action = event.action;
-    comicFormValue = { ...event.data.comicFormValue };
-    isComicFormValid = event.data.isComicFormValid;
-
-    if (action == 'addComic') {
-      if (isComicFormValid) {
-        formatedComic =
-          this.addComicFacadeService.formatComicChapter(comicFormValue);
-
-        this.comic = { ...formatedComic };
-
-        this.isSubmitButtonDisabled = false;
-      } else {
-        this.isSubmitButtonDisabled = true;
-      }
-    }
-  }
-
-  addComic() {
+  addComic(): void {
     this.isSubmitButtonDisabled = true;
 
     this.addComicFacadeService.addComic(this.comic);
@@ -80,11 +57,43 @@ export class AddComicPageComponent implements OnDestroy {
     });
   }
 
-  cancel() {
+  cancelAddComic(): void {
     this.navigateToComicListPage();
   }
 
-  private navigateToComicListPage() {
+  onEventBus(event: AddEditComicEvent): void {
+    let eventName: string;
+
+    eventName = event.name;
+
+    if (eventName == 'addComic') {
+      this.tryToAddComic(event);
+    }
+  }
+
+  tryToAddComic(event: AddEditComicEvent): void {
+    let comicFormValue: ComicFormValue;
+    let isComicFormValid: boolean;
+    let formatedComic: Partial<Comic>;
+
+    comicFormValue = { ...event.data.comicFormValue };
+    isComicFormValid = event.data.isComicFormValid;
+
+    if (isComicFormValid) {
+      formatedComic =
+        this.addComicFacadeService.formatComicChapter(comicFormValue);
+
+      this.comic = { ...formatedComic };
+
+      this.isSubmitButtonDisabled = false;
+    }
+  }
+
+  private navigateToComicListPage(): void {
     this.router.navigate(['/home', 'comics']).catch((error) => error);
+  }
+
+  private setInitialValues(): void {
+    this.isSubmitButtonDisabled = true;
   }
 }
