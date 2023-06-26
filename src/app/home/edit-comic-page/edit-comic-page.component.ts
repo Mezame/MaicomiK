@@ -27,7 +27,7 @@ export class EditComicPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router
   ) {}
-  
+
   ngOnInit(): void {
     this.setInitialValues();
   }
@@ -67,11 +67,11 @@ export class EditComicPageComponent implements OnInit, OnDestroy {
     eventName = event.name;
 
     if (eventName == 'editComic') {
-      this.tryToEditComic(event);
+      this.prepareToEditComic(event);
     }
   }
 
-  tryToEditComic(event: AddEditComicEvent): void {
+  prepareToEditComic(event: AddEditComicEvent): void {
     let comicFormValue: Readonly<ComicFormValue>;
     let isComicFormValid: boolean;
     let isComicFormDirty: boolean;

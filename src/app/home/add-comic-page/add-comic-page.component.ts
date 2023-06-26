@@ -67,11 +67,11 @@ export class AddComicPageComponent implements OnInit, OnDestroy {
     eventName = event.name;
 
     if (eventName == 'addComic') {
-      this.tryToAddComic(event);
+      this.prepareToAddComic(event);
     }
   }
 
-  tryToAddComic(event: AddEditComicEvent): void {
+  prepareToAddComic(event: AddEditComicEvent): void {
     let comicFormValue: ComicFormValue;
     let isComicFormValid: boolean;
     let formatedComic: Partial<Comic>;
