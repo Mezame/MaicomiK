@@ -115,6 +115,10 @@ export class AddEditComicFormComponent implements OnInit {
     this.eventBus.emit(event);
   }
 
+  setPreviewImageSrc(): void {
+    this.previewImageSrc = this.comicForm.value.coverUrl!;
+  }
+
   tryToEmitAddComic(): void {
     let comicFormValue: ComicFormValue;
     let isComicFormValid: boolean;
@@ -122,15 +126,13 @@ export class AddEditComicFormComponent implements OnInit {
     comicFormValue = { ...this.comicForm.value } as ComicFormValue;
     isComicFormValid = this.comicForm.valid;
 
-    if (this.container == 'addComicPage') {
-      if (!isComicFormValid) {
-        this.emitAddComic({} as any, isComicFormValid);
+    if (!isComicFormValid) {
+      this.emitAddComic({} as any, isComicFormValid);
 
-        return;
-      }
-
-      this.emitAddComic(comicFormValue, isComicFormValid);
+      return;
     }
+
+    this.emitAddComic(comicFormValue, isComicFormValid);
   }
 
   tryToEmitEditComic(): void {
@@ -143,35 +145,37 @@ export class AddEditComicFormComponent implements OnInit {
     isComicFormValid = this.comicForm.valid;
     isComicFormDirty = this.comicForm.dirty;
 
-    if (this.container == 'editComicPage') {
-      hasChanges = !_.isEqual(comicFormValue, this.currentComicFormValue);
+    hasChanges = !_.isEqual(comicFormValue, this.currentComicFormValue);
 
-      if (!isComicFormValid || !isComicFormDirty || !hasChanges) {
-        this.emitEditComic(
-          {} as any,
-          {} as any,
-          isComicFormValid,
-          isComicFormDirty,
-          hasChanges
-        );
-
-        return;
-      }
-
+    if (!isComicFormValid || !isComicFormDirty || !hasChanges) {
       this.emitEditComic(
-        comicFormValue,
-        this.comic,
+        {} as any,
+        {} as any,
         isComicFormValid,
         isComicFormDirty,
         hasChanges
       );
+
+      return;
     }
+
+    this.emitEditComic(
+      comicFormValue,
+      this.comic,
+      isComicFormValid,
+      isComicFormDirty,
+      hasChanges
+    );
   }
 
   private onComicFormValueChanges(): void {
-    this.tryToEmitAddComic();
+    if (this.container == 'addComicPage') {
+      this.tryToEmitAddComic();
+    }
 
-    this.tryToEmitEditComic();
+    if (this.container == 'editComicPage') {
+      this.tryToEmitEditComic();
+    }
   }
 
   private setCurrentComicFormValues(): void {
@@ -215,9 +219,5 @@ export class AddEditComicFormComponent implements OnInit {
         },
       ],
     });
-  }
-
-  private setPreviewImageSrc(): void {
-    this.previewImageSrc = this.comicForm.value.coverUrl!;
   }
 }
