@@ -7,7 +7,12 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Comic, ComicNotesForm, ComicNotesFormValue } from '../models';
+import {
+  AddEditComicNotesEvent,
+  Comic,
+  ComicNotesForm,
+  ComicNotesFormValue,
+} from '../models';
 
 @Component({
   selector: 'app-add-edit-comic-notes-form',
@@ -19,24 +24,18 @@ export class AddEditComicNotesFormComponent implements OnInit {
   comicNotesForm!: ComicNotesForm;
 
   @Input('data') comic!: Readonly<Comic>;
-  @Input() action!: string;
+  @Input() container!: string;
 
-  @Output() actionEvent = new EventEmitter<{
-    action: string;
-    data: {
-      comicNotesFormValue: ComicNotesFormValue;
-      isComicNotesFormValid: boolean;
-      isComicNotesFormDirty?: boolean;
-      originalComic: Readonly<Comic>;
-    };
-  }>();
+  @Output() eventBus!: EventEmitter<AddEditComicNotesEvent>;
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.setInitialValues();
+
     this.setInitialComicNotesFormValues();
 
-    if (this.action == 'editComicNotes' && this.comic.notes) {
+    if (this.container == 'editComicNotes' && this.comic.notes) {
       this.setCurrentComicNotesFormValues();
     }
   }
@@ -45,15 +44,20 @@ export class AddEditComicNotesFormComponent implements OnInit {
     comicNotesFormValue: ComicNotesFormValue,
     originalComic: Readonly<Comic>,
     isComicNotesFormValid = false
-  ) {
-    const action = 'addComicNotes';
-    const data = {
+  ): void {
+    let eventName: string;
+    let data: AddEditComicNotesEvent['data'];
+    let event: AddEditComicNotesEvent;
+
+    eventName = 'addComicNotes';
+    data = {
       comicNotesFormValue,
       isComicNotesFormValid,
       originalComic,
     };
+    event = { name: eventName, data };
 
-    this.actionEvent.emit({ action, data });
+    this.eventBus.emit(event);
   }
 
   emitEditComicNotes(
@@ -61,39 +65,37 @@ export class AddEditComicNotesFormComponent implements OnInit {
     originalComic: Readonly<Comic>,
     isComicNotesFormValid = false,
     isComicNotesFormDirty = false
-  ) {
-    const action = 'editComicNotes';
-    const data = {
+  ): void {
+    let eventName: string;
+    let data: AddEditComicNotesEvent['data'];
+    let event: AddEditComicNotesEvent;
+
+    eventName = 'addComicNotes';
+    data = {
       comicNotesFormValue,
       isComicNotesFormValid,
       isComicNotesFormDirty,
       originalComic,
     };
+    event = { name: eventName, data };
 
-    this.actionEvent.emit({ action, data });
+    this.eventBus.emit(event);
   }
 
-  onValueChanges() {
+  onComicNotesFormValueChanges(): void {
     this.tryToEmitAddComicNotes();
+
     this.tryToEmitEditComicNotes();
   }
 
-  private setCurrentComicNotesFormValues() {
-    this.comicNotesForm.patchValue(this.comic.notes!);
-  }
-
-  private setInitialComicNotesFormValues() {
-    this.comicNotesForm = this.fb.control('', Validators.required);
-  }
-
-  private tryToEmitAddComicNotes() {
+  tryToEmitAddComicNotes(): void {
     let comicNotesFormValue: ComicNotesFormValue;
     let isComicNotesFormValid: boolean;
 
     comicNotesFormValue = this.comicNotesForm.value;
     isComicNotesFormValid = this.comicNotesForm.valid;
 
-    if (this.action == 'addComicNotes') {
+    if (this.container == 'addComicNotes') {
       if (!isComicNotesFormValid) {
         this.emitAddComicNotes('', {} as any, isComicNotesFormValid);
 
@@ -108,7 +110,7 @@ export class AddEditComicNotesFormComponent implements OnInit {
     }
   }
 
-  private tryToEmitEditComicNotes() {
+  tryToEmitEditComicNotes(): void {
     let comicNotesFormValue: ComicNotesFormValue;
     let isComicNotesFormValid: boolean;
     let isComicNotesFormDirty: boolean;
@@ -117,7 +119,7 @@ export class AddEditComicNotesFormComponent implements OnInit {
     isComicNotesFormValid = this.comicNotesForm.valid;
     isComicNotesFormDirty = this.comicNotesForm.dirty;
 
-    if (this.action == 'editComicNotes') {
+    if (this.container == 'editComicNotes') {
       if (!isComicNotesFormValid || !isComicNotesFormDirty) {
         this.emitEditComicNotes(
           '',
@@ -136,5 +138,17 @@ export class AddEditComicNotesFormComponent implements OnInit {
         isComicNotesFormDirty
       );
     }
+  }
+
+  private setCurrentComicNotesFormValues(): void {
+    this.comicNotesForm.patchValue(this.comic.notes!);
+  }
+
+  private setInitialComicNotesFormValues(): void {
+    this.comicNotesForm = this.fb.control('', Validators.required);
+  }
+
+  private setInitialValues(): void {
+    this.eventBus = new EventEmitter<AddEditComicNotesEvent>();
   }
 }
