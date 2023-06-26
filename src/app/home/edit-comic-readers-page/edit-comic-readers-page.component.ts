@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Comic, ComicReadersFormValue } from '@features/comics/models';
+import {
+  AddEditComicReadersEvent,
+  Comic,
+  ComicReadersFormValue,
+  EventBus,
+} from '@features/comics/models';
 import { Observable } from 'rxjs';
 import { EditComicReadersFacadeService } from './edit-comic-readers-facade.service';
 
@@ -11,60 +16,30 @@ import { EditComicReadersFacadeService } from './edit-comic-readers-facade.servi
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditComicReadersPageComponent {
-  comic$: Observable<Readonly<Comic>>;
-  comicUrlSegment: string;
+  comic$!: Observable<Readonly<Comic>>;
+  comicUrlSegment!: string;
   updatedComic!: Comic;
-  isSubmitButtonDisabled: boolean;
+  isSubmitButtonDisabled!: boolean;
 
   constructor(
     private editComicReadersFacadeService: EditComicReadersFacadeService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
-    this.comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
+  ) {}
 
-    this.comic$ = this.editComicReadersFacadeService.getComic(
-      this.comicUrlSegment
-    );
-
-    this.isSubmitButtonDisabled = true;
+  ngOnInit(): void {
+    this.setInitialValues();
   }
 
-  getFormAction(event: {
-    action: string;
-    data: {
-      comicReadersFormValue: readonly ComicReadersFormValue[];
-      isComicReadersFormValid: boolean;
-      originalComic: Readonly<Comic>;
-    };
-  }) {
-    let action: string;
-    let comicReadersFormValue: readonly ComicReadersFormValue[];
-    let isComicReadersFormValid: boolean;
-    let comicReaders: Comic['readers'];
-    let originalComic: Readonly<Comic>;
-
-    action = event.action;
-    comicReadersFormValue = [...event.data.comicReadersFormValue];
-    isComicReadersFormValid = event.data.isComicReadersFormValid;
-    originalComic = { ...event.data.originalComic };
-
-    if (action == 'addComicReaders') {
-      if (isComicReadersFormValid) {
-        comicReaders = [
-          ...comicReadersFormValue,
-        ] as unknown as Comic['readers'];
-
-        this.updatedComic = { ...originalComic, readers: comicReaders };
-
-        this.isSubmitButtonDisabled = false;
-      } else {
-        this.isSubmitButtonDisabled = true;
-      }
-    }
+  ngOnDestroy(): void {
+    this.editComicReadersFacadeService.clearApiState();
   }
 
-  editComicReaders() {
+  cancelEditComicReaders() {
+    this.navigateToComicDetailPage();
+  }
+
+  editComicReaders(): void {
     this.isSubmitButtonDisabled = true;
 
     this.editComicReadersFacadeService.editComicReaders(this.updatedComic);
@@ -85,13 +60,48 @@ export class EditComicReadersPageComponent {
     });
   }
 
-  cancel() {
-    this.navigateToComicDetailPage();
+  onEventBus(event: EventBus): void {
+    let eventName: string;
+
+    eventName = event.name;
+
+    if (eventName == 'editComicReaders') {
+      this.prepareToEditComicReaders(event);
+    }
   }
 
-  private navigateToComicDetailPage() {
+  prepareToEditComicReaders(event: AddEditComicReadersEvent): void {
+    let comicReadersFormValue: readonly ComicReadersFormValue[];
+    let isComicReadersFormValid: boolean;
+    let comicReaders: Comic['readers'];
+    let originalComic: Readonly<Comic>;
+
+    comicReadersFormValue = [...event.data.comicReadersFormValue];
+    isComicReadersFormValid = event.data.isComicReadersFormValid;
+    originalComic = { ...event.data.originalComic };
+
+    if (isComicReadersFormValid) {
+      comicReaders = [...comicReadersFormValue] as unknown as Comic['readers'];
+
+      this.updatedComic = { ...originalComic, readers: comicReaders };
+
+      this.isSubmitButtonDisabled = false;
+    }
+  }
+
+  private navigateToComicDetailPage(): void {
     this.router
       .navigate(['/home', 'comics', this.comicUrlSegment])
       .catch((error) => error);
+  }
+
+  private setInitialValues(): void {
+    this.comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
+
+    this.comic$ = this.editComicReadersFacadeService.getComic(
+      this.comicUrlSegment
+    );
+
+    this.isSubmitButtonDisabled = true;
   }
 }

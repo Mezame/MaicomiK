@@ -2,9 +2,9 @@
 
 <app-add-edit-comic-readers-form
   *ngIf="comic$ | async as comic; else noComic"
-  action="editComicReaders"
+  container="editComicReaders"
   [data]="comic"
-  (actionEvent)="getFormAction($event)"
+  (eventBus)="onEventBus($event)"
 ></app-add-edit-comic-readers-form>
 <ng-template #noComic>
   <app-add-edit-comic-readers-form></app-add-edit-comic-readers-form>
@@ -18,7 +18,7 @@
         mat-button
         class="label-medium"
         color="primary"
-        (click)="cancel()"
+        (click)="cancelEditComicReaders()"
         aria-label="Cancel edit readers and go to comic detail"
       >
         <span>Cancel</span>
