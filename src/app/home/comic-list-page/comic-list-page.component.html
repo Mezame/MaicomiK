@@ -1,6 +1,6 @@
 <app-comic-list-items
   [comics]="(comics$ | async)!"
-  (actionEvent)="getItemsAction($event)"
+  (eventBus)="onEventBus($event)"
 ></app-comic-list-items>
 
 <ng-container *appFooterPortal="footer"></ng-container>

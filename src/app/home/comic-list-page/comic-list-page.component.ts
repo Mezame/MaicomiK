@@ -1,6 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { Comic } from '@features/comics/models';
+import {
+  Comic,
+  EventBus,
+  GoToComicDetailEvent,
+  IncrementComicChapterEvent,
+} from '@features/comics/models';
 import { Observable } from 'rxjs';
 import { ComicListFacadeService } from './comic-list-facade.service';
 
@@ -10,37 +20,59 @@ import { ComicListFacadeService } from './comic-list-facade.service';
   styleUrls: ['./comic-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicListPageComponent implements OnInit {
-  comics$: Observable<readonly Comic[]>;
+export class ComicListPageComponent implements OnInit, OnDestroy {
+  comics$!: Observable<readonly Comic[]>;
 
   constructor(
     private comicListFacadeService: ComicListFacadeService,
     private router: Router
   ) {
-    //this.comics$ = this.store.select(selectComics);
-    this.comics$ = this.comicListFacadeService.getComics();
+    /*
+     *this.comics$ = this.store.select(selectComics);
+     */
   }
 
   ngOnInit(): void {
-    //this.store.dispatch(loadComicsAction());
+    this.setInitialValues();
+    /*
+     *this.store.dispatch(loadComicsAction());
+     */
   }
 
-  getItemsAction(event: { action: string; data: Readonly<Comic> }) {
-    let action: string;
+  ngOnDestroy(): void {
+    this.comicListFacadeService.clearApiState();
+  }
+
+  onEventBus(event: EventBus): void {
+    let eventName: string;
+
+    eventName = event.name;
+
+    if (eventName == 'incrementComicChapter') {
+      this.tryToIncrementComicChapter(event);
+    }
+
+    if (eventName == 'goToComicDetail') {
+      this.tryToGoToComicDetail(event);
+    }
+  }
+
+  tryToIncrementComicChapter(event: IncrementComicChapterEvent): void {
+    let comic: Readonly<Comic>;
+
+    comic = event.data;
+
+    this.incrementComicChapter(comic);
+  }
+
+  tryToGoToComicDetail(event: GoToComicDetailEvent): void {
     let comic: Readonly<Comic>;
     let comicUrlSegment: string;
 
-    action = event.action;
     comic = event.data;
     comicUrlSegment = comic.metadata.urlSegment;
 
-    if (action == 'incrementChapter') {
-      this.incrementComicChapter(comic);
-    }
-
-    if (action == 'goToComicDetail') {
-      this.goToComicDetail(comicUrlSegment);
-    }
+    this.goToComicDetail(comicUrlSegment);
   }
 
   incrementComicChapter(comic: Readonly<Comic>) {
@@ -55,5 +87,9 @@ export class ComicListPageComponent implements OnInit {
 
   goToComicDetail(comicUrlSegment: string) {
     this.router.navigate(['/home', 'comics', comicUrlSegment]);
+  }
+
+  private setInitialValues(): void {
+    this.comics$ = this.comicListFacadeService.getComics();
   }
 }
