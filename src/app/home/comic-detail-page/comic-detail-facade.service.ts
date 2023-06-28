@@ -15,6 +15,10 @@ import { Observable, map, take } from 'rxjs';
 export class ComicDetailFacadeService {
   constructor(private appStoreService: AppStoreService, private store: Store) {}
 
+  clearApiState(): void {
+    this.appStoreService.clearApiState();
+  }
+
   deleteComic(comicId: string): void {
     this.store.dispatch(deleteComicAction({ id: comicId }));
   }
