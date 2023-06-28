@@ -3,7 +3,7 @@ import { AppStoreService } from '@core/services/app-store.service';
 import { Comic } from '@features/comics/models';
 import { loadComicsAction, selectComics } from '@features/comics/state';
 import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { Observable, first, map, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +17,15 @@ export class ComicListFacadeService {
 
   getComics(): Observable<readonly Comic[]> {
     const comics$ = this.store.select(selectComics).pipe(
+      take(2),
       map((comics) => {
         if (!comics) {
-          this.store.dispatch(loadComicsAction());
 
           return [];
+        }
+
+        if(comics.length < 1) {
+          this.store.dispatch(loadComicsAction());
         }
 
         return comics;
