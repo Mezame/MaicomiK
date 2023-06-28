@@ -1,7 +1,9 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function webUrlValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
+  let validator: (control: AbstractControl) => ValidationErrors | null;
+
+  validator = (control) => {
     const webUrl = control.value;
 
     if (!webUrl) {
@@ -15,4 +17,6 @@ export function webUrlValidator(): ValidatorFn {
 
     return isWebUrlValid ? null : { webUrl: true };
   };
+
+  return validator;
 }
