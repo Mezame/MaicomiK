@@ -1,7 +1,7 @@
 <span class="title-medium">Adding comic</span>
 
 <app-add-edit-comic-form
-  container="addComicPage"
+  [eventBus]="sourceEventName"
   (eventBus)="onEventBus($event)"
 ></app-add-edit-comic-form>
 

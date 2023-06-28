@@ -7,11 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  AddEditComicEvent,
-  Comic,
-  ComicFormValue,
-} from '@features/comics/models';
+import { AddComicEvent, Comic, ComicFormValue } from '@features/comics/models';
 import { EventBus } from '@shared/models';
 import { AddComicFacadeService } from './add-comic-facade.service';
 
@@ -23,6 +19,7 @@ import { AddComicFacadeService } from './add-comic-facade.service';
 })
 export class AddComicPageComponent implements OnInit, OnDestroy {
   comic!: Partial<Comic>;
+  sourceEventName!: EventBus['name'];
   isSubmitButtonDisabled!: boolean;
 
   @ViewChild('footer') footer!: TemplateRef<any>;
@@ -63,16 +60,16 @@ export class AddComicPageComponent implements OnInit, OnDestroy {
   }
 
   onEventBus(event: EventBus): void {
-    let eventName: string;
+    let eventName: EventBus['name'];
 
     eventName = event.name;
 
-    if (eventName == 'addComic') {
+    if (eventName == this.sourceEventName) {
       this.prepareToAddComic(event);
     }
   }
 
-  prepareToAddComic(event: AddEditComicEvent): void {
+  prepareToAddComic(event: AddComicEvent): void {
     let comicFormValue: ComicFormValue;
     let isComicFormValid: boolean;
     let formatedComic: Partial<Comic>;
@@ -95,6 +92,7 @@ export class AddComicPageComponent implements OnInit, OnDestroy {
   }
 
   private setInitialValues(): void {
+    this.sourceEventName = 'addComic';
     this.isSubmitButtonDisabled = true;
   }
 }

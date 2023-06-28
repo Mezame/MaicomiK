@@ -34,12 +34,12 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
   previewImageSrc!: string | null;
 
   @Input('data') comic!: Readonly<Comic>;
-  @Input() container!: string;
+  @Input('eventBus') incomingEvent!: EventBus['name'];
 
-  @Output() eventBus: EventEmitter<EventBus>;
+  @Output('eventBus') outgoingEvent: EventEmitter<EventBus>;
 
   constructor(private fb: FormBuilder) {
-    this.eventBus = new EventEmitter();
+    this.outgoingEvent = new EventEmitter();
   }
 
   get titleCtrl() {
@@ -67,7 +67,7 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
 
     this.setInitialComicFormValues();
 
-    if (this.container == 'editComicPage') {
+    if (this.incomingEvent == 'editComic') {
       this.setCurrentComicFormValues();
 
       this.currentComicFormValue = { ...this.comicForm.value };
@@ -120,7 +120,7 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
   }
 
   emitEvent(event: EventBus): void {
-    this.eventBus.emit(event);
+    this.outgoingEvent.emit(event);
   }
 
   setPreviewImageSrc(): void {
@@ -177,11 +177,11 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
   }
 
   private onComicFormValueChanges(): void {
-    if (this.container == 'addComicPage') {
+    if (this.incomingEvent == 'addComic') {
       this.tryToEmitAddComic();
     }
 
-    if (this.container == 'editComicPage') {
+    if (this.incomingEvent == 'editComic') {
       this.tryToEmitEditComic();
     }
   }
