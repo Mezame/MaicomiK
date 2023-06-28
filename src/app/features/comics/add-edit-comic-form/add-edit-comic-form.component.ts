@@ -17,7 +17,7 @@ import {
   ComicFormat,
   ComicStatus,
 } from '../models';
-import { EventBus } from '@shared/models';
+import { EventBus, EventBusEmitter } from '@shared/models';
 
 @Component({
   selector: 'app-add-edit-comic-form',
@@ -25,7 +25,7 @@ import { EventBus } from '@shared/models';
   styleUrls: ['./add-edit-comic-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddEditComicFormComponent implements OnInit {
+export class AddEditComicFormComponent implements OnInit, EventBusEmitter {
   comicForm!: ComicForm;
   currentComicFormValue!: Partial<ComicFormValue>;
   formatList!: ComicFormat[];
