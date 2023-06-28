@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import {
   Comic,
-  EventBusEmitter,
   IncrementComicChapterEvent,
   OpenComicBottomSheetEvent,
 } from '../models';
@@ -19,7 +18,7 @@ import {
   styleUrls: ['./comic-detail-content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicDetailContentComponent implements OnInit, EventBusEmitter {
+export class ComicDetailContentComponent implements OnInit {
   @Input() comic!: Readonly<Comic>;
 
   @Output() eventBus!: EventEmitter<
