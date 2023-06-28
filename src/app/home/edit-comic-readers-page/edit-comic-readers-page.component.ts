@@ -4,8 +4,8 @@ import {
   AddEditComicReadersEvent,
   Comic,
   ComicReadersFormValue,
-  EventBus,
 } from '@features/comics/models';
+import { EventBus } from '@shared/models';
 import { Observable } from 'rxjs';
 import { EditComicReadersFacadeService } from './edit-comic-readers-facade.service';
 

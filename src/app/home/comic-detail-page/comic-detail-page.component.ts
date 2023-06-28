@@ -10,10 +10,10 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   Comic,
-  EventBus,
   IncrementComicChapterEvent,
   OpenComicBottomSheetEvent,
 } from '@features/comics/models';
+import { EventBus } from '@shared/models';
 import { Observable } from 'rxjs';
 import { ComicDetailFacadeService } from './comic-detail-facade.service';
 

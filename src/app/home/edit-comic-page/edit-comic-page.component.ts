@@ -7,6 +7,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddEditComicEvent, Comic } from '@features/comics/models';
 import { ComicFormValue } from '@features/comics/models/comic-form';
+import { EventBus } from '@shared/models';
 import { Observable } from 'rxjs';
 import { EditComicFacadeService } from './edit-comic-facade.service';
 
@@ -61,7 +62,7 @@ export class EditComicPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  onEventBus(event: AddEditComicEvent): void {
+  onEventBus(event: EventBus): void {
     let eventName: string;
 
     eventName = event.name;

@@ -11,8 +11,8 @@ import {
   AddEditComicEvent,
   Comic,
   ComicFormValue,
-  EventBus,
 } from '@features/comics/models';
+import { EventBus } from '@shared/models';
 import { AddComicFacadeService } from './add-comic-facade.service';
 
 @Component({

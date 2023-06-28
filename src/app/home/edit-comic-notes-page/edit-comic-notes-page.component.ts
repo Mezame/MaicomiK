@@ -9,8 +9,8 @@ import {
   AddEditComicNotesEvent,
   Comic,
   ComicNotesFormValue,
-  EventBus,
 } from '@features/comics/models';
+import { EventBus } from '@shared/models';
 import { Observable } from 'rxjs';
 import { EditComicNotesFacadeService } from './edit-comic-notes-facade.service';
 

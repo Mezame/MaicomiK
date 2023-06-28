@@ -7,10 +7,10 @@ import {
 import { Router } from '@angular/router';
 import {
   Comic,
-  EventBus,
   GoToComicDetailEvent,
   IncrementComicChapterEvent,
 } from '@features/comics/models';
+import { EventBus } from '@shared/models';
 import { Observable } from 'rxjs';
 import { ComicListFacadeService } from './comic-list-facade.service';
 
