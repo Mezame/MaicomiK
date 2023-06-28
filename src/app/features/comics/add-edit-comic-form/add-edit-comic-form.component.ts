@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { webUrlValidator } from '@shared/validators';
+import { comicChapterValidator, webUrlValidator } from '@shared/validators';
 import * as _ from 'lodash';
 import {
   AddEditComicEvent,
@@ -25,7 +25,7 @@ import { EventBus, EventBusEmitter } from '@shared/models';
   styleUrls: ['./add-edit-comic-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddEditComicFormComponent implements OnInit, EventBusEmitter {
+export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
   comicForm!: ComicForm;
   currentComicFormValue!: Partial<ComicFormValue>;
   formatList!: ComicFormat[];
@@ -207,7 +207,7 @@ export class AddEditComicFormComponent implements OnInit, EventBusEmitter {
         {
           validators: [
             Validators.required,
-            Validators.pattern('^[0-9]\\d*(\\.\\d+)?$'),
+            comicChapterValidator(),
           ],
           updateOn: 'blur',
         },
