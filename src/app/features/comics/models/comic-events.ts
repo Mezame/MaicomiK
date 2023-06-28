@@ -4,13 +4,20 @@ import { ComicFormValue } from './comic-form';
 import { ComicNotesFormValue } from './comic-notes-form';
 import { ComicReadersFormValue } from './comic-readers-form';
 
-export interface AddEditComicEvent extends EventBus {
+export interface AddComicEvent extends EventBus {
   data: {
     comicFormValue: ComicFormValue;
     isComicFormValid: boolean;
-    hasChanges?: boolean;
-    isComicFormDirty?: boolean;
-    originalComic?: Readonly<Comic>;
+  };
+}
+
+export interface EditComicEvent extends EventBus {
+  data: {
+    comicFormValue: ComicFormValue;
+    isComicFormValid: boolean;
+    hasChanges: boolean;
+    isComicFormDirty: boolean;
+    originalComic: Readonly<Comic>;
   };
 }
 
