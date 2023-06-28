@@ -18,7 +18,7 @@
     <div class="actions">
       <button
         mat-icon-button
-        (click)="emitOpenBottomSheetAction(comic)"
+        (click)="emitOpenComicBottomSheet()"
         aria-label="Navigate to comic detail"
       >
         <mat-icon fontSet="material-symbols-rounded">more_vert</mat-icon>
@@ -41,7 +41,7 @@
       <button
         mat-icon-button
         color="primary"
-        (click)="emitIncrementChapterAction(comic)"
+        (click)="emitIncrementChapter(comic)"
         aria-label="Increment comic chapter by one"
       >
         <mat-icon fontSet="material-symbols-rounded">add</mat-icon>

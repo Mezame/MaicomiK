@@ -3,9 +3,15 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
-import { Comic } from '../models';
+import {
+  Comic,
+  EventBusEmitter,
+  IncrementComicChapterEvent,
+  OpenComicBottomSheetEvent,
+} from '../models';
 
 @Component({
   selector: 'app-comic-detail-content',
@@ -13,23 +19,40 @@ import { Comic } from '../models';
   styleUrls: ['./comic-detail-content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicDetailContentComponent {
+export class ComicDetailContentComponent implements OnInit, EventBusEmitter {
   @Input() comic!: Readonly<Comic>;
 
-  @Output() actionEvent = new EventEmitter<{
-    action: string;
-    data: Comic;
-  }>();
+  @Output() eventBus!: EventEmitter<
+    IncrementComicChapterEvent | OpenComicBottomSheetEvent
+  >;
 
-  emitIncrementChapterAction(data: Comic) {
-    const action = 'incrementChapter';
-
-    this.actionEvent.emit({ action, data });
+  ngOnInit(): void {
+    this.setInitialValues();
   }
 
-  emitOpenBottomSheetAction(data: Comic) {
-    const action = 'openBottomSheet';
+  emitIncrementChapter(data: Readonly<Comic>) {
+    let eventName: string;
+    let event: IncrementComicChapterEvent;
 
-    this.actionEvent.emit({ action, data });
+    eventName = 'incrementComicChapter';
+    event = { name: eventName, data };
+
+    this.eventBus.emit(event);
+  }
+
+  emitOpenComicBottomSheet(data = {}) {
+    let eventName: string;
+    let event: OpenComicBottomSheetEvent;
+
+    eventName = 'openComicBottomSheet';
+    event = { name: eventName, data };
+
+    this.eventBus.emit(event);
+  }
+
+  private setInitialValues(): void {
+    this.eventBus = new EventEmitter<
+      IncrementComicChapterEvent | OpenComicBottomSheetEvent
+    >();
   }
 }
