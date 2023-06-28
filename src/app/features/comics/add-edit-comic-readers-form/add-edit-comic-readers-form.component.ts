@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { webUrlValidator } from '@shared/validators/web-url-validator';
+import { webUrlValidator } from '@shared/validators';
 import {
   AddEditComicReadersEvent,
   Comic,
