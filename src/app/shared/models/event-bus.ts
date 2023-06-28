@@ -6,7 +6,9 @@ export interface EventBus {
 }
 
 export interface EventBusEmitter {
-  eventBus: EventEmitter<EventBus>;
+  outgoingEvent: EventEmitter<EventBus>;
+
+  incomingEvent?: EventBus['name'];
 }
 
 export interface EventBusReceiver {
