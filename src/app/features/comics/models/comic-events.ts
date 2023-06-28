@@ -1,17 +1,8 @@
-import { EventEmitter } from '@angular/core';
+import { EventBus } from '@shared/models';
 import { Comic } from './comic';
 import { ComicFormValue } from './comic-form';
 import { ComicNotesFormValue } from './comic-notes-form';
 import { ComicReadersFormValue } from './comic-readers-form';
-
-export interface EventBus {
-  name: string;
-  data: any;
-}
-
-export interface EventBusEmitter {
-  eventBus: EventEmitter<EventBus>;
-}
 
 export interface AddEditComicEvent extends EventBus {
   data: {
