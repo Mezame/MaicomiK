@@ -10,12 +10,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { comicChapterValidator, webUrlValidator } from '@shared/validators';
 import * as _ from 'lodash';
 import {
-  AddEditComicEvent,
+  AddComicEvent,
   Comic,
   ComicForm,
   ComicFormValue,
   ComicFormat,
   ComicStatus,
+  EditComicEvent,
 } from '../models';
 import { EventBus, EventBusEmitter } from '@shared/models';
 
@@ -35,7 +36,7 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
   @Input('data') comic!: Readonly<Comic>;
   @Input() container!: string;
 
-  @Output() eventBus: EventEmitter<AddEditComicEvent>;
+  @Output() eventBus: EventEmitter<EventBus>;
 
   constructor(private fb: FormBuilder) {
     this.eventBus = new EventEmitter();
@@ -81,15 +82,17 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
 
   emitAddComic(comicFormValue: ComicFormValue, isComicFormValid = false): void {
     let eventName: EventBus['name'];
-    let data: AddEditComicEvent['data'];
+    let data: AddComicEvent['data'];
+    let event: AddComicEvent;
 
     eventName = 'addComic';
     data = {
       comicFormValue,
       isComicFormValid,
     };
+    event = { name: eventName, data };
 
-    this.emitEvent({ name: eventName, data });
+    this.emitEvent(event);
   }
 
   emitEditComic(
@@ -100,7 +103,8 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
     hasChanges = false
   ): void {
     let eventName: EventBus['name'];
-    let data: AddEditComicEvent['data'];
+    let data: EditComicEvent['data'];
+    let event: EditComicEvent;
 
     eventName = 'editComic';
     data = {
@@ -110,8 +114,9 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
       hasChanges,
       originalComic,
     };
+    event = { name: eventName, data };
 
-    this.emitEvent({ name: eventName, data });
+    this.emitEvent(event);
   }
 
   emitEvent(event: EventBus): void {
@@ -205,10 +210,7 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
       chapter: [
         '',
         {
-          validators: [
-            Validators.required,
-            comicChapterValidator(),
-          ],
+          validators: [Validators.required, comicChapterValidator()],
           updateOn: 'blur',
         },
       ],
