@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddComicEvent, Comic, ComicFormValue } from '@features/comics/models';
-import { EventBus } from '@shared/models';
+import { EventBus, EventBusReceiver } from '@shared/models';
 import { AddComicFacadeService } from './add-comic-facade.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { AddComicFacadeService } from './add-comic-facade.service';
   styleUrls: ['./add-comic-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddComicPageComponent implements OnInit, OnDestroy {
+export class AddComicPageComponent implements EventBusReceiver, OnInit, OnDestroy {
   comic!: Partial<Comic>;
   sourceEventName!: EventBus['name'];
   isSubmitButtonDisabled!: boolean;
