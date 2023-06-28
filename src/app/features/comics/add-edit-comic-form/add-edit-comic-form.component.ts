@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { EventBus, EventBusEmitter } from '@shared/models';
 import { comicChapterValidator, webUrlValidator } from '@shared/validators';
 import * as _ from 'lodash';
 import {
@@ -18,7 +19,6 @@ import {
   ComicStatus,
   EditComicEvent,
 } from '../models';
-import { EventBus, EventBusEmitter } from '@shared/models';
 
 @Component({
   selector: 'app-add-edit-comic-form',
