@@ -27,9 +27,11 @@ export class AddEditComicReadersFormComponent {
   @Input('data') comic!: Readonly<Comic>;
   @Input() container!: string;
 
-  @Output() eventBus!: EventEmitter<AddEditComicReadersEvent>;
+  @Output() eventBus: EventEmitter<AddEditComicReadersEvent>;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    this.eventBus = new EventEmitter();
+  }
 
   get comicReadersFormArrayCtrl() {
     return this.comicReadersFormArray.controls;
@@ -143,7 +145,5 @@ export class AddEditComicReadersFormComponent {
 
   private setInitialValues(newComicReadersForm: ComicReadersForm): void {
     this.comicReadersFormArray = this.fb.array([newComicReadersForm]);
-
-    this.eventBus = new EventEmitter<AddEditComicReadersEvent>();
   }
 }

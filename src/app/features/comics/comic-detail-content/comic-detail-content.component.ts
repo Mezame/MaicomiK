@@ -25,6 +25,10 @@ export class ComicDetailContentComponent implements OnInit {
     IncrementComicChapterEvent | OpenComicBottomSheetEvent
   >;
 
+  constructor() {
+    this.eventBus = new EventEmitter();
+  }
+
   ngOnInit(): void {
     this.setInitialValues();
   }
@@ -50,8 +54,6 @@ export class ComicDetailContentComponent implements OnInit {
   }
 
   private setInitialValues(): void {
-    this.eventBus = new EventEmitter<
-      IncrementComicChapterEvent | OpenComicBottomSheetEvent
-    >();
+    /**EMPTY */
   }
 }

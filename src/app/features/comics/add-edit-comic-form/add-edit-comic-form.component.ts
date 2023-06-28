@@ -34,9 +34,11 @@ export class AddEditComicFormComponent implements OnInit {
   @Input('data') comic!: Readonly<Comic>;
   @Input() container!: string;
 
-  @Output() eventBus!: EventEmitter<AddEditComicEvent>;
+  @Output() eventBus: EventEmitter<AddEditComicEvent>;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    this.eventBus = new EventEmitter();
+  }
 
   get titleCtrl() {
     return this.comicForm.controls['title'];
@@ -192,8 +194,6 @@ export class AddEditComicFormComponent implements OnInit {
     this.formatList = ['manga', 'manhua', 'manhwa', 'webtoon'];
     this.statusList = ['reading', 'paused', 'planning', 'completed'];
     this.previewImageSrc = null;
-
-    this.eventBus = new EventEmitter<AddEditComicEvent>();
   }
 
   private setInitialComicFormValues(): void {

@@ -21,12 +21,12 @@ import {
 export class ComicListItemsComponent implements OnInit {
   @Input() comics!: readonly Comic[];
 
-  @Output() eventBus!: EventEmitter<
+  @Output() eventBus: EventEmitter<
     IncrementComicChapterEvent | GoToComicDetailEvent
   >;
 
   constructor() {
-    /* EMPTY */
+    this.eventBus = new EventEmitter();
   }
 
   ngOnInit(): void {
@@ -54,10 +54,6 @@ export class ComicListItemsComponent implements OnInit {
   }
 
   private setInitialValues(): void {
-    this.comics = [];
-
-    this.eventBus = new EventEmitter<
-      IncrementComicChapterEvent | GoToComicDetailEvent
-    >();
+    /**EMPTY */
   }
 }

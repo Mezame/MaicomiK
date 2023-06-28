@@ -28,7 +28,9 @@ export class AddEditComicNotesFormComponent implements OnInit {
 
   @Output() eventBus!: EventEmitter<AddEditComicNotesEvent>;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    this.eventBus = new EventEmitter();
+  }
 
   ngOnInit(): void {
     this.setInitialValues();
@@ -149,6 +151,6 @@ export class AddEditComicNotesFormComponent implements OnInit {
   }
 
   private setInitialValues(): void {
-    this.eventBus = new EventEmitter<AddEditComicNotesEvent>();
+    /**EMPTY */
   }
 }
