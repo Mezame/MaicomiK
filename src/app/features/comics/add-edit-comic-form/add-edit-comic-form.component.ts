@@ -17,6 +17,7 @@ import {
   ComicFormat,
   ComicStatus,
 } from '../models';
+import { EventBus } from '@shared/models';
 
 @Component({
   selector: 'app-add-edit-comic-form',
@@ -79,18 +80,16 @@ export class AddEditComicFormComponent implements OnInit {
   }
 
   emitAddComic(comicFormValue: ComicFormValue, isComicFormValid = false): void {
-    let eventName: string;
+    let eventName: EventBus['name'];
     let data: AddEditComicEvent['data'];
-    let event: AddEditComicEvent;
 
     eventName = 'addComic';
     data = {
       comicFormValue,
       isComicFormValid,
     };
-    event = { name: eventName, data };
 
-    this.eventBus.emit(event);
+    this.emitEvent({ name: eventName, data });
   }
 
   emitEditComic(
@@ -100,9 +99,8 @@ export class AddEditComicFormComponent implements OnInit {
     isComicFormDirty = false,
     hasChanges = false
   ): void {
-    let eventName: string;
+    let eventName: EventBus['name'];
     let data: AddEditComicEvent['data'];
-    let event: AddEditComicEvent;
 
     eventName = 'editComic';
     data = {
@@ -112,8 +110,11 @@ export class AddEditComicFormComponent implements OnInit {
       hasChanges,
       originalComic,
     };
-    event = { name: eventName, data };
 
+    this.emitEvent({ name: eventName, data });
+  }
+
+  emitEvent(event: EventBus): void {
     this.eventBus.emit(event);
   }
 
