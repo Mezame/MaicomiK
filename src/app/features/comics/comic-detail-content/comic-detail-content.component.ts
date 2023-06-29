@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { EventBus, EventBusEmitter } from '@shared/models';
 import {
   Comic,
   IncrementComicChapterEvent,
@@ -18,19 +19,21 @@ import {
   styleUrls: ['./comic-detail-content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicDetailContentComponent implements OnInit {
+export class ComicDetailContentComponent implements EventBusEmitter, OnInit {
   @Input() comic!: Readonly<Comic>;
 
-  @Output() eventBus!: EventEmitter<
-    IncrementComicChapterEvent | OpenComicBottomSheetEvent
-  >;
+  @Output('eventBus') outgoingEvent: EventEmitter<EventBus>;
 
   constructor() {
-    this.eventBus = new EventEmitter();
+    this.outgoingEvent = new EventEmitter();
   }
 
   ngOnInit(): void {
     this.setInitialValues();
+  }
+
+  emitEvent(event: EventBus): void {
+    this.outgoingEvent.emit(event);
   }
 
   emitIncrementChapter(data: Readonly<Comic>) {
@@ -40,7 +43,7 @@ export class ComicDetailContentComponent implements OnInit {
     eventName = 'incrementComicChapter';
     event = { name: eventName, data };
 
-    this.eventBus.emit(event);
+    this.emitEvent(event);
   }
 
   emitOpenComicBottomSheet(data = {}) {
@@ -50,7 +53,7 @@ export class ComicDetailContentComponent implements OnInit {
     eventName = 'openComicBottomSheet';
     event = { name: eventName, data };
 
-    this.eventBus.emit(event);
+    this.emitEvent(event);
   }
 
   private setInitialValues(): void {
