@@ -13,7 +13,7 @@ import {
   IncrementComicChapterEvent,
   OpenComicBottomSheetEvent,
 } from '@features/comics/models';
-import { EventBus } from '@shared/models';
+import { EventBus, EventBusReceiver } from '@shared/models';
 import { Observable } from 'rxjs';
 import { ComicDetailFacadeService } from './comic-detail-facade.service';
 
@@ -23,7 +23,7 @@ import { ComicDetailFacadeService } from './comic-detail-facade.service';
   styleUrls: ['./comic-detail-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicDetailPageComponent implements OnInit, OnDestroy {
+export class ComicDetailPageComponent implements EventBusReceiver, OnInit, OnDestroy {
   comic$!: Observable<Readonly<Comic>>;
 
   @ViewChild('bottomSheet') bottomSheet!: TemplateRef<any>;
@@ -94,7 +94,7 @@ export class ComicDetailPageComponent implements OnInit, OnDestroy {
     this.comicDetailFacadeService.incrementComicChapter(comic, comicFields);
   }
 
-  onEventBus(event: EventBus): void {
+  onEvent(event: EventBus): void {
     let eventName: string;
 
     eventName = event.name;
