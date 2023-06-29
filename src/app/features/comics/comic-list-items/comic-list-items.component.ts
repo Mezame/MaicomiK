@@ -11,6 +11,7 @@ import {
   GoToComicDetailEvent,
   IncrementComicChapterEvent,
 } from '../models';
+import { EventBus, EventBusEmitter } from '@shared/models';
 
 @Component({
   selector: 'app-comic-list-items',
@@ -18,40 +19,44 @@ import {
   styleUrls: ['./comic-list-items.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicListItemsComponent implements OnInit {
-  @Input() comics!: readonly Comic[];
+export class ComicListItemsComponent implements EventBusEmitter, OnInit {
+  @Input('data') comics!: readonly Comic[];
 
-  @Output() eventBus: EventEmitter<
-    IncrementComicChapterEvent | GoToComicDetailEvent
-  >;
+  @Output('eventBus') outgoingEvent: EventEmitter<EventBus>;
 
   constructor() {
-    this.eventBus = new EventEmitter();
+    this.outgoingEvent = new EventEmitter();
   }
 
   ngOnInit(): void {
     this.setInitialValues();
   }
 
+  emitEvent(event: EventBus) {
+    this.outgoingEvent.emit(event);
+  }
+
+  emitGoToComicDetail(data: Readonly<Comic>): void {
+    let eventName: EventBus['name'];
+    let event: GoToComicDetailEvent;
+
+    eventName = 'goToComicDetail';
+    event = { name: eventName, data };
+
+    this.emitEvent(event);
+  }
+
   emitIncrementComicChapter(data: Readonly<Comic>): void {
-    let eventName: string;
+    let eventName: EventBus['name'];
     let event: IncrementComicChapterEvent;
 
     eventName = 'incrementComicChapter';
     event = { name: eventName, data };
 
-    this.eventBus.emit(event);
+    this.emitEvent(event);
   }
 
-  emitGoToComicDetail(data: Readonly<Comic>): void {
-    let eventName: string;
-    let event: IncrementComicChapterEvent;
-
-    eventName = 'goToComicDetail';
-    event = { name: eventName, data };
-
-    this.eventBus.emit(event);
-  }
+  
 
   private setInitialValues(): void {
     /**EMPTY */

@@ -1,5 +1,5 @@
 <app-comic-list-items
-  [comics]="(comics$ | async)!"
+  [data]="(comics$ | async)!"
   (eventBus)="onEventBus($event)"
 ></app-comic-list-items>
 
