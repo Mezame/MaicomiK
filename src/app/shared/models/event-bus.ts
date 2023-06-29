@@ -7,12 +7,13 @@ export interface EventBus {
 
 export interface EventBusEmitter {
   outgoingEvent: EventEmitter<EventBus>;
+  emitEvent: (event: EventBus) => void;
 
   incomingEvent?: EventBus['name'];
 }
 
 export interface EventBusReceiver {
-  onEventBus: (event: EventBus) => void;
+  onEvent: (event: EventBus) => void;
 
-  sourceEventName?: EventBus['name'];
+  eventNameSource?: EventBus['name'];
 }
