@@ -24,10 +24,13 @@ import {
 export class AddEditComicReadersFormComponent {
   comicReadersFormArray!: ComicReadersFormArray;
 
-  @Input('data') comic!: Readonly<Comic>;
-  @Input() container!: string;
+  @Input('data')
+  comic!: Readonly<Comic>;
+  @Input()
+  container!: string;
 
-  @Output() eventBus: EventEmitter<AddEditComicReadersEvent>;
+  @Output()
+  eventBus: EventEmitter<AddEditComicReadersEvent>;
 
   constructor(private fb: FormBuilder) {
     this.eventBus = new EventEmitter();

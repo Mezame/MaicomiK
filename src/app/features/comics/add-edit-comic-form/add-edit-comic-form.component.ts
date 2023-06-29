@@ -34,9 +34,11 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
   statusList!: ComicStatus[];
   previewImageSrc!: string | null;
 
-  @Input('eventBus') incomingEvent!: EventBus;
+  @Input('eventBus') 
+  incomingEvent!: EventBus;
 
-  @Output('eventBus') outgoingEvent: EventEmitter<EventBus>;
+  @Output('eventBus') 
+  outgoingEvent: EventEmitter<EventBus>;
 
   constructor(private fb: FormBuilder) {
     this.outgoingEvent = new EventEmitter();

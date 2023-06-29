@@ -23,10 +23,13 @@ import {
 export class AddEditComicNotesFormComponent implements OnInit {
   comicNotesForm!: ComicNotesForm;
 
-  @Input('data') comic!: Readonly<Comic>;
-  @Input() container!: string;
+  @Input('data')
+  comic!: Readonly<Comic>;
+  @Input()
+  container!: string;
 
-  @Output() eventBus!: EventEmitter<AddEditComicNotesEvent>;
+  @Output()
+  eventBus!: EventEmitter<AddEditComicNotesEvent>;
 
   constructor(private fb: FormBuilder) {
     this.eventBus = new EventEmitter();
