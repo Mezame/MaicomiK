@@ -10,7 +10,7 @@ import {
   Comic,
   ComicNotesFormValue,
 } from '@features/comics/models';
-import { EventBus } from '@shared/models';
+import { EventBus, EventBusReceiver } from '@shared/models';
 import { Observable } from 'rxjs';
 import { EditComicNotesFacadeService } from './edit-comic-notes-facade.service';
 
@@ -20,9 +20,12 @@ import { EditComicNotesFacadeService } from './edit-comic-notes-facade.service';
   styleUrls: ['./edit-comic-notes-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditComicNotesPageComponent implements OnInit, OnDestroy {
+export class EditComicNotesPageComponent
+  implements EventBusReceiver, OnInit, OnDestroy
+{
   comic$!: Observable<Readonly<Comic>>;
   comicUrlSegment!: string;
+  eventNameSource!: EventBus['name'];
   updatedComic!: Comic;
   isSubmitButtonDisabled!: boolean;
 
@@ -65,12 +68,12 @@ export class EditComicNotesPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  onEventBus(event: EventBus): void {
+  onEvent(event: EventBus): void {
     let eventName: string;
 
     eventName = event.name;
 
-    if (eventName == 'editComicNotes') {
+    if (eventName == this.eventNameSource) {
       this.prepareToEditComicNotes(event);
     }
   }
@@ -104,11 +107,11 @@ export class EditComicNotesPageComponent implements OnInit, OnDestroy {
 
   private setInitialValues(): void {
     this.comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
-
     this.comic$ = this.editComicNotesFacadeService.getComic(
       this.comicUrlSegment
     );
 
+    this.eventNameSource = 'editComicNotes';
     this.isSubmitButtonDisabled = true;
   }
 }

@@ -2,9 +2,8 @@
 
 <app-add-edit-comic-notes-form
   *ngIf="comic$ | async as comic"
-  action="addComicNotes"
-  [data]="comic"
-  (eventBus)="onEventBus($event)"
+  [eventBus]="{name: eventNameSource, data: comic}"
+  (eventBus)="onEvent($event)"
 ></app-add-edit-comic-notes-form>
 
 <ng-container *appFooterPortal="footer"></ng-container>
