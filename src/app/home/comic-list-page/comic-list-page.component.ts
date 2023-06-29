@@ -10,7 +10,7 @@ import {
   GoToComicDetailEvent,
   IncrementComicChapterEvent,
 } from '@features/comics/models';
-import { EventBus } from '@shared/models';
+import { EventBus, EventBusReceiver } from '@shared/models';
 import { Observable } from 'rxjs';
 import { ComicListFacadeService } from './comic-list-facade.service';
 
@@ -20,7 +20,7 @@ import { ComicListFacadeService } from './comic-list-facade.service';
   styleUrls: ['./comic-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicListPageComponent implements OnInit, OnDestroy {
+export class ComicListPageComponent implements EventBusReceiver, OnInit, OnDestroy {
   comics$!: Observable<readonly Comic[]>;
 
   constructor(
@@ -43,7 +43,7 @@ export class ComicListPageComponent implements OnInit, OnDestroy {
     this.comicListFacadeService.clearApiState();
   }
 
-  onEventBus(event: EventBus): void {
+  onEvent(event: EventBus): void {
     let eventName: string;
 
     eventName = event.name;
