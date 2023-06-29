@@ -10,7 +10,7 @@ import {
   Comic,
   ComicReadersFormValue,
 } from '@features/comics/models';
-import { EventBus } from '@shared/models';
+import { EventBus, EventBusReceiver } from '@shared/models';
 import { Observable } from 'rxjs';
 import { AddComicReadersFacadeService } from './add-comic-readers-facade.service';
 
@@ -20,9 +20,12 @@ import { AddComicReadersFacadeService } from './add-comic-readers-facade.service
   styleUrls: ['./add-comic-readers-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddComicReadersPageComponent implements OnInit, OnDestroy {
+export class AddComicReadersPageComponent
+  implements EventBusReceiver, OnInit, OnDestroy
+{
   comic$!: Observable<Readonly<Comic>>;
   comicUrlSegment!: string;
+  eventNameSource!: EventBus['name'];
   updatedComic!: Comic;
   isSubmitButtonDisabled!: boolean;
 
@@ -65,12 +68,12 @@ export class AddComicReadersPageComponent implements OnInit, OnDestroy {
     this.navigateToComicDetailPage();
   }
 
-  onEventBus(event: EventBus): void {
-    let eventName: string;
+  onEvent(event: EventBus): void {
+    let eventName: EventBus['name'];
 
     eventName = event.name;
 
-    if (eventName == 'addComicReaders') {
+    if (eventName == this.eventNameSource) {
       this.prepareToAddComicReaders(event);
     }
   }
@@ -102,11 +105,11 @@ export class AddComicReadersPageComponent implements OnInit, OnDestroy {
 
   private setInitialValues(): void {
     this.comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
-
     this.comic$ = this.addComicReadersFacadeService.getComic(
       this.comicUrlSegment
     );
 
+    this.eventNameSource = 'addComicReaders';
     this.isSubmitButtonDisabled = true;
   }
 }

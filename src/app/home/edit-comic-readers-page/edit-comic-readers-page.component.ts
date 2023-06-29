@@ -1,11 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AddEditComicReadersEvent,
   Comic,
   ComicReadersFormValue,
 } from '@features/comics/models';
-import { EventBus } from '@shared/models';
+import { EventBus, EventBusReceiver } from '@shared/models';
 import { Observable } from 'rxjs';
 import { EditComicReadersFacadeService } from './edit-comic-readers-facade.service';
 
@@ -15,9 +20,12 @@ import { EditComicReadersFacadeService } from './edit-comic-readers-facade.servi
   styleUrls: ['./edit-comic-readers-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditComicReadersPageComponent {
+export class EditComicReadersPageComponent
+  implements EventBusReceiver, OnInit, OnDestroy
+{
   comic$!: Observable<Readonly<Comic>>;
   comicUrlSegment!: string;
+  eventNameSource!: EventBus['name'];
   updatedComic!: Comic;
   isSubmitButtonDisabled!: boolean;
 
@@ -60,12 +68,12 @@ export class EditComicReadersPageComponent {
     });
   }
 
-  onEventBus(event: EventBus): void {
-    let eventName: string;
+  onEvent(event: EventBus): void {
+    let eventName: EventBus['name'];
 
     eventName = event.name;
 
-    if (eventName == 'editComicReaders') {
+    if (eventName == this.eventNameSource) {
       this.prepareToEditComicReaders(event);
     }
   }
@@ -97,11 +105,11 @@ export class EditComicReadersPageComponent {
 
   private setInitialValues(): void {
     this.comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
-
     this.comic$ = this.editComicReadersFacadeService.getComic(
       this.comicUrlSegment
     );
 
+    this.eventNameSource = 'editComicReaders';
     this.isSubmitButtonDisabled = true;
   }
 }
