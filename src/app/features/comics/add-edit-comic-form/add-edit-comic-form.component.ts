@@ -218,7 +218,6 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
         '',
         {
           validators: [Validators.required, webUrlValidator()],
-          updateOn: 'blur',
         },
       ],
     });
