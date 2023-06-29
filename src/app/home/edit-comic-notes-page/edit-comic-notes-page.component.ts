@@ -69,7 +69,7 @@ export class EditComicNotesPageComponent
   }
 
   onEvent(event: EventBus): void {
-    let eventName: string;
+    let eventName: EventBus['name'];
 
     eventName = event.name;
 
