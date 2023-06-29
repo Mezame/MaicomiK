@@ -6,10 +6,10 @@ export interface EventBus {
 }
 
 export interface EventBusEmitter {
-  outgoingEvent: EventEmitter<EventBus>;
   emitEvent: (event: EventBus) => void;
 
   incomingEvent?: EventBus['name'];
+  outgoingEvent?: EventEmitter<EventBus>;
 }
 
 export interface EventBusReceiver {
