@@ -6,12 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { EventBus, EventBusEmitter } from '@shared/models';
 import {
   Comic,
   GoToComicDetailEvent,
   IncrementComicChapterEvent,
 } from '../models';
-import { EventBus, EventBusEmitter } from '@shared/models';
 
 @Component({
   selector: 'app-comic-list-items',
@@ -32,7 +32,7 @@ export class ComicListItemsComponent implements EventBusEmitter, OnInit {
     this.setInitialValues();
   }
 
-  emitEvent(event: EventBus) {
+  emitEvent(event: EventBus): void {
     this.outgoingEvent.emit(event);
   }
 
@@ -55,8 +55,6 @@ export class ComicListItemsComponent implements EventBusEmitter, OnInit {
 
     this.emitEvent(event);
   }
-
-  
 
   private setInitialValues(): void {
     /**EMPTY */
