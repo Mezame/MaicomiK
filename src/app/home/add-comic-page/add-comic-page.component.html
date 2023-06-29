@@ -1,8 +1,8 @@
 <span class="title-medium">Adding comic</span>
 
 <app-add-edit-comic-form
-  [eventBus]="sourceEventName"
-  (eventBus)="onEventBus($event)"
+  [eventBus]="eventNameSource"
+  (eventBus)="onEvent($event)"
 ></app-add-edit-comic-form>
 
 <ng-container *appFooterPortal="footer"></ng-container>

@@ -24,7 +24,7 @@ export class EditComicPageComponent
   comicUrlSegment!: string;
   editedComic!: Readonly<Comic>;
   isSubmitButtonDisabled!: boolean;
-  sourceEventName!: EventBus['name'];
+  eventNameSource!: EventBus['name'];
 
   constructor(
     private editComicFacadeService: EditComicFacadeService,
@@ -65,12 +65,12 @@ export class EditComicPageComponent
     });
   }
 
-  onEventBus(event: EventBus): void {
-    let eventName: string;
+  onEvent(event: EventBus): void {
+    let eventName: EventBus['name'];
 
     eventName = event.name;
 
-    if (eventName == this.sourceEventName) {
+    if (eventName == this.eventNameSource) {
       this.prepareToEditComic(event);
     }
   }
@@ -113,6 +113,6 @@ export class EditComicPageComponent
     this.comic$ = this.editComicFacadeService.getComic(this.comicUrlSegment);
 
     this.isSubmitButtonDisabled = true;
-    this.sourceEventName = 'editComic';
+    this.eventNameSource = 'editComic';
   }
 }
