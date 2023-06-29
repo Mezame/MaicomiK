@@ -2,8 +2,8 @@
 
 <app-add-edit-comic-form
   *ngIf="comic$ | async as comic; else noComic"
-  container="editComicPage"
   [data]="comic"
+  [eventBus]="sourceEventName"
   (eventBus)="onEventBus($event)"
 ></app-add-edit-comic-form>
 <ng-template #noComic>

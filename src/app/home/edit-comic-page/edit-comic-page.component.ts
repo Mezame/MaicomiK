@@ -5,9 +5,9 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AddEditComicEvent, Comic } from '@features/comics/models';
+import { Comic, EditComicEvent } from '@features/comics/models';
 import { ComicFormValue } from '@features/comics/models/comic-form';
-import { EventBus } from '@shared/models';
+import { EventBus, EventBusReceiver } from '@shared/models';
 import { Observable } from 'rxjs';
 import { EditComicFacadeService } from './edit-comic-facade.service';
 
@@ -17,11 +17,14 @@ import { EditComicFacadeService } from './edit-comic-facade.service';
   styleUrls: ['./edit-comic-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditComicPageComponent implements OnInit, OnDestroy {
+export class EditComicPageComponent
+  implements EventBusReceiver, OnInit, OnDestroy
+{
   comic$!: Observable<Readonly<Comic>>;
   comicUrlSegment!: string;
   editedComic!: Readonly<Comic>;
   isSubmitButtonDisabled!: boolean;
+  sourceEventName!: EventBus['name'];
 
   constructor(
     private editComicFacadeService: EditComicFacadeService,
@@ -67,12 +70,12 @@ export class EditComicPageComponent implements OnInit, OnDestroy {
 
     eventName = event.name;
 
-    if (eventName == 'editComic') {
+    if (eventName == this.sourceEventName) {
       this.prepareToEditComic(event);
     }
   }
 
-  prepareToEditComic(event: AddEditComicEvent): void {
+  prepareToEditComic(event: EditComicEvent): void {
     let comicFormValue: Readonly<ComicFormValue>;
     let isComicFormValid: boolean;
     let isComicFormDirty: boolean;
@@ -107,9 +110,9 @@ export class EditComicPageComponent implements OnInit, OnDestroy {
 
   private setInitialValues() {
     this.comicUrlSegment = this.route.snapshot?.params['comicUrlSegment'];
-
     this.comic$ = this.editComicFacadeService.getComic(this.comicUrlSegment);
 
     this.isSubmitButtonDisabled = true;
+    this.sourceEventName = 'editComic';
   }
 }
