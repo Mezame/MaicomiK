@@ -13,6 +13,7 @@ import {
   ComicNotesForm,
   ComicNotesFormValue,
 } from '../models';
+import { EventBus, EventBusEmitter } from '@shared/models';
 
 @Component({
   selector: 'app-add-edit-comic-notes-form',
@@ -20,19 +21,18 @@ import {
   styleUrls: ['./add-edit-comic-notes-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddEditComicNotesFormComponent implements OnInit {
+export class AddEditComicNotesFormComponent implements EventBusEmitter, OnInit {
+  comic!: Readonly<Comic>;
   comicNotesForm!: ComicNotesForm;
 
-  @Input('data')
-  comic!: Readonly<Comic>;
-  @Input()
-  container!: string;
+  @Input('eventBus') 
+  incomingEvent!: EventBus;
 
-  @Output()
-  eventBus!: EventEmitter<AddEditComicNotesEvent>;
+  @Output('eventBus') 
+  outgoingEvent: EventEmitter<EventBus>;
 
   constructor(private fb: FormBuilder) {
-    this.eventBus = new EventEmitter();
+    this.outgoingEvent = new EventEmitter();
   }
 
   ngOnInit(): void {
@@ -40,7 +40,7 @@ export class AddEditComicNotesFormComponent implements OnInit {
 
     this.setInitialComicNotesFormValues();
 
-    if (this.container == 'editComicNotes' && this.comic.notes) {
+    if (this.incomingEvent.name == 'editComicNotes' && this.comic.notes) {
       this.setCurrentComicNotesFormValues();
     }
   }
@@ -50,7 +50,7 @@ export class AddEditComicNotesFormComponent implements OnInit {
     originalComic: Readonly<Comic>,
     isComicNotesFormValid = false
   ): void {
-    let eventName: string;
+    let eventName: EventBus['name'];
     let data: AddEditComicNotesEvent['data'];
     let event: AddEditComicNotesEvent;
 
@@ -62,7 +62,7 @@ export class AddEditComicNotesFormComponent implements OnInit {
     };
     event = { name: eventName, data };
 
-    this.eventBus.emit(event);
+    this.emitEvent(event);
   }
 
   emitEditComicNotes(
@@ -71,7 +71,7 @@ export class AddEditComicNotesFormComponent implements OnInit {
     isComicNotesFormValid = false,
     isComicNotesFormDirty = false
   ): void {
-    let eventName: string;
+    let eventName: EventBus['name'];
     let data: AddEditComicNotesEvent['data'];
     let event: AddEditComicNotesEvent;
 
@@ -84,7 +84,11 @@ export class AddEditComicNotesFormComponent implements OnInit {
     };
     event = { name: eventName, data };
 
-    this.eventBus.emit(event);
+    this.emitEvent(event);
+  }
+
+  emitEvent(event: EventBus): void {
+    this.outgoingEvent.emit(event);
   }
 
   onComicNotesFormValueChanges(): void {
@@ -100,7 +104,7 @@ export class AddEditComicNotesFormComponent implements OnInit {
     comicNotesFormValue = this.comicNotesForm.value;
     isComicNotesFormValid = this.comicNotesForm.valid;
 
-    if (this.container == 'addComicNotes') {
+    if (this.incomingEvent.name == 'addComicNotes') {
       if (!isComicNotesFormValid) {
         this.emitAddComicNotes('', {} as any, isComicNotesFormValid);
 
@@ -124,7 +128,7 @@ export class AddEditComicNotesFormComponent implements OnInit {
     isComicNotesFormValid = this.comicNotesForm.valid;
     isComicNotesFormDirty = this.comicNotesForm.dirty;
 
-    if (this.container == 'editComicNotes') {
+    if (this.incomingEvent.name == 'editComicNotes') {
       if (!isComicNotesFormValid || !isComicNotesFormDirty) {
         this.emitEditComicNotes(
           '',
@@ -154,6 +158,6 @@ export class AddEditComicNotesFormComponent implements OnInit {
   }
 
   private setInitialValues(): void {
-    /**EMPTY */
+    this.comic = this.incomingEvent.data;
   }
 }
