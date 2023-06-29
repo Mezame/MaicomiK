@@ -17,9 +17,11 @@ import { AddComicFacadeService } from './add-comic-facade.service';
   styleUrls: ['./add-comic-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddComicPageComponent implements EventBusReceiver, OnInit, OnDestroy {
+export class AddComicPageComponent
+  implements EventBusReceiver, OnInit, OnDestroy
+{
   comic!: Partial<Comic>;
-  eventNameSource!: EventBus['name'];
+  eventSource!: EventBus;
   isSubmitButtonDisabled!: boolean;
 
   @ViewChild('footer') footer!: TemplateRef<any>;
@@ -64,7 +66,7 @@ export class AddComicPageComponent implements EventBusReceiver, OnInit, OnDestro
 
     eventName = event.name;
 
-    if (eventName == this.eventNameSource) {
+    if (eventName == this.eventSource.name) {
       this.prepareToAddComic(event);
     }
   }
@@ -92,7 +94,7 @@ export class AddComicPageComponent implements EventBusReceiver, OnInit, OnDestro
   }
 
   private setInitialValues(): void {
-    this.eventNameSource = 'addComic';
+    this.eventSource = { name: 'addComic', data: {} };
     this.isSubmitButtonDisabled = true;
   }
 }

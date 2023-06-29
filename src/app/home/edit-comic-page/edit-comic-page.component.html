@@ -2,8 +2,7 @@
 
 <app-add-edit-comic-form
   *ngIf="comic$ | async as comic; else noComic"
-  [data]="comic"
-  [eventBus]="eventNameSource"
+  [eventBus]="{ name: eventNameSource, data: comic }"
   (eventBus)="onEvent($event)"
 ></app-add-edit-comic-form>
 <ng-template #noComic>

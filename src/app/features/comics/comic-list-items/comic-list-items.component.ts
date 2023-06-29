@@ -20,9 +20,12 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicListItemsComponent implements EventBusEmitter, OnInit {
-  @Input('data') comics!: readonly Comic[];
 
-  @Output('eventBus') outgoingEvent: EventEmitter<EventBus>;
+  @Input('data')
+  comics!: readonly Comic[];
+
+  @Output('eventBus')
+  outgoingEvent: EventEmitter<EventBus>;
 
   constructor() {
     this.outgoingEvent = new EventEmitter();

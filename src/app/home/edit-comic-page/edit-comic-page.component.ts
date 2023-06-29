@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Comic, EditComicEvent } from '@features/comics/models';
 import { ComicFormValue } from '@features/comics/models/comic-form';
 import { EventBus, EventBusReceiver } from '@shared/models';
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { EditComicFacadeService } from './edit-comic-facade.service';
 
 @Component({
@@ -23,8 +23,8 @@ export class EditComicPageComponent
   comic$!: Observable<Readonly<Comic>>;
   comicUrlSegment!: string;
   editedComic!: Readonly<Comic>;
-  isSubmitButtonDisabled!: boolean;
   eventNameSource!: EventBus['name'];
+  isSubmitButtonDisabled!: boolean;
 
   constructor(
     private editComicFacadeService: EditComicFacadeService,

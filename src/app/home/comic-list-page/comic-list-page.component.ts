@@ -20,8 +20,11 @@ import { ComicListFacadeService } from './comic-list-facade.service';
   styleUrls: ['./comic-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicListPageComponent implements EventBusReceiver, OnInit, OnDestroy {
+export class ComicListPageComponent
+  implements EventBusReceiver, OnInit, OnDestroy
+{
   comics$!: Observable<readonly Comic[]>;
+  eventNameSource!: EventBus['name'];
 
   constructor(
     private comicListFacadeService: ComicListFacadeService,
@@ -91,5 +94,7 @@ export class ComicListPageComponent implements EventBusReceiver, OnInit, OnDestr
 
   private setInitialValues(): void {
     this.comics$ = this.comicListFacadeService.getComics();
+
+    this.eventNameSource = 'loadComics';
   }
 }

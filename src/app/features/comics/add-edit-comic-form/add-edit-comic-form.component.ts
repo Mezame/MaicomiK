@@ -27,14 +27,14 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
+  comic!: Readonly<Comic>;
   comicForm!: ComicForm;
   currentComicFormValue!: Partial<ComicFormValue>;
   formatList!: ComicFormat[];
   statusList!: ComicStatus[];
   previewImageSrc!: string | null;
 
-  @Input('data') comic!: Readonly<Comic>;
-  @Input('eventBus') incomingEvent!: EventBus['name'];
+  @Input('eventBus') incomingEvent!: EventBus;
 
   @Output('eventBus') outgoingEvent: EventEmitter<EventBus>;
 
@@ -67,7 +67,7 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
 
     this.setInitialComicFormValues();
 
-    if (this.incomingEvent == 'editComic') {
+    if (this.incomingEvent.name == 'editComic') {
       this.setCurrentComicFormValues();
 
       this.currentComicFormValue = { ...this.comicForm.value };
@@ -177,11 +177,11 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
   }
 
   private onComicFormValueChanges(): void {
-    if (this.incomingEvent == 'addComic') {
+    if (this.incomingEvent.name == 'addComic') {
       this.tryToEmitAddComic();
     }
 
-    if (this.incomingEvent == 'editComic') {
+    if (this.incomingEvent.name == 'editComic') {
       this.tryToEmitEditComic();
     }
   }
@@ -197,6 +197,7 @@ export class AddEditComicFormComponent implements EventBusEmitter, OnInit {
   }
 
   private setInitialValues(): void {
+    this.comic = this.incomingEvent.data;
     this.formatList = ['manga', 'manhua', 'manhwa', 'webtoon'];
     this.statusList = ['reading', 'paused', 'planning', 'completed'];
     this.previewImageSrc = null;
