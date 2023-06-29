@@ -3,9 +3,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { EventBus, EventBusEmitter } from '@shared/models';
 import { webUrlValidator } from '@shared/validators';
 import {
   AddEditComicReadersEvent,
@@ -21,19 +23,20 @@ import {
   styleUrls: ['./add-edit-comic-readers-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddEditComicReadersFormComponent {
+export class AddEditComicReadersFormComponent
+  implements EventBusEmitter, OnInit
+{
+  comic!: Readonly<Comic>;
   comicReadersFormArray!: ComicReadersFormArray;
 
-  @Input('data')
-  comic!: Readonly<Comic>;
-  @Input()
-  container!: string;
+  @Input('eventBus')
+  incomingEvent!: EventBus;
 
-  @Output()
-  eventBus: EventEmitter<AddEditComicReadersEvent>;
+  @Output('eventBus')
+  outgoingEvent: EventEmitter<EventBus>;
 
   constructor(private fb: FormBuilder) {
-    this.eventBus = new EventEmitter();
+    this.outgoingEvent = new EventEmitter();
   }
 
   get comicReadersFormArrayCtrl() {
@@ -50,7 +53,7 @@ export class AddEditComicReadersFormComponent {
     this.setInitialValues(newComicReadersForm);
 
     if (
-      this.container == 'editComicReaders' &&
+      this.incomingEvent?.name == 'editComicReaders' &&
       this.comic.readers &&
       this.comic.readers.length > 0
     ) {
@@ -71,7 +74,7 @@ export class AddEditComicReadersFormComponent {
     originalComic: Readonly<Comic>,
     isComicReadersFormValid = false
   ) {
-    let eventName: string;
+    let eventName: EventBus['name'];
     let data: AddEditComicReadersEvent['data'];
     let event: AddEditComicReadersEvent;
 
@@ -83,7 +86,11 @@ export class AddEditComicReadersFormComponent {
     };
     event = { name: eventName, data };
 
-    this.eventBus.emit(event);
+    this.emitEvent(event);
+  }
+
+  emitEvent(event: EventBus): void {
+    this.outgoingEvent.emit(event);
   }
 
   onComicReadersFormValueChanges(): void {
@@ -147,6 +154,7 @@ export class AddEditComicReadersFormComponent {
   }
 
   private setInitialValues(newComicReadersForm: ComicReadersForm): void {
+    this.comic = this.incomingEvent?.data;
     this.comicReadersFormArray = this.fb.array([newComicReadersForm]);
   }
 }
