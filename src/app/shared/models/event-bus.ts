@@ -5,15 +5,16 @@ export interface EventBus {
   data: any;
 }
 
-export interface EventBusEmitter {
-  emitEvent: (event: EventBus) => void;
-
-  incomingEvent?: EventBus['name'];
+export interface EventBusOptionals {
+  eventSource?: EventBus;
+  incomingEvent?: EventBus;
   outgoingEvent?: EventEmitter<EventBus>;
 }
 
-export interface EventBusReceiver {
-  onEvent: (event: EventBus) => void;
+export interface EventBusEmitter extends EventBusOptionals {
+  emitEvent: (event: EventBus) => void;
+}
 
-  eventNameSource?: EventBus['name'];
+export interface EventBusReceiver extends EventBusOptionals {
+  onEvent: (event: EventBus) => void;
 }
