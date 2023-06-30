@@ -46,6 +46,10 @@ export interface IncrementComicChapterEvent extends EventBus {
   data: Readonly<Comic>;
 }
 
+export interface LoadComicEvent extends EventBus {
+  data: Readonly<Comic>;
+}
+
 export interface OpenComicBottomSheetEvent extends EventBus {
   data: {};
 }
