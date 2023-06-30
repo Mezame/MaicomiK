@@ -52,7 +52,7 @@ export class ComicDetailFacadeService {
     const comic$ = this.store.select(selectComic(comicUrlSegment)).pipe(
       map((comic) => {
         if (!comic) {
-          this.store.dispatch({ type: '[Comic Detail Page] Load Comics' });
+          this.loadComics();
 
           return null as unknown as Readonly<Comic>;
         }
@@ -71,5 +71,9 @@ export class ComicDetailFacadeService {
     this.store.dispatch(
       incrementComicChapterAction({ comic, fields: comicFields })
     );
+  }
+
+  loadComics(): void {
+    this.store.dispatch({ type: '[Comic Detail Page] Load Comics' });
   }
 }

@@ -17,7 +17,7 @@ export class ComicListFacadeService {
 
   getComics(): Observable<readonly Comic[]> {
     const comics$ = this.store.select(selectComics).pipe(
-      take(2),
+      take(3),
       map((comics) => {
         if (!comics) {
 
@@ -25,7 +25,7 @@ export class ComicListFacadeService {
         }
 
         if(comics.length < 1) {
-          this.store.dispatch(loadComicsAction());
+          this.loadComics();
         }
 
         return comics;
@@ -44,5 +44,9 @@ export class ComicListFacadeService {
       comic,
       fields: comicFields,
     });
+  }
+
+  loadComics(): void {
+    this.store.dispatch(loadComicsAction());
   }
 }

@@ -41,7 +41,7 @@ export class EditComicFacadeService {
     const comic$ = this.store.select(selectComic(comicUrlSegment)).pipe(
       map((comic) => {
         if (!comic) {
-          this.store.dispatch({ type: '[Comic Edit Page] Load Comics' });
+          this.loadComics();
 
           return null as unknown as Readonly<Comic>;
         }
@@ -51,5 +51,9 @@ export class EditComicFacadeService {
     );
 
     return comic$;
+  }
+
+  loadComics(): void {
+    this.store.dispatch({ type: '[Comic Edit Page] Load Comics' });
   }
 }
