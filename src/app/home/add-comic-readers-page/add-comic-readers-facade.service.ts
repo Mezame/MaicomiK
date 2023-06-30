@@ -34,7 +34,7 @@ export class AddComicReadersFacadeService {
         if (!comic) {
           this.store.dispatch({ type: '[Comic Readers Add Page] Load Comics' });
 
-          return {} as unknown as Readonly<Comic>;
+          return null as unknown as Readonly<Comic>;
         }
 
         return comic;

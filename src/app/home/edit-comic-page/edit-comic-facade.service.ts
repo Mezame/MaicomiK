@@ -43,7 +43,7 @@ export class EditComicFacadeService {
         if (!comic) {
           this.store.dispatch({ type: '[Comic Edit Page] Load Comics' });
 
-          return {} as Readonly<Comic>;
+          return null as unknown as Readonly<Comic>;
         }
 
         return comic;
