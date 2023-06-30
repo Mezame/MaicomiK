@@ -40,7 +40,7 @@ export class AddEditComicNotesFormComponent implements EventBusEmitter, OnInit {
 
     this.setInitialComicNotesFormValues();
 
-    if (this.incomingEvent.name == 'editComicNotes' && this.comic.notes) {
+    if (this.incomingEvent?.name == 'editComicNotes' && this.comic.notes) {
       this.setCurrentComicNotesFormValues();
     }
   }
@@ -104,7 +104,7 @@ export class AddEditComicNotesFormComponent implements EventBusEmitter, OnInit {
     comicNotesFormValue = this.comicNotesForm.value;
     isComicNotesFormValid = this.comicNotesForm.valid;
 
-    if (this.incomingEvent.name == 'addComicNotes') {
+    if (this.incomingEvent?.name == 'addComicNotes') {
       if (!isComicNotesFormValid) {
         this.emitAddComicNotes('', {} as any, isComicNotesFormValid);
 
@@ -128,7 +128,7 @@ export class AddEditComicNotesFormComponent implements EventBusEmitter, OnInit {
     isComicNotesFormValid = this.comicNotesForm.valid;
     isComicNotesFormDirty = this.comicNotesForm.dirty;
 
-    if (this.incomingEvent.name == 'editComicNotes') {
+    if (this.incomingEvent?.name == 'editComicNotes') {
       if (!isComicNotesFormValid || !isComicNotesFormDirty) {
         this.emitEditComicNotes(
           '',
@@ -158,6 +158,6 @@ export class AddEditComicNotesFormComponent implements EventBusEmitter, OnInit {
   }
 
   private setInitialValues(): void {
-    this.comic = this.incomingEvent.data;
+    this.comic = this.incomingEvent?.data;
   }
 }
