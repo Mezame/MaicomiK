@@ -2,7 +2,7 @@
 
 <app-add-edit-comic-notes-form
   *ngIf="comic$ | async as comic"
-  [eventBus]="{name: eventNameSource, data: comic}"
+  [eventBus]="{ name: eventNameSource, data: comic }"
   (eventBus)="onEvent($event)"
 ></app-add-edit-comic-notes-form>
 
