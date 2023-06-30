@@ -61,7 +61,6 @@ export class ComicDetailContentComponent implements EventBusEmitter, OnInit {
   }
 
   private setInitialValues(): void {
-    /**EMPTY */
     this.comic = this.incomingEvent.data;
   }
 }
