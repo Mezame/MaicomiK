@@ -1,10 +1,11 @@
 <app-comic-detail-content
-  [data]="(comic$ | async)!"
+  *ngIf="comic$ | async as comic"
+  [eventBus]="{ name: 'loadComic', data: comic }"
   (eventBus)="onEvent($event)"
 ></app-comic-detail-content>
 
 <ng-template #bottomSheet>
-  <mat-nav-list *ngIf="comic$ | async as comic; else noComic">
+  <mat-nav-list *ngIf="comic$ | async as comic; else noBottomSheetComic">
     <ng-container *ngIf="!comic.readers?.length">
       <a
         [routerLink]="[
@@ -60,7 +61,13 @@
 
     <a
       *ngIf="comic.notes"
-      [routerLink]="['/home', 'comics', comic?.metadata?.urlSegment, 'notes', 'edit']"
+      [routerLink]="[
+        '/home',
+        'comics',
+        comic?.metadata?.urlSegment,
+        'notes',
+        'edit'
+      ]"
       mat-list-item
       (click)="closeBottomSheet()"
     >
@@ -78,14 +85,11 @@
       <span>Delete readers</span>
     </mat-list-item>
 
-    <mat-list-item
-      *ngIf="comic.notes"
-      (click)="deleteComicNotes(comic)"
-    >
+    <mat-list-item *ngIf="comic.notes" (click)="deleteComicNotes(comic)">
       <span>Delete notes</span>
     </mat-list-item>
   </mat-nav-list>
-  <ng-template #noComic>
+  <ng-template #noBottomSheetComic>
     <mat-list-item (click)="closeBottomSheet()">
       <span>Close</span>
     </mat-list-item>

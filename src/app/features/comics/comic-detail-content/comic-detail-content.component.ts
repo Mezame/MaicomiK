@@ -20,8 +20,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicDetailContentComponent implements EventBusEmitter, OnInit {
-  @Input('data')
   comic!: Readonly<Comic>;
+
+  @Input('eventBus')
+  incomingEvent!: EventBus;
 
   @Output('eventBus')
   outgoingEvent: EventEmitter<EventBus>;
@@ -60,5 +62,6 @@ export class ComicDetailContentComponent implements EventBusEmitter, OnInit {
 
   private setInitialValues(): void {
     /**EMPTY */
+    this.comic = this.incomingEvent.data;
   }
 }

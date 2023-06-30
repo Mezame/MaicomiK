@@ -54,7 +54,7 @@ export class ComicDetailFacadeService {
         if (!comic) {
           this.store.dispatch({ type: '[Comic Detail Page] Load Comics' });
 
-          return {} as Readonly<Comic>;
+          return null as unknown as Readonly<Comic>;
         }
 
         return comic;
