@@ -23,7 +23,9 @@ import { ComicDetailFacadeService } from './comic-detail-facade.service';
   styleUrls: ['./comic-detail-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicDetailPageComponent implements EventBusReceiver, OnInit, OnDestroy {
+export class ComicDetailPageComponent
+  implements EventBusReceiver, OnInit, OnDestroy
+{
   comic$!: Observable<Readonly<Comic>>;
 
   @ViewChild('bottomSheet') bottomSheet!: TemplateRef<any>;
