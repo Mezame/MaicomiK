@@ -75,7 +75,7 @@ export class AddEditComicNotesFormComponent implements EventBusEmitter, OnInit {
     let data: AddEditComicNotesEvent['data'];
     let event: AddEditComicNotesEvent;
 
-    eventName = 'addComicNotes';
+    eventName = 'editComicNotes';
     data = {
       comicNotesFormValue,
       isComicNotesFormValid,
