@@ -216,6 +216,7 @@ export class FirestoreService {
       currentTimestamp = Timestamp.fromDate(new Date());
       patchedDocument = {
         ...document,
+        ...fields,
         metadata: {
           ...document['metadata'],
           updatedAt: currentTimestamp,
