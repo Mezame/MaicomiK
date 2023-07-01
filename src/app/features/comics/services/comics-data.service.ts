@@ -63,7 +63,7 @@ export class ComicsDataService {
   }
 
   addComic(comic: Partial<Comic>): Observable<FirestoreResponse> {
-    const newComic = this.addMetadataUrlSegment(comic);
+    const newComic = this.getComicWithMetadataUrlSegment(comic);
     const operation = 'addComic';
     const message = `${this.serviceName}: ${operation}: added ${this.feature}`;
 
@@ -130,7 +130,7 @@ export class ComicsDataService {
     );
   }
 
-  private addMetadataUrlSegment(comic: Partial<Comic>): Readonly<Comic> {
+  private getComicWithMetadataUrlSegment(comic: Partial<Comic>): Readonly<Comic> {
     let comicWithMetadataUrlSegment: Readonly<Comic>;
     let urlSegment: string;
     const metadata = {
@@ -140,14 +140,22 @@ export class ComicsDataService {
       urlSegment: '',
     };
 
-    urlSegment = comic
-      .title!.toLowerCase()
-      .replace(/[^a-z0-9]+/g, ' ')
-      .replace(/ /g, '-');
+    urlSegment = this.getComicUrlSegment(comic.title!);
     metadata.urlSegment = urlSegment;
     comicWithMetadataUrlSegment = { ...comic, metadata } as Readonly<Comic>;
 
     return comicWithMetadataUrlSegment;
+  }
+
+  private getComicUrlSegment(comicTitle: string): string {
+    let comicUrlSegment: string;
+
+    comicUrlSegment = comicTitle
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ' ')
+      .replace(/ /g, '-');
+
+    return comicUrlSegment;
   }
 
   private onResponseSetApiState(
