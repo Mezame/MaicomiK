@@ -14,7 +14,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { Logger } from '@core/services/logger.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 export interface FirestoreResponse {
   success?: true;
@@ -34,7 +34,7 @@ export class FirestoreService {
   @param path A slash-separated path to a Firestore collection.
   @returns Returns a stream of documents.
   **/
-  getCollection(path: string) {
+  getCollectionStream(path: string) {
     let collRef: CollectionReference<DocumentData>;
     let documents$: Observable<readonly DocumentData[]>;
 
