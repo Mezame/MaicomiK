@@ -33,7 +33,7 @@ export class ComicsDataService {
     this.feature = 'comic';
     this.featurePlural = 'comics';
     this.path = `users/${id}/comics`;
-    this.serviceName = 'ComicsService';
+    this.serviceName = 'ComicsDataService';
     this.handleError = this.firebaseErrorHandlerService.createHandleError(
       this.serviceName
     );
@@ -44,7 +44,7 @@ export class ComicsDataService {
     const message = (comicsLength: number) =>
       `${this.serviceName}: ${operation}: got ${comicsLength} ${this.featurePlural}`;
 
-    return this.firestoreService.getCollection(this.path).pipe(
+    return this.firestoreService.getCollectionStream(this.path).pipe(
       take(1),
       map((docData) => docData as readonly Comic[]),
       tap((comics) => {
