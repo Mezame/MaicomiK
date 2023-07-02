@@ -24,33 +24,23 @@ export class AppStoreService {
   getApiState(): Observable<ApiState | null> {
     const apiState$ = this.apiState$.asObservable();
 
-    this.setApiStateLogger(apiState$);
-
     return apiState$;
   }
 
   setApiState(apiState: ApiState): void {
     this.apiState$.next(apiState);
 
-    this.setApiStateLogger(this.apiState$);
+    this.setApiStateLogger(apiState);
   }
 
-  private setApiStateLogger(
-    apiState$: Observable<ApiState | null>
-  ): Observable<ApiState | null> {
+  private setApiStateLogger(apiState: ApiState | null): void {
     const message = (
       operation: ApiState['operation'],
       status: ApiState['status']
-    ) => `${operation} status: ${status}`;
+    ) => `${operation} api state = ${status}`;
 
-    apiState$.pipe(
-      tap((apiState) => {
-        if (apiState) {
-          this.logger.log(message(apiState.operation, apiState.status));
-        }
-      })
-    );
-
-    return apiState$;
+    if (apiState) {
+      this.logger.log(message(apiState.operation, apiState.status));
+    }
   }
 }
