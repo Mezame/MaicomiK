@@ -62,6 +62,27 @@ export class ComicsDataService {
     );
   }
 
+  _getComics(): Observable<FirestoreResponse> {
+    const operation = 'getComics';
+    const message = (comicsLength: number) =>
+      `${this.serviceName}: ${operation}: got ${comicsLength} ${this.featurePlural}`;
+
+    return from(this.firestoreService.getDocuments(this.path)).pipe(
+      tap((response) => {
+        if (response.error) {
+          this.setApiState(operation, 'failure');
+
+          throw Error('no comics');
+        }
+
+        this.setApiState(operation, 'success');
+
+        this.logger.log(message(response.document.length));
+      }),
+      catchError(this.handleError<FirestoreResponse>(operation))
+    );
+  }
+
   addComic(comic: Partial<Comic>): Observable<FirestoreResponse> {
     const newComic = this.getComicWithMetadataUrlSegment(comic);
     const operation = 'addComic';
