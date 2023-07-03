@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { EMPTY, catchError, map, mergeMap, of, switchMap } from 'rxjs';
+import {
+  EMPTY,
+  catchError,
+  exhaustMap,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+} from 'rxjs';
 import { ComicsDataService } from '../services/comics-data.service';
 import {
   ComicsApiActions,
@@ -32,6 +40,17 @@ export class ComicEffects {
           return EMPTY;
         }
 
+        return this.comicsDataService
+          .getComics()
+          .pipe(map((comics) => ComicsApiActions.gotComics({ comics })));
+      })
+    )
+  );
+
+  reloadComics$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType('[Comic List Page] Reload Comics'),
+      exhaustMap(() => {
         return this.comicsDataService
           .getComics()
           .pipe(map((comics) => ComicsApiActions.gotComics({ comics })));
