@@ -9,6 +9,8 @@ import {
   DocumentData,
   DocumentReference,
   Firestore,
+  getDocs,
+  QuerySnapshot,
   setDoc,
   Timestamp,
   updateDoc,
@@ -17,10 +19,10 @@ import { Logger } from '@core/services/logger.service';
 import { Observable, of } from 'rxjs';
 
 export interface FirestoreResponse {
-  success?: true;
   document?: any;
-  id?: string;
   error?: any;
+  id?: string;
+  success?: true;
 }
 
 @Injectable({
@@ -38,11 +40,46 @@ export class FirestoreService {
     let collRef: CollectionReference<DocumentData>;
     let documents$: Observable<readonly DocumentData[]>;
 
-    collRef = collection(this.firestore, path);
+    try {
+      collRef = collection(this.firestore, path);
 
-    documents$ = collectionData(collRef);
+      documents$ = collectionData(collRef);
+  
+      return documents$;
+    } catch (error) {
+      console.log(error);
+      return of([]);
+    }
+  }
 
-    return documents$;
+  /**
+   * Get documents from Firestore.
+  @param path A slash-separated path to a Firestore collection.
+  @returns A promise with a Firestore custom response.
+  **/
+  async getDocuments(path: string) {
+    let collRef: CollectionReference<DocumentData>;
+    let snapshot: QuerySnapshot<DocumentData>;
+    let documents: DocumentData[];
+
+    documents = [];
+
+    try {
+      collRef = collection(this.firestore, path);
+
+      snapshot = await getDocs(collRef);
+
+      console.log(snapshot);
+
+      snapshot.forEach((doc) => {
+        console.log(doc.id, '=>', doc.data());
+        documents.push(doc.data());
+      });
+
+      return { success: true, document: documents } as FirestoreResponse;
+    } catch (error) {
+      return { error } as FirestoreResponse;
+    }
   }
 
   /**
@@ -157,7 +194,7 @@ export class FirestoreService {
   }
 
   /**
-   * Add a new document to Firestore with a custom id.
+   * Update a Firestore document.
   @param path A slash-separated path to a Firestore collection.
   @param id The id for the document to be updated.
   @param document An Object containing the data for the document to be updated.
@@ -196,7 +233,7 @@ export class FirestoreService {
   }
 
   /**
-   * Add a new document to Firestore with a custom id.
+   * Patch a Firestore document.
   @param path A slash-separated path to a Firestore collection.
   @param id The id for the document to be updated.
   @param document An Object containing the data for the original document.
@@ -240,7 +277,7 @@ export class FirestoreService {
   }
 
   /**
-   * Add a new document to Firestore with a custom id.
+   * Delete a Firestore document.
   @param path A slash-separated path to a Firestore collection.
   @param id The id for the document to be deleted.
   @returns A promise with a Firestore custom response.
