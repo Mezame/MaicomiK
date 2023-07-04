@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Logger } from './logger.service';
 
 export interface ApiState {
@@ -11,17 +11,19 @@ export interface ApiState {
   providedIn: 'root',
 })
 export class AppStore {
-  private apiState$: ReplaySubject<ApiState | null>;
+  initialState: {};
+  private apiState$: BehaviorSubject<ApiState>;
 
   constructor(private logger: Logger) {
-    this.apiState$ = new ReplaySubject(1);
+    this.initialState = {};
+    this.apiState$ = new BehaviorSubject(this.initialState as ApiState);
   }
 
   clearApiState(): void {
-    this.apiState$.next(null);
+    this.apiState$.next(this.initialState as ApiState);
   }
 
-  getApiState(): Observable<ApiState | null> {
+  getApiState(): Observable<ApiState> {
     const apiState$ = this.apiState$.asObservable();
 
     return apiState$;
@@ -33,7 +35,7 @@ export class AppStore {
     this.setApiStateLogger(apiState);
   }
 
-  private setApiStateLogger(apiState: ApiState | null): void {
+  private setApiStateLogger(apiState: ApiState): void {
     const message = (
       operation: ApiState['operation'],
       status: ApiState['status']
