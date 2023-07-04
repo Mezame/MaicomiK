@@ -50,6 +50,10 @@ export interface LoadComicEvent extends EventBus {
   data: Readonly<Comic>;
 }
 
+export interface LoadComicsEvent extends EventBus {
+  data: readonly Comic[];
+}
+
 export interface OpenComicBottomSheetEvent extends EventBus {
   data: {};
 }
