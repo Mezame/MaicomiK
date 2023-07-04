@@ -1,6 +1,6 @@
 <app-comic-list-items
   *ngIf="comics$ | async as comics"
-  [data]="comics"
+  [eventBus]="{ name: 'loadComics', data: comics }"
   (eventBus)="onEvent($event)"
 ></app-comic-list-items>
 
