@@ -41,4 +41,8 @@ export class ComicListFacadeService {
   loadComics(): void {
     this.store.dispatch(loadComicsAction());
   }
+
+  reloadComics(): void {
+    this.store.dispatch({ type: '[Comic List Page] Reload Comics' });
+  }
 }
