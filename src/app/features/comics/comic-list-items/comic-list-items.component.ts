@@ -3,10 +3,8 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { EventBus, EventBusEmitter } from '@shared/models';
 import {
@@ -22,9 +20,7 @@ import {
   styleUrls: ['./comic-list-items.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicListItemsComponent
-  implements EventBusEmitter, OnInit
-{
+export class ComicListItemsComponent implements EventBusEmitter, OnInit {
   comics!: readonly Comic[];
 
   @Input('eventBus')
