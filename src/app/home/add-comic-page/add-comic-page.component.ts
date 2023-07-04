@@ -94,6 +94,7 @@ export class AddComicPageComponent
   }
 
   private setInitialValues(): void {
+    this.addComicFacadeService.loadComics();
     this.eventSource = { name: 'addComic', data: {} };
     this.isSubmitButtonDisabled = true;
   }
