@@ -47,12 +47,6 @@ export class ComicDetailContentComponent
     this.setInitialValues();
   }
 
-  onIncomingEvent(event: EventBus): void {
-    const loadComicEvent: LoadComicEvent = event;
-
-    this.comic = loadComicEvent.data;
-  }
-
   emitEvent(event: EventBus): void {
     this.outgoingEvent.emit(event);
   }
@@ -75,6 +69,12 @@ export class ComicDetailContentComponent
     event = { name: eventName, data };
 
     this.emitEvent(event);
+  }
+
+  private onIncomingEvent(event: EventBus): void {
+    const loadComicEvent: LoadComicEvent = event;
+
+    this.comic = loadComicEvent.data;
   }
 
   private setInitialValues(): void {
