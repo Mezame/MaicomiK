@@ -54,7 +54,7 @@ export class ComicDetailFacadeService {
         if (!comic) {
           this.loadComics();
 
-          return null as unknown as Readonly<Comic>;
+          return {} as unknown as Readonly<Comic>;
         }
 
         return comic;
