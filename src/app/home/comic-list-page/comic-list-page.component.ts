@@ -24,7 +24,6 @@ export class ComicListPageComponent
   implements EventBusReceiver, OnInit, OnDestroy
 {
   comics$!: Observable<readonly Comic[]>;
-  eventNameSource!: EventBus['name'];
 
   constructor(
     private comicListFacadeService: ComicListFacadeService,
@@ -94,7 +93,5 @@ export class ComicListPageComponent
 
   private setInitialValues(): void {
     this.comics$ = this.comicListFacadeService.getComics();
-
-    this.eventNameSource = 'loadComics';
   }
 }
