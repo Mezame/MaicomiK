@@ -23,31 +23,22 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComicListItemsComponent
-  implements EventBusEmitter, OnChanges, OnInit
+  implements EventBusEmitter, OnInit
 {
   comics!: readonly Comic[];
 
   @Input('eventBus')
-  incomingEvent!: EventBus;
+  set comicsValue(incomingEvent: EventBus) {
+    const loadComicsEvent: LoadComicsEvent = incomingEvent;
+
+    this.comics = loadComicsEvent.data;
+  }
 
   @Output('eventBus')
   outgoingEvent: EventEmitter<EventBus>;
 
   constructor() {
     this.outgoingEvent = new EventEmitter();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['incomingEvent']) {
-      this.onIncomingEvent(changes['incomingEvent'].currentValue);
-    }
-  }
-
-  onIncomingEvent(event: EventBus): void {
-    const loadComicsEvent: LoadComicsEvent = event;
-
-    console.log(loadComicsEvent);
-    this.comics = loadComicsEvent.data;
   }
 
   ngOnInit(): void {
