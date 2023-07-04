@@ -28,6 +28,7 @@ export class ComicEffects {
       ofType(
         loadComicsAction,
         '[Comic Detail Page] Load Comics',
+        '[Add Comic Page] Load Comics',
         '[Comic Edit Page] Load Comics',
         '[Comic Readers Add Page] Load Comics',
         '[Comic Readers Edit Page] Load Comics',
