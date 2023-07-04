@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject, tap } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { Logger } from './logger.service';
 
 export interface ApiState {
@@ -10,7 +10,7 @@ export interface ApiState {
 @Injectable({
   providedIn: 'root',
 })
-export class AppStoreService {
+export class AppStore {
   private apiState$: ReplaySubject<ApiState | null>;
 
   constructor(private logger: Logger) {

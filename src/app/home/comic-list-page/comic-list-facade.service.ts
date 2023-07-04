@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppStoreService } from '@core/services/app-store.service';
+import { AppStore } from '@core/services/app-store.service';
 import { Comic } from '@features/comics/models';
 import { loadComicsAction, selectComics } from '@features/comics/state';
 import { Store } from '@ngrx/store';
@@ -9,10 +9,10 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class ComicListFacadeService {
-  constructor(private appStoreService: AppStoreService, private store: Store) {}
+  constructor(private appStore: AppStore, private store: Store) {}
 
   clearApiState(): void {
-    this.appStoreService.clearApiState();
+    this.appStore.clearApiState();
   }
 
   getComics(): Observable<readonly Comic[]> {

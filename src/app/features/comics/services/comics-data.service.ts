@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiState, AppStoreService } from '@core/services/app-store.service';
+import { ApiState, AppStore } from '@core/services/app-store.service';
 import { Logger } from '@core/services/logger.service';
 import {
   FirebaseErrorHandlerService,
@@ -23,7 +23,7 @@ export class ComicsDataService {
   private serviceName: string;
 
   constructor(
-    private appStoreService: AppStoreService,
+    private appStore: AppStore,
     private firestoreService: FirestoreService,
     private firebaseErrorHandlerService: FirebaseErrorHandlerService,
     private logger: Logger
@@ -193,7 +193,7 @@ export class ComicsDataService {
   }
 
   private setApiState(operation: string, status: ApiState['status']): void {
-    this.appStoreService.setApiState({
+    this.appStore.setApiState({
       operation,
       status,
     });

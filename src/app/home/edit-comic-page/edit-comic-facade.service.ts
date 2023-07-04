@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiState, AppStoreService } from '@core/services/app-store.service';
+import { ApiState, AppStore } from '@core/services/app-store.service';
 import { Comic } from '@features/comics/models';
 import { ComicFormValue } from '@features/comics/models/comic-form';
 import { ComicFormService } from '@features/comics/services/comic-form.service';
@@ -12,13 +12,13 @@ import { Observable, map, take } from 'rxjs';
 })
 export class EditComicFacadeService {
   constructor(
-    private appStoreService: AppStoreService,
+    private appStore: AppStore,
     private comicFormService: ComicFormService,
     private store: Store
   ) {}
 
   clearApiState(): void {
-    this.appStoreService.clearApiState();
+    this.appStore.clearApiState();
   }
 
   editComic(editedComic: Readonly<Comic>): void {
@@ -32,7 +32,7 @@ export class EditComicFacadeService {
   }
 
   getApiState(): Observable<ApiState | null> {
-    const apiState = this.appStoreService.getApiState().pipe(take(1));
+    const apiState = this.appStore.getApiState().pipe(take(1));
 
     return apiState;
   }
