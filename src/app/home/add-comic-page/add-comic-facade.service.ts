@@ -35,4 +35,8 @@ export class AddComicFacadeService {
 
     return apiState;
   }
+
+  loadComics(): void {
+    this.store.dispatch({ type: '[Add Comic Page] Load Comics' });
+  }
 }
