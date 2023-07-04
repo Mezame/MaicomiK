@@ -3,14 +3,17 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { EventBus, EventBusEmitter } from '@shared/models';
 import {
   Comic,
   GoToComicDetailEvent,
   IncrementComicChapterEvent,
+  LoadComicsEvent,
 } from '../models';
 
 @Component({
@@ -19,16 +22,32 @@ import {
   styleUrls: ['./comic-list-items.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ComicListItemsComponent implements EventBusEmitter, OnInit {
-
-  @Input('data')
+export class ComicListItemsComponent
+  implements EventBusEmitter, OnChanges, OnInit
+{
   comics!: readonly Comic[];
+
+  @Input('eventBus')
+  incomingEvent!: EventBus;
 
   @Output('eventBus')
   outgoingEvent: EventEmitter<EventBus>;
 
   constructor() {
     this.outgoingEvent = new EventEmitter();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['incomingEvent']) {
+      this.onIncomingEvent(changes['incomingEvent'].currentValue);
+    }
+  }
+
+  onIncomingEvent(event: EventBus): void {
+    const loadComicsEvent: LoadComicsEvent = event;
+
+    console.log(loadComicsEvent);
+    this.comics = loadComicsEvent.data;
   }
 
   ngOnInit(): void {
