@@ -4,11 +4,12 @@ import { Comic } from '@features/comics/models';
 import { loadComicsAction, selectComics } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
+import { ComicListServices } from './comic-list';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ComicListFacadeService {
+export class ComicListFacadeService implements ComicListServices {
   constructor(private appStore: AppStore, private store: Store) {}
 
   clearApiState(): void {
