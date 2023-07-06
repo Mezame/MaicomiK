@@ -13,6 +13,7 @@ const routes: Routes = [
           import('./comic-list-page/comic-list-page.module').then(
             (m) => m.ComicListPageModule
           ),
+        data: { layout: 'primaryLayout' },
       },
       {
         path: 'comics/add-comic',
@@ -20,6 +21,7 @@ const routes: Routes = [
           import('./add-comic-page/add-comic-page.module').then(
             (m) => m.ComicAddPageModule
           ),
+        data: { layout: 'fullModalLayout' },
       },
       {
         path: 'comics/:comicUrlSegment',
@@ -27,6 +29,7 @@ const routes: Routes = [
           import('./comic-detail-page/comic-detail-page.module').then(
             (m) => m.ComicDetailPageModule
           ),
+        data: { layout: 'primaryLayout' },
       },
       {
         path: 'comics/:comicUrlSegment/edit',
@@ -34,6 +37,7 @@ const routes: Routes = [
           import('./edit-comic-page/edit-comic-page.module').then(
             (m) => m.EditComicPageModule
           ),
+        data: { layout: 'fullModalLayout' },
       },
       {
         path: 'comics/:comicUrlSegment/add-readers',
@@ -41,6 +45,7 @@ const routes: Routes = [
           import('./add-comic-readers-page/add-comic-readers-page.module').then(
             (m) => m.AddComicReadersPageModule
           ),
+        data: { layout: 'fullModalLayout' },
       },
       {
         path: 'comics/:comicUrlSegment/readers/edit',
@@ -48,6 +53,7 @@ const routes: Routes = [
           import(
             './edit-comic-readers-page/edit-comic-readers-page.module'
           ).then((m) => m.EditComicReadersPageModule),
+        data: { layout: 'fullModalLayout' },
       },
       {
         path: 'comics/:comicUrlSegment/add-notes',
@@ -55,6 +61,7 @@ const routes: Routes = [
           import('./add-comic-notes-page/add-comic-notes-page.module').then(
             (m) => m.AddComicNotesPageModule
           ),
+        data: { layout: 'fullModalLayout' },
       },
       {
         path: 'comics/:comicUrlSegment/notes/edit',
@@ -62,6 +69,7 @@ const routes: Routes = [
           import('./edit-comic-notes-page/edit-comic-notes-page.module').then(
             (m) => m.EditComicNotesPageModule
           ),
+        data: { layout: 'fullModalLayout' },
       },
       {
         path: '',
