@@ -4,11 +4,12 @@ import { Comic } from '@features/comics/models';
 import { selectComic } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, map, take } from 'rxjs';
+import { AddComicReadersServices } from './add-comic-readers';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AddComicReadersFacadeService {
+export class AddComicReadersFacadeService implements AddComicReadersServices {
   constructor(private appStore: AppStore, private store: Store) {}
 
   addComicReaders(comic: Comic): void {
@@ -22,7 +23,7 @@ export class AddComicReadersFacadeService {
     this.appStore.clearApiState();
   }
 
-  getApiState(): Observable<ApiState | null> {
+  getApiState(): Observable<ApiState> {
     const apiState = this.appStore.getApiState().pipe(take(1));
 
     return apiState;
