@@ -5,7 +5,8 @@ import { FooterPortalService } from './footer-portal.service';
   selector: '[appFooterPortal]',
 })
 export class FooterPortalDirective {
-  @Input('appFooterPortal') set footer(template: TemplateRef<any>) {
+  @Input('appFooterPortal')
+  set footer(template: TemplateRef<any>) {
     if (template) {
       this.footerPortalService.setFooter(template);
     }
