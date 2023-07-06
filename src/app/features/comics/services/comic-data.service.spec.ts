@@ -22,7 +22,7 @@ describe('ComicDataService', () => {
     ]);
 
     expectedComics = [...comicsMock];
-    comicIdMock = 'someId123';
+    /**comicIdMock = 'someId123';*/
 
     TestBed.configureTestingModule({
       providers: [
