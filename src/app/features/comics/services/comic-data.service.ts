@@ -15,7 +15,7 @@ import { Comic } from '../models';
 @Injectable({
   providedIn: 'root',
 })
-export class ComicsDataService {
+export class ComicDataService {
   private feature: string;
   private featurePlural: string;
   private handleError: HandleError;
@@ -33,7 +33,7 @@ export class ComicsDataService {
     this.feature = 'comic';
     this.featurePlural = 'comics';
     this.path = `users/${id}/comics`;
-    this.serviceName = 'ComicsDataService';
+    this.serviceName = 'ComicDataService';
     this.handleError = this.firebaseErrorHandlerService.createHandleError(
       this.serviceName
     );

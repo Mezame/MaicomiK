@@ -1,18 +1,19 @@
 import { fakeAsync, flushMicrotasks, TestBed } from '@angular/core/testing';
 import { FirestoreService } from '@shared/firebase/firestore.service';
 import { comicsMock } from '@testing/comics.mock';
-import { ComicsDataService } from './comics-data.service';
+import { of } from 'rxjs';
 import { Comic } from '../models/comic';
+import { ComicDataService } from './comic-data.service';
 
-describe('ComicsDataService', () => {
-  let comicsDataService: ComicsDataService;
+describe('ComicDataService', () => {
+  let comicDataService: ComicDataService;
   let firestoreService: jasmine.SpyObj<FirestoreService>;
-  let expectedComics: Comic[];
+  let expectedComics: readonly Comic[];
   let comicIdMock: string;
 
   beforeEach(() => {
     const firestoreServiceSpy = jasmine.createSpyObj('FirestoreService', [
-      'getDocument',
+      'getCollectionStream',
       'addDocument',
       'setDocument',
       'setDocumentNoId',
@@ -20,12 +21,12 @@ describe('ComicsDataService', () => {
       'updateDocument',
     ]);
 
-    expectedComics = comicsMock;
+    expectedComics = [...comicsMock];
     comicIdMock = 'someId123';
 
     TestBed.configureTestingModule({
       providers: [
-        ComicsDataService,
+        ComicDataService,
         {
           provide: FirestoreService,
           useValue: firestoreServiceSpy,
@@ -33,26 +34,21 @@ describe('ComicsDataService', () => {
       ],
     });
 
-    comicsDataService = TestBed.inject(ComicsDataService);
+    comicDataService = TestBed.inject(ComicDataService);
     firestoreService = TestBed.inject(
       FirestoreService
     ) as jasmine.SpyObj<FirestoreService>;
   });
 
   it('should be created', () => {
-    expect(comicsDataService).toBeTruthy();
+    expect(comicDataService).toBeTruthy();
   });
 
   describe('#getComics', () => {
     it('should return expected comics', fakeAsync(() => {
-      firestoreService.getDocument.and.returnValue(
-        Promise.resolve({
-          success: true,
-          document: { payload: expectedComics },
-        })
-      );
+      firestoreService.getCollectionStream.and.returnValue(of(expectedComics));
 
-      comicsDataService.getComics().subscribe({
+      comicDataService.getComics().subscribe({
         next: (comics) =>
           expect(comics)
             .withContext('should return expected comics')
@@ -64,11 +60,9 @@ describe('ComicsDataService', () => {
     }));
 
     it('should not return comics on error', fakeAsync(() => {
-      firestoreService.getDocument.and.returnValue(
-        Promise.resolve({ error: new Error('some error') })
-      );
+      firestoreService.getCollectionStream.and.returnValue(of([]));
 
-      comicsDataService.getComics().subscribe({
+      comicDataService.getComics().subscribe({
         next: (comics) =>
           expect(comics.length)
             .withContext('should have empty array')
