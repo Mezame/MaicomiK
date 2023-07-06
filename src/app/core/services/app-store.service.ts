@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ApiState, ApiStateServices } from './app-store';
 import { Logger } from './logger.service';
-
-export interface ApiState {
-  operation: string;
-  status: 'failure' | 'loading' | 'success';
-}
 
 @Injectable({
   providedIn: 'root',
 })
-export class AppStore {
+export class AppStore implements ApiStateServices {
   initialState: {};
   private apiState$: BehaviorSubject<ApiState>;
 
