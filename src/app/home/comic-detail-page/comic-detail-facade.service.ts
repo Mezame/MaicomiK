@@ -8,11 +8,12 @@ import {
 } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, map, take } from 'rxjs';
+import { ComicDetailServices } from './comic-detail';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ComicDetailFacadeService {
+export class ComicDetailFacadeService implements ComicDetailServices {
   constructor(private appStore: AppStore, private store: Store) {}
 
   clearApiState(): void {
@@ -23,7 +24,7 @@ export class ComicDetailFacadeService {
     this.store.dispatch(deleteComicAction({ id: comicId }));
   }
 
-  deleteComicNotes(comic: Readonly<Comic>, comicFields: Partial<Comic>) {
+  deleteComicNotes(comic: Readonly<Comic>, comicFields: Partial<Comic>): void {
     this.store.dispatch({
       type: '[Comic Detail Page] Delete Comic Notes',
       comic,
@@ -42,7 +43,7 @@ export class ComicDetailFacadeService {
     });
   }
 
-  getApiState(): Observable<ApiState | null> {
+  getApiState(): Observable<ApiState> {
     const apiState = this.appStore.getApiState().pipe(take(1));
 
     return apiState;
