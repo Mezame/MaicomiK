@@ -4,7 +4,7 @@ import {
   OnInit,
   TemplateRef,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivationEnd, Router } from '@angular/router';
 import { FooterPortalService } from '@shared/layouts/footer-portal/footer-portal.service';
 import { Observable, filter } from 'rxjs';
 
@@ -15,62 +15,24 @@ import { Observable, filter } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
-  currentUrl: string;
+  footer$!: Observable<TemplateRef<any> | null>;
+  currentUrl!: string;
   isComicListRoute!: boolean;
   isComicDetailRoute!: boolean;
   layout!: string;
-  footer$!: Observable<Readonly<TemplateRef<any>> | null>;
 
   constructor(
-    private router: Router,
-    private footerPortalService: FooterPortalService
+    private footerPortalService: FooterPortalService,
+    private router: Router
   ) {
-    this.currentUrl = '';
-
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        let segmentsCount: number;
-
-        this.currentUrl = event.url;
-        segmentsCount = this.getSegmentsCount(this.currentUrl);
-
-        if (segmentsCount < 3) {
-          this.isComicListRoute = true;
-        } else {
-          this.isComicListRoute = false;
-        }
-
-        if (segmentsCount == 3) {
-          this.isComicDetailRoute = true;
-        } else {
-          this.isComicDetailRoute = false;
-        }
-
-        this.setLayout();
-      });
+    this.setRouterEvents();
   }
 
   ngOnInit(): void {
-    this.setLayout();
-
-    this.footer$ = this.footerPortalService.getFooter();
+    this.setInitialValues();
   }
 
-  setLayout() {
-    console.log(this.isComicListRoute);
-    if (
-      this.isComicListRoute ||
-      (this.isComicDetailRoute && this.currentUrl !== '/home/comics/add-comic')
-    ) {
-      console.log('primaryLayout');
-      this.layout = 'primaryLayout';
-    } else {
-      this.layout = 'fullModalLayout';
-    }
-  }
-
-  getBackUrl() {
+  getBackUrl(): string {
     let currentUrlIndex: number;
     let backUrl: string;
 
@@ -80,11 +42,21 @@ export class HomeComponent implements OnInit {
     return backUrl;
   }
 
-  getSegmentsCount(url: string) {
-    let segmentsCount: number;
+  private onRouterEvent(event: any): void {
+    this.currentUrl = this.router.url;
 
-    segmentsCount = (url.match(/\//g) ?? []).length;
+    this.layout = event?.snapshot?.firstChild?.firstChild?.data['layout'];
+  }
 
-    return segmentsCount;
+  private setInitialValues(): void {
+    this.footer$ = this.footerPortalService.getFooter();
+  }
+
+  private setRouterEvents(): void {
+    this.router.events
+      .pipe(filter((event) => event instanceof ActivationEnd))
+      .subscribe((event) => {
+        this.onRouterEvent(event);
+      });
   }
 }
