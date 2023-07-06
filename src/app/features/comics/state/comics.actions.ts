@@ -4,12 +4,12 @@ import { Comic } from '../models';
 export const loadComicsAction = createAction('[Comic List Page] Load Comics');
 
 export const addComicAction = createAction(
-  '[Comic Add Page] Add Comic',
+  '[Add Comic Page] Add Comic',
   props<{ comic: Partial<Comic> }>()
 );
 
 export const editComicAction = createAction(
-  '[Comic Edit Page] Edit Comic',
+  '[Edit Comic Page] Edit Comic',
   props<{ comic: Readonly<Comic> }>()
 );
 

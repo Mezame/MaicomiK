@@ -14,7 +14,7 @@ export class AddComicNotesFacadeService implements AddComicNotesPageServices {
 
   addComicNotes(comic: Comic): void {
     this.store.dispatch({
-      type: '[Comic Notes Add Page] Update Comic',
+      type: '[Add Comic Notes Page] Update Comic',
       comic,
     });
   }
@@ -46,6 +46,6 @@ export class AddComicNotesFacadeService implements AddComicNotesPageServices {
   }
 
   loadComics(): void {
-    this.store.dispatch({ type: '[Comic Notes Add Page] Load Comics' });
+    this.store.dispatch({ type: '[Add Comic Notes Page] Load Comics' });
   }
 }

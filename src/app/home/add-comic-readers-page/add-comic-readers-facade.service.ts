@@ -13,7 +13,7 @@ export class AddComicReadersFacadeService {
 
   addComicReaders(comic: Comic): void {
     this.store.dispatch({
-      type: '[Comic Readers Add Page] Update Comic',
+      type: '[Add Comic Readers Page] Update Comic',
       comic,
     });
   }
@@ -45,6 +45,6 @@ export class AddComicReadersFacadeService {
   }
 
   loadComics(): void {
-    this.store.dispatch({ type: '[Comic Readers Add Page] Load Comics' });
+    this.store.dispatch({ type: '[Add Comic Readers Page] Load Comics' });
   }
 }

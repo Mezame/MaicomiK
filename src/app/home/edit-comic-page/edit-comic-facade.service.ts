@@ -54,6 +54,6 @@ export class EditComicFacadeService {
   }
 
   loadComics(): void {
-    this.store.dispatch({ type: '[Comic Edit Page] Load Comics' });
+    this.store.dispatch({ type: '[Edit Comic Page] Load Comics' });
   }
 }

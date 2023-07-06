@@ -17,7 +17,7 @@ export class EditComicNotesFacadeService {
 
   editComicNotes(comic: Comic): void {
     this.store.dispatch({
-      type: '[Comic Notes Edit Page] Update Comic',
+      type: '[Edit Comic Notes Page] Update Comic',
       comic,
     });
   }
@@ -45,6 +45,6 @@ export class EditComicNotesFacadeService {
   }
 
   loadComics(): void {
-    this.store.dispatch({ type: '[Comic Notes Add Page] Load Comics' });
+    this.store.dispatch({ type: '[Add Comic Notes Page] Load Comics' });
   }
 }
