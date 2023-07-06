@@ -4,12 +4,12 @@ import { Comic } from '@features/comics/models';
 import { selectComic } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, map, take } from 'rxjs';
-import { AddComicNotesPageServices } from './add-comic-notes-page';
+import { AddComicNotesServices } from './add-comic-notes';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AddComicNotesFacadeService implements AddComicNotesPageServices {
+export class AddComicNotesFacadeService implements AddComicNotesServices {
   constructor(private appStore: AppStore, private store: Store) {}
 
   addComicNotes(comic: Comic): void {
