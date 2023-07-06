@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { ApiState, AppStore } from '@core/services/app-store.service';
+import { ApiState } from '@core/services/app-store';
+import { AppStore } from '@core/services/app-store.service';
 import { Comic } from '@features/comics/models';
 import { selectComic } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, map, take } from 'rxjs';
+import { EditComicNotesServices } from './edit-comic-notes';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EditComicNotesFacadeService {
+export class EditComicNotesFacadeService implements EditComicNotesServices {
   constructor(private appStore: AppStore, private store: Store) {}
 
   clearApiState(): void {
@@ -22,7 +24,7 @@ export class EditComicNotesFacadeService {
     });
   }
 
-  getApiState(): Observable<ApiState | null> {
+  getApiState(): Observable<ApiState> {
     const apiState = this.appStore.getApiState().pipe(take(1));
 
     return apiState;
