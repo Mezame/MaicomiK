@@ -1,25 +1,25 @@
 import { Injectable, TemplateRef } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FooterPortalService {
-  private footer: Subject<Readonly<TemplateRef<any>> | null>;
+  private footer$: BehaviorSubject<TemplateRef<any> | null>;
 
   constructor() {
-    this.footer = new Subject();
+    this.footer$ = new BehaviorSubject<TemplateRef<any> | null>(null);
   }
 
-  setFooter(footer: TemplateRef<any>) {
-    this.footer.next(footer);
+  clearFooter(): void {
+    this.footer$.next(null);
   }
 
-  getFooter() {
-    return this.footer.asObservable();
+  getFooter(): Observable<TemplateRef<any> | null> {
+    return this.footer$.asObservable();
   }
 
-  clearFooter() {
-    this.footer.next(null);
+  setFooter(footer: TemplateRef<any>): void {
+    this.footer$.next(footer);
   }
 }
