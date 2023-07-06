@@ -64,5 +64,5 @@ export class PrimaryLayoutComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  logOut() {}
+  logOut() { /* TODO document why this method 'logOut' is empty */ }
 }
