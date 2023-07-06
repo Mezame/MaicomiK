@@ -5,11 +5,12 @@ import { ComicFormService } from '@features/comics/services/comic-form.service';
 import { addComicAction } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
+import { AddComicServices } from './add-comic';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AddComicFacadeService {
+export class AddComicFacadeService implements AddComicServices {
   constructor(
     private appStore: AppStore,
     private comicFormService: ComicFormService,
@@ -30,7 +31,7 @@ export class AddComicFacadeService {
     return comic;
   }
 
-  getApiState(): Observable<ApiState | null> {
+  getApiState(): Observable<ApiState> {
     const apiState = this.appStore.getApiState().pipe(take(1));
 
     return apiState;
