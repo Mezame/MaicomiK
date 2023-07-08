@@ -4,10 +4,10 @@ import { Injectable, isDevMode } from '@angular/core';
   providedIn: 'root',
 })
 export class Logger {
-  isDevMode: boolean;
-  logs: string[];
+  private isDevMode: boolean;
+  private logs: string[];
 
-  log: (message: string) => void = this.info;
+  info: (message: string) => void = this.log;
 
   constructor() {
     this.isDevMode = isDevMode();
@@ -20,7 +20,7 @@ export class Logger {
     console.error(message);
   }
 
-  info(message: string): void {
+  log(message: string): void {
     if (!this.isDevMode) return;
 
     console.log(message);
