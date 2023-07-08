@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [{
-  path: 'login',
+  path: 'welcome',
   loadChildren: () =>
-    import('./login/login.module').then((m) => m.LoginModule)
+    import('./welcome/welcome.module').then((m) => m.WelcomeModule)
 },
 {
   path: 'home',
