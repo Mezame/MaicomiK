@@ -1,5 +1,5 @@
-import { Comic } from '@features/comics/comic';
 import { Timestamp } from '@angular/fire/firestore';
+import { Comic } from '@features/comics/models';
 
 export const comicsMock: Comic[] = [
   {
