@@ -15,7 +15,7 @@ import {
   Timestamp,
   updateDoc,
 } from '@angular/fire/firestore';
-import { Logger } from '@core/services/logger.service';
+import { Logger } from '@core/logger.service';
 import { Observable, of } from 'rxjs';
 
 export interface FirestoreResponse {
@@ -44,7 +44,7 @@ export class FirestoreService {
       collRef = collection(this.firestore, path);
 
       documents$ = collectionData(collRef);
-  
+
       return documents$;
     } catch (error) {
       console.log(error);

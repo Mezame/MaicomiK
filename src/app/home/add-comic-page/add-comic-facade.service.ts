@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ApiState } from '@core/services/app-store';
-import { AppStore } from '@core/services/app-store.service';
+import { ApiState } from '@core/app-store';
+import { AppStore } from '@core/app-store.service';
 import { Comic, ComicFormValue } from '@features/comics/models';
 import { ComicFormService } from '@features/comics/services/comic-form.service';
 import { addComicAction } from '@features/comics/state';

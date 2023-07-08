@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ApiState } from '@core/services/app-store';
-import { AppStore } from '@core/services/app-store.service';
-import { Logger } from '@core/services/logger.service';
 import {
   FirebaseErrorHandlerService,
   HandleError,
@@ -12,6 +9,9 @@ import {
 } from '@shared/firebase/firestore.service';
 import { Observable, catchError, from, map, take, tap } from 'rxjs';
 import { Comic } from '../models';
+import { AppStore } from '@core/app-store.service';
+import { Logger } from '@core/logger.service';
+import { ApiState } from '@core/app-store';
 
 @Injectable({
   providedIn: 'root',
