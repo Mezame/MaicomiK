@@ -6,6 +6,15 @@ const routes: Routes = [
   {
     path: '',
     component: WelcomeComponent,
+    children: [
+      {
+        path: 'sign-in',
+        loadChildren: () =>
+          import('./sign-in-page/sign-in-page.module').then(
+            (m) => m.SignInPageModule
+          ),
+      },
+    ],
   },
 ];
 
