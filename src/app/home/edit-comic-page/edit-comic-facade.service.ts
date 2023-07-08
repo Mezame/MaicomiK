@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { ApiState, AppStore } from '@core/services/app-store.service';
+import { ApiState } from '@core/services/app-store';
+import { AppStore } from '@core/services/app-store.service';
 import { Comic } from '@features/comics/models';
 import { ComicFormValue } from '@features/comics/models/comic-form';
 import { ComicFormService } from '@features/comics/services/comic-form.service';
 import { editComicAction, selectComic } from '@features/comics/state';
 import { Store } from '@ngrx/store';
 import { Observable, map, take } from 'rxjs';
+import { EditComicServices } from './edit-comic';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EditComicFacadeService {
+export class EditComicFacadeService implements EditComicServices {
   constructor(
     private appStore: AppStore,
     private comicFormService: ComicFormService,
@@ -31,7 +33,7 @@ export class EditComicFacadeService {
     return comic;
   }
 
-  getApiState(): Observable<ApiState | null> {
+  getApiState(): Observable<ApiState> {
     const apiState = this.appStore.getApiState().pipe(take(1));
 
     return apiState;
