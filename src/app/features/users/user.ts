@@ -8,7 +8,9 @@ export interface User {
   };
   comics: string[];
   metadata: {
-    id?: string;
-    createdAt: Timestamp;
+    id: string;
+    urlSegment: string;
+    createdAt: Timestamp | null;
+    updatedAt: Timestamp | null;
   };
 }
