@@ -14,6 +14,18 @@ const routes: Routes = [
             (m) => m.SignInPageModule
           ),
       },
+      {
+        path: 'sign-up',
+        loadChildren: () =>
+          import('./sign-up-page/sign-up-page.module').then(
+            (m) => m.SignUpPageModule
+          ),
+      },
+      {
+        path: '',
+        redirectTo: 'sign-in',
+        pathMatch: 'full',
+      },
     ],
   },
 ];
