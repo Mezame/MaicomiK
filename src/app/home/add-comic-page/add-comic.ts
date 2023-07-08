@@ -1,4 +1,4 @@
-import { ApiState } from '@core/services/app-store.service';
+import { ApiState } from '@core/services/app-store';
 import { Comic, ComicFormValue } from '@features/comics/models';
 import { Observable } from 'rxjs';
 

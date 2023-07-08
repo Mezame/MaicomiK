@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ApiState, AppStore } from '@core/services/app-store.service';
+import { ApiState } from '@core/services/app-store';
+import { AppStore } from '@core/services/app-store.service';
 import { Logger } from '@core/services/logger.service';
 import {
   FirebaseErrorHandlerService,
@@ -151,7 +152,9 @@ export class ComicDataService {
     );
   }
 
-  private getComicWithMetadataUrlSegment(comic: Partial<Comic>): Readonly<Comic> {
+  private getComicWithMetadataUrlSegment(
+    comic: Partial<Comic>
+  ): Readonly<Comic> {
     let comicWithMetadataUrlSegment: Readonly<Comic>;
     let urlSegment: string;
     const metadata = {

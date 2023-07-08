@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ApiState, AppStore } from '@core/services/app-store.service';
+import { ApiState } from '@core/services/app-store';
+import { AppStore } from '@core/services/app-store.service';
 import { Comic } from '@features/comics/models';
 import { selectComic } from '@features/comics/state';
 import { Store } from '@ngrx/store';
